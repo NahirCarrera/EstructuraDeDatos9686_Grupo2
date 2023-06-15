@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o NodoDoble.o ListaCircularDoble.o
-LINKOBJ  = main.o NodoDoble.o ListaCircularDoble.o
+OBJ      = main.o NodoDoble.o ListaCircularDoble.o Dato.o Fecha.o Persona.o RegistroEntradaSalida.o
+LINKOBJ  = main.o NodoDoble.o ListaCircularDoble.o Dato.o Fecha.o Persona.o RegistroEntradaSalida.o
 LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
 CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"
@@ -32,3 +32,15 @@ NodoDoble.o: NodoDoble.cpp
 
 ListaCircularDoble.o: ListaCircularDoble.cpp
 	$(CPP) -c ListaCircularDoble.cpp -o ListaCircularDoble.o $(CXXFLAGS)
+
+Dato.o: Dato.cpp
+	$(CPP) -c Dato.cpp -o Dato.o $(CXXFLAGS)
+
+Fecha.o: Fecha.cpp
+	$(CPP) -c Fecha.cpp -o Fecha.o $(CXXFLAGS)
+
+Persona.o: Persona.cpp
+	$(CPP) -c Persona.cpp -o Persona.o $(CXXFLAGS)
+
+RegistroEntradaSalida.o: RegistroEntradaSalida.cpp
+	$(CPP) -c RegistroEntradaSalida.cpp -o RegistroEntradaSalida.o $(CXXFLAGS)
