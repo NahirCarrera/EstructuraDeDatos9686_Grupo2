@@ -12,8 +12,8 @@
 #define LISTACIRCULARDOBLE_H
 
 #pragma once
-#include "OperacionListas.h"
-#include "NodoDoble.cpp"
+#include "../Modelo/OperacionListas.h"
+#include "../Controlador/NodoDoble.cpp"
 
 template <typename T>
 class ListaCircularDoble:public OperacionListas<T>{

@@ -9,8 +9,8 @@
  *
  *******************************************************************************/ 
 
-#include "Dato.h"
-#include "Fecha.h"
+#include "../Modelo/Dato.h"
+#include "../Modelo/Fecha.h"
 #include <iostream>
 #include <cstdlib> //funcion atoi()
 #include <conio.h> //getch()

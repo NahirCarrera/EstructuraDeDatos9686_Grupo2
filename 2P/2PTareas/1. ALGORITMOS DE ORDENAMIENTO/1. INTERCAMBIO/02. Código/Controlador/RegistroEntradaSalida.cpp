@@ -9,7 +9,7 @@
  *
  *******************************************************************************/ 
 
-#include "RegistroEntradaSalida.h"
+#include "../Modelo/RegistroEntradaSalida.h"
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       RegistroEntradaSalida::getPersona()

@@ -8,7 +8,7 @@
  * enlazadas y algoritmo de búsqueda burbuja mejorado
  *
  *******************************************************************************/ 
-#include "NodoDoble.h"
+#include "../Modelo/NodoDoble.h"
 template <typename T>
 NodoDoble<T>::NodoDoble(T dato){
 	this->dato = dato;

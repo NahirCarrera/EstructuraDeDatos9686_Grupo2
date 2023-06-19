@@ -8,7 +8,7 @@
  * enlazadas y algoritmo de búsqueda burbuja mejorado
  *
  *******************************************************************************/ 
-#include "ListaCircularDoble.h"
+#include "../Modelo/ListaCircularDoble.h"
 #include <iostream>
 
 template <typename T>

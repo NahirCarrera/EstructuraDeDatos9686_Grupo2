@@ -12,10 +12,10 @@
 #include <iostream>
 #include <cstdlib> // para usar system("cls") y system("pause")
 #include <string>
-#include "ListaCircularDoble.cpp"
-#include "RegistroEntradaSalida.h"
-#include "Fecha.h"
-#include "Persona.h"
+#include "../Controlador/ListaCircularDoble.cpp"
+#include "../Modelo/RegistroEntradaSalida.h"
+#include "../Modelo/Fecha.h"
+#include "../Modelo/Persona.h"
 #include <stdlib.h>
 
 int main() {
