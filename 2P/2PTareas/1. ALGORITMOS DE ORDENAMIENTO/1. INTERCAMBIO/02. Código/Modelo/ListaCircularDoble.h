@@ -5,7 +5,7 @@
  * Fecha de modificacion: 14/06/23 19:12
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
- * enlazadas y algoritmo de búsqueda burbuja mejorado
+ * enlazadas y algoritmo de búsqueda por intercambio
  *
  *******************************************************************************/ 
 #ifndef LISTACIRCULARDOBLE_H
