@@ -11,7 +11,47 @@
 
 #include "../Modelo/Persona.h"
 #include <iostream>
+////////////////////////////////////////////////////////////////////////
+// Name:       Persona::Persona(std::string cedula, std::string nombre, std::string apellido)
+// Purpose:    Implementation of Persona::Persona()
+// Parameters:
+// - cedula
+// - nombre
+// - apellido
+// Return:     
+////////////////////////////////////////////////////////////////////////
 
+Persona::Persona(std::string cedula, std::string nombre, std::string apellido, Fecha fechaNacimiento)
+{
+    this->nombre = nombre;
+    this->apellido = apellido;
+    this->cedula = cedula;
+    this->fechaNacimiento = fechaNacimiento;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       Persona::Persona()
+// Purpose:    Implementation of Persona::Persona()
+// Return:     
+////////////////////////////////////////////////////////////////////////
+
+Persona::Persona()
+{
+    this->nombre = "";
+    this->apellido = "";
+    this->cedula = "";
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       Persona::~Persona()
+// Purpose:    Implementation of Persona::~Persona()
+// Return:     
+////////////////////////////////////////////////////////////////////////
+
+Persona::~Persona()
+{
+   // TODO : implement
+}
 ////////////////////////////////////////////////////////////////////////
 // Name:       Persona::getCedula()
 // Purpose:    Implementation of Persona::getCedula()
@@ -83,46 +123,28 @@ void Persona::setApellido(std::string newApellido)
 {
    apellido = newApellido;
 }
+////////////////////////////////////////////////////////////////////////
+// Name:       Persona::getFechaNacimiento()
+// Purpose:    Implementation of Persona::getFechaNacimiento()
+// Return:     Fecha
+////////////////////////////////////////////////////////////////////////
+
+Fecha Persona::getFechaNacimiento(void)
+{
+   return fechaNacimiento;
+}
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       Persona::Persona(std::string cedula, std::string nombre, std::string apellido)
-// Purpose:    Implementation of Persona::Persona()
+// Name:       Persona::setFechaNacimiento(Fecha newFechaNacimiento)
+// Purpose:    Implementation of Persona::setFechaNacimiento()
 // Parameters:
-// - cedula
-// - nombre
-// - apellido
-// Return:     
+// - newFechaNacimiento
+// Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-Persona::Persona(std::string cedula, std::string nombre, std::string apellido)
+void Persona::setFechaNacimiento(Fecha newFechaNacimiento)
 {
-    this->nombre = nombre;
-    this->apellido = apellido;
-    this->cedula = cedula;
-}
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Persona::Persona()
-// Purpose:    Implementation of Persona::Persona()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Persona::Persona()
-{
-   this->nombre = "";
-    this->apellido = "";
-    this->cedula = "";
-}
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Persona::~Persona()
-// Purpose:    Implementation of Persona::~Persona()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Persona::~Persona()
-{
-   // TODO : implement
+   fechaNacimiento = newFechaNacimiento;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -140,3 +162,12 @@ std::ostream& operator <<(std::ostream& os, const Persona& persona) {
 		+ ", Cedula: "+ persona.cedula + "}"<< std::endl;
   return os;
 }
+
+bool Persona::operator==(Persona& persona){
+	return (this->cedula == persona.cedula);
+}
+
+
+
+
+

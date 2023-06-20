@@ -13,7 +13,6 @@
 #include <ctime>
 #include <locale>
 #include<iostream>
-
 ////////////////////////////////////////////////////////////////////////
 // Name:       Fecha::getAnio()
 // Purpose:    Implementation of Fecha::getAnio()
