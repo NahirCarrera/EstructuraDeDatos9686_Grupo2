@@ -96,6 +96,22 @@ bool ListaCircularDoble<T>::buscar(T dato){
 	return false;
 }
 
+template <typename T>
+NodoDoble<T>* ListaCircularDoble<T>::getCabeza() {
+	return cabeza;
+}
 
+template <typename T>
+NodoDoble<T>* ListaCircularDoble<T>::getCola() {
+	return cola;
+}
 
+template <typename T>
+void ListaCircularDoble<T>::setCabeza(NodoDoble<T>* newCabeza) {
+	this->cabeza = newCabeza;
+}
 
+template <typename T>
+void ListaCircularDoble<T>::setCola(NodoDoble<T>* newCola) {
+	this->cola = newCola;
+}

@@ -28,6 +28,11 @@ public:
 	void eliminar(T)override;
 	bool buscar(T)override;
 	void mostrar()override;
+	
+	NodoDoble<T>* getCabeza();
+	NodoDoble<T>* getCola();
+	void setCabeza(NodoDoble<T>*);
+	void setCola(NodoDoble<T>*);
 };                        
 #endif
 	

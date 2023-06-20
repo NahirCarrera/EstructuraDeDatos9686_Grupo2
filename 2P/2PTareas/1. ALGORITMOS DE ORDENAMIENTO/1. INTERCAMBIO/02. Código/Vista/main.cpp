@@ -2,7 +2,7 @@
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 14/06/23 18:57
- * Fecha de modificacion: 14/06/23 22:40
+ * Fecha de modificacion: 19/06/23 23:33
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y algoritmo de búsqueda por intercambio
@@ -16,32 +16,59 @@
 #include "../Modelo/RegistroEntradaSalida.h"
 #include "../Modelo/Fecha.h"
 #include "../Modelo/Persona.h"
-#include <stdlib.h>
+#include "../Herramientas/Menu.h"
+
+void registrarEmpleado();
+void registrarEntradaSalida();
+void mostrarRegistroCompleto();
+void mostrarRegistroIndividual();
 
 int main() {
-	Persona persona("1726952946", "Stephen", "Drouet");
-	Fecha fechaEntrada;
-	Fecha fechaSalida(2023, 6, 14, 23, 59, 11);
-	RegistroEntradaSalida registro1(persona, fechaEntrada, fechaSalida);
+	std::string opcion;
 	
-	Persona persona2("1710708973", "Nahir", "Carrera");
-	Fecha fechaEntrada2(2023, 6, 14, 8, 0, 15);;
-	Fecha fechaSalida2(2023, 6, 14, 14, 30, 12);
-	RegistroEntradaSalida registro2(persona2, fechaEntrada2, fechaSalida2);
+	do {
+		opcion = Menu::correrMenu();
+		
+		system("cls");
+		
+		if (opcion == "Registrar Empleado") {
+			registrarEmpleado();
+		}
 	
-	ListaCircularDoble<RegistroEntradaSalida> listaRegistro;
-	/*
-	ListaCircularDoble<int> lista;
+		if (opcion == "Registrar Entrada/Salida") {
+			registrarEntradaSalida();
+		}
+		
+		if (opcion == "Mostrar Registro completo") {
+			mostrarRegistroCompleto();
+		}
+		
+		if (opcion == "Mostrar Registro individual") {
+			mostrarRegistroIndividual();
+		}
+		
+		if (opcion == "Salir") {
+			std::cout << "Saliendo..." << std::endl;
+		}	
+		system("PAUSE");	
+	} while (opcion != "Salir");
 	
-	lista.insertar(5);
-	lista.insertar(7);
-	lista.insertar(3);
-	lista.mostrar();*/
-	
-	listaRegistro.insertar(registro1);
-	listaRegistro.insertar(registro2);
-	listaRegistro.mostrar();
-   	system("PAUSE");
     return 0;
 }
 
+
+void registrarEmpleado() {
+	std::cout << "registrando empleado" << std::endl;
+}
+
+void registrarEntradaSalida() {
+	std::cout << "registrando entrada o salida" << std::endl;
+}
+
+void mostrarRegistroCompleto() {
+	std::cout << "registro completo" << std::endl;
+}
+
+void mostrarRegistroIndividual() {
+	std::cout << "registro individual" << std::endl;
+}
