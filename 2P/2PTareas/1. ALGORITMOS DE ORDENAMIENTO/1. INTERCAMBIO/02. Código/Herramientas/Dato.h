@@ -12,6 +12,8 @@
 #ifndef DATO_H
 #define DATO_H
 #include <string>
+#include "../Modelo/Fecha.h"
+
 class Dato
 {
 	public:
@@ -27,6 +29,8 @@ class Dato
    		static std::string ingresarNombreSimple();
    		static std::string ingresarNombreCompleto();
    		static std::string ingresarModelo();
+   		static bool validarFecha(Fecha fecha);
+   		static Fecha ingresarFechaCumple();
 	protected:
 };
 

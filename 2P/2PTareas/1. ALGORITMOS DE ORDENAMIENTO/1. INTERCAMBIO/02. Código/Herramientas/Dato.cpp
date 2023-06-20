@@ -395,4 +395,99 @@ std::string Dato::ingresarModelo(){
 }
 
 
+bool Dato::validarFecha(Fecha fecha) {
+	Fecha fechaActual;
+	int anio, mes, dia;
+	int anioA, mesA, diaA;
+	
+	anio = fecha.getAnio();
+	mes = fecha.getMes();
+	dia = fecha.getDia();			
+	
+	anioA = fechaActual.getAnio();
+	mesA = fechaActual.getMes();
+	diaA = fechaActual.getDia();		
+	
+    bool esBisiesto = (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0);
+
+    // Verificar si el mes está dentro del rango válido (1-12)
+    if (mes < 1 || mes > 12) {
+    	std::cout << "Fecha no valida, vuelva a intentar" << std::endl;
+        return false;
+    }
+
+    // Verificar los días según el mes
+    int diasEnMes;
+
+    switch (mes) {
+        case 2:
+            diasEnMes = esBisiesto ? 29 : 28;
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            diasEnMes = 30;
+            break;
+        default:
+            diasEnMes = 31;
+    }
+
+    // Verificar si el día está dentro del rango válido para el mes
+    if (dia < 1 || dia > diasEnMes) {
+    	std::cout << "Fecha no valida, vuelva a intentar" << std::endl;
+        return false;
+    }
+
+	if (anio > anioA) {
+		std::cout << "Fecha no valida, vuelva a intentar" << std::endl;
+		return false;
+	}
+	
+	if (anio == anioA && mes > mesA) {
+		std::cout << "Fecha no valida, vuelva a intentar" << std::endl;
+		return false;
+	}
+	
+	if (anio == anioA && mes == mesA && dia > diaA) {
+		std::cout << "Fecha no valida, vuelva a intentar" << std::endl;
+		return false;
+	}
+
+    // Si pasa todas las validaciones anteriores, la fecha es valida
+    return true;
+}
+
+
+Fecha Dato::ingresarFechaCumple() {
+	Fecha fecha;
+	Fecha fechaActual;
+	int dia, mes, anio;
+	bool fechaValida = false;
+	
+	do {
+		std::cout << "Ingrese el anio: ";
+		anio = ingresarEntero();
+		std::cout <<"Ingrese el mes: ";
+		mes = ingresarEntero();
+		std::cout << "Ingrese el dia: ";
+		dia = ingresarEntero();
+		
+		fecha = Fecha(anio, mes, dia, 0, 0, 0);
+		
+		fechaValida = validarFecha(fecha);
+		
+		if (!fechaValida) {
+			std::cout << "Fecha no valida, vuelva a intentar" << std::endl;
+		} else {
+			if (fechaActual.getAnio() - fecha.getAnio() < 18) {
+				fechaValida = false;
+				std::cout << "No puede registrar a personas menores de edad" << std::endl;
+			}
+		}
+		
+	} while (!fechaValida);
+	
+	return fecha;
+}
 

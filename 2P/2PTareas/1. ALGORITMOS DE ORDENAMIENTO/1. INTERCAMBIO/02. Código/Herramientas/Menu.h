@@ -73,6 +73,7 @@ class Menu
 	    options.insertar("Registrar Entrada/Salida");
 	    options.insertar("Mostrar Registro completo");
 	    options.insertar("Mostrar Registro individual");
+	    options.insertar("Mostrar Empleados");
 	    options.insertar("Salir");
 	    Menu menu(options);
 	

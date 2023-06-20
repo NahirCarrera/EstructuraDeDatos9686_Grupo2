@@ -159,7 +159,8 @@ void Persona::setFechaNacimiento(Fecha newFechaNacimiento)
 std::ostream& operator <<(std::ostream& os, const Persona& persona) {
   os << "Persona: -> {Nombre: " + persona.nombre
   		+ ", Apellido: " + persona.apellido
-		+ ", Cedula: "+ persona.cedula + "}"<< std::endl;
+		+ ", Cedula: "+ persona.cedula
+		+ ", FechaNacimiento: " << persona.fechaNacimiento << "}"<< std::endl;
   return os;
 }
 
