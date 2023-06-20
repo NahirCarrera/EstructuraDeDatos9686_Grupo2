@@ -1,6 +1,6 @@
 [Project]
-FileName=ListaCircularDoble.dev
-Name=ListaCircularDoble
+FileName=RegistroDePersonal.dev
+Name=RegistroDePersonal
 Type=1
 Ver=2
 ObjFiles=
@@ -19,16 +19,16 @@ ObjectOutput=
 LogOutput=
 LogOutputEnabled=0
 OverrideOutput=0
-OverrideOutputName=
+OverrideOutputName=RegistroDePersonal.exe
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
 CommandLine=
-Folders=
+Folders=Controlador,Herramientas,Modelo,Vista
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
-CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
 UnitCount=14
 
 [VersionInfo]
@@ -39,21 +39,21 @@ Build=0
 LanguageID=1033
 CharsetID=1252
 CompanyName=
-FileVersion=
+FileVersion=1.0.0.0
 FileDescription=Developed using the Dev-C++ IDE
 InternalName=
 LegalCopyright=
 LegalTrademarks=
 OriginalFilename=
 ProductName=
-ProductVersion=
+ProductVersion=1.0.0.0
 AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit2]
-FileName=NodoDoble.cpp
+FileName=Modelo\Fecha.h
 CompileCpp=1
-Folder=
+Folder=Modelo
 Compile=1
 Link=1
 Priority=1000
@@ -61,9 +61,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit1]
-FileName=main.cpp
+FileName=Vista\main.cpp
 CompileCpp=1
-Folder=
+Folder=Vista
 Compile=1
 Link=1
 Priority=1000
@@ -71,9 +71,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=ListaCircularDoble.cpp
+FileName=Modelo\ListaCircularDoble.h
 CompileCpp=1
-Folder=
+Folder=Modelo
 Compile=1
 Link=1
 Priority=1000
@@ -81,9 +81,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=NodoDoble.h
+FileName=Modelo\NodoDoble.h
 CompileCpp=1
-Folder=
+Folder=Modelo
 Compile=1
 Link=1
 Priority=1000
@@ -91,9 +91,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=ListaCircularDoble.h
+FileName=Modelo\OperacionListas.h
 CompileCpp=1
-Folder=
+Folder=Modelo
 Compile=1
 Link=1
 Priority=1000
@@ -101,9 +101,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=OperacionListas.h
+FileName=Modelo\Persona.h
 CompileCpp=1
-Folder=
+Folder=Modelo
 Compile=1
 Link=1
 Priority=1000
@@ -111,9 +111,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=Dato.cpp
+FileName=Modelo\RegistroEntradaSalida.h
 CompileCpp=1
-Folder=
+Folder=Modelo
 Compile=1
 Link=1
 Priority=1000
@@ -121,9 +121,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=Dato.h
+FileName=Controlador\Fecha.cpp
 CompileCpp=1
-Folder=
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
@@ -131,9 +131,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=Fecha.cpp
+FileName=Controlador\ListaCircularDoble.cpp
 CompileCpp=1
-Folder=
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
@@ -141,9 +141,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit10]
-FileName=Fecha.h
+FileName=Controlador\NodoDoble.cpp
 CompileCpp=1
-Folder=
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
@@ -151,9 +151,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=Persona.cpp
+FileName=Controlador\Persona.cpp
 CompileCpp=1
-Folder=
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
@@ -161,9 +161,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit12]
-FileName=Persona.h
+FileName=Controlador\RegistroEntradaSalida.cpp
 CompileCpp=1
-Folder=
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
@@ -171,9 +171,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=RegistroEntradaSalida.cpp
+FileName=Herramientas\Dato.cpp
 CompileCpp=1
-Folder=
+Folder=Herramientas
 Compile=1
 Link=1
 Priority=1000
@@ -181,9 +181,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit14]
-FileName=RegistroEntradaSalida.h
+FileName=Herramientas\Dato.h
 CompileCpp=1
-Folder=
+Folder=Herramientas
 Compile=1
 Link=1
 Priority=1000
