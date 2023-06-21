@@ -28,6 +28,7 @@ public:
 	void eliminar(T)override;
 	bool buscar(T)override;
 	void mostrar()override;
+	T extraer(T)override;
 	
 	NodoDoble<T>* getCabeza();
 	NodoDoble<T>* getCola();

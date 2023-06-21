@@ -13,6 +13,7 @@
 #define GESTORARCHIVO_H
 
 #include "../Modelo/Persona.h"
+#include "../Modelo/RegistroEntradaSalida.h"
 #include <string>
 
 template <typename T>
@@ -26,6 +27,8 @@ class GestorArchivo
 		static Fecha extraerFecha(std::string input);
 		static void guardarListaPersonaComoCSV(ListaCircularDoble<Persona>&, std::string);
 		static void cargarCSVEnListaPersona(ListaCircularDoble<Persona>&, std::string);
+		static void guardarListaRegistroComoCSV(ListaCircularDoble<RegistroEntradaSalida>&, std::string);
+		static void cargarCSVEnListaRegistro(ListaCircularDoble<RegistroEntradaSalida>&, ListaCircularDoble<Persona>&, std::string);
 		
 	private:		
 		

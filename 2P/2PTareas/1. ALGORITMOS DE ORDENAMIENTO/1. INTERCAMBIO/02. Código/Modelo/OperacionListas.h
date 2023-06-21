@@ -18,5 +18,6 @@ class OperacionListas{
 		virtual void eliminar(T)=0;
 		virtual bool buscar(T)=0;
 		virtual void mostrar()=0;
+		virtual T extraer(T dato)=0;
 };
 #endif

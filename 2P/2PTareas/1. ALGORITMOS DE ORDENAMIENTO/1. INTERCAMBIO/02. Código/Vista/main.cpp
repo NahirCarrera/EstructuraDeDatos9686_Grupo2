@@ -21,16 +21,18 @@
 #include "../Herramientas/Dato.h"
 
 void registrarEmpleado(ListaCircularDoble<Persona>&);
-void registrarEntradaSalida();
-void mostrarRegistroCompleto();
+void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>&);
+void mostrarRegistroCompleto(ListaCircularDoble<RegistroEntradaSalida>&);
 void mostrarRegistroIndividual();
 
 int main() {
 	ListaCircularDoble<Persona> listaPersonas;
+	ListaCircularDoble<RegistroEntradaSalida> listaRegistros;
 	std::string opcion;
 	
 	// Cargar archivos
 	GestorArchivo::cargarCSVEnListaPersona(listaPersonas, "personas.csv");
+	GestorArchivo::cargarCSVEnListaRegistro(listaRegistros, listaPersonas, "registros.csv");
 	
 	do {
 		opcion = Menu::correrMenu();
@@ -42,11 +44,11 @@ int main() {
 		}
 	
 		if (opcion == "Registrar Entrada/Salida") {
-			registrarEntradaSalida();
+			registrarEntradaSalida(listaRegistros);
 		}
 		
 		if (opcion == "Mostrar Registro completo") {
-			mostrarRegistroCompleto();
+			mostrarRegistroCompleto(listaRegistros);
 		}
 		
 		if (opcion == "Mostrar Registro individual") {
@@ -96,12 +98,18 @@ void registrarEmpleado(ListaCircularDoble<Persona>& lista) {
     
 }
 
-void registrarEntradaSalida() {
+void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>& listaRegistros) {
 	std::cout << "registrando entrada o salida" << std::endl;
+	Fecha fecha;
+	Persona persona("1752235943", "", "", fecha);
+	RegistroEntradaSalida registro(persona, fecha, fecha);
+	listaRegistros.insertar(registro);
+	GestorArchivo::guardarListaRegistroComoCSV(listaRegistros, "registros.csv");
 }
 
-void mostrarRegistroCompleto() {
+void mostrarRegistroCompleto(ListaCircularDoble<RegistroEntradaSalida>& listaRegistros) {
 	std::cout << "registro completo" << std::endl;
+	listaRegistros.mostrar();
 }
 
 void mostrarRegistroIndividual() {

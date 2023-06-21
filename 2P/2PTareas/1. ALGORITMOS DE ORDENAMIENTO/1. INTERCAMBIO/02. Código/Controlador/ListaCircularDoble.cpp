@@ -97,6 +97,20 @@ bool ListaCircularDoble<T>::buscar(T dato){
 }
 
 template <typename T>
+T ListaCircularDoble<T>::extraer(T dato){
+	if (!estaVacia()){
+		NodoDoble<T>* aux = this->cabeza;
+		do{
+			if (aux->getDato() == dato){
+				return aux->getDato();
+			}
+			aux = aux->getSiguiente();
+		} while (aux != this->cabeza);
+	}
+	return dato;
+}
+
+template <typename T>
 NodoDoble<T>* ListaCircularDoble<T>::getCabeza() {
 	return cabeza;
 }
