@@ -111,6 +111,21 @@ T ListaCircularDoble<T>::extraer(T dato){
 }
 
 template <typename T>
+NodoDoble<T>* ListaCircularDoble<T>::extraerNodo(T dato){
+	if (!estaVacia()){
+		NodoDoble<T>* aux = this->cola;
+		do{
+			if (aux->getDato() == dato){
+				return aux;
+			}
+			aux = aux->getAnterior();
+		} while (aux != this->cola);
+	}
+	
+	return nullptr;
+}
+
+template <typename T>
 void  ListaCircularDoble<T>::ordenarPorIntercambio(int criterio){
 	if (!estaVacia()){ //Si la lista no está vacía 
 		NodoDoble<T>* nodoActual = this->cabeza->getSiguiente(); // Nodo que va a recorrer la lista

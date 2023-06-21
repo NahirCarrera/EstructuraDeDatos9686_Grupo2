@@ -13,6 +13,7 @@
 #include <cstdlib> // para usar system("cls") y system("pause")
 #include <string>
 #include "../Controlador/ListaCircularDoble.cpp"
+#include "../Controlador/NodoDoble.cpp"
 #include "../Modelo/RegistroEntradaSalida.h"
 #include "../Modelo/Fecha.h"
 #include "../Modelo/Persona.h"
@@ -21,7 +22,7 @@
 #include "../Herramientas/Dato.h"
 
 void registrarEmpleado(ListaCircularDoble<Persona>&);
-void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>&);
+void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>&, ListaCircularDoble<Persona>&);
 void mostrarRegistroPorEntrada(ListaCircularDoble<RegistroEntradaSalida>&);
 void mostrarRegistroPorSalida(ListaCircularDoble<RegistroEntradaSalida>&);
 void mostrarRegistroIndividual();
@@ -48,7 +49,7 @@ int main() {
 		}
 	
 		if (opcion == "Registrar Entrada/Salida") {
-			registrarEntradaSalida(listaRegistros);
+			registrarEntradaSalida(listaRegistros, listaPersonas);
 		}
 		
 		if (opcion == "Mostrar Registro ordenado por fecha de entrada") {
@@ -110,13 +111,51 @@ void registrarEmpleado(ListaCircularDoble<Persona>& lista) {
     
 }
 
-void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>& listaRegistros) {
-	std::cout << "registrando entrada o salida" << std::endl;
-	Fecha fecha;
-	Persona persona("1752235943", "", "", fecha);
-	RegistroEntradaSalida registro(persona, fecha, fecha);
-	listaRegistros.insertar(registro);
-	GestorArchivo::guardarListaRegistroComoCSV(listaRegistros, "registros.csv");
+void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>& listaRegistros, ListaCircularDoble<Persona>& personas) {
+	std::string cedula;
+	Fecha fecha(0,0,0,0,0,0);
+	Fecha fechaActual;
+	NodoDoble<RegistroEntradaSalida>* nodoRegistro;
+	NodoDoble<Persona>* nodoPersona;
+	listaRegistros = ListaCircularDoble<RegistroEntradaSalida>();
+	GestorArchivo::cargarCSVEnListaRegistro(listaRegistros, personas, "registros.csv");
+	
+	std::cout << "Registrando entrada o salida" << std::endl;	
+	std::cout << "Ingrese la cedula: ";
+    cedula = Dato::ingresarCedulaEcuador();
+    		
+	nodoPersona = personas.extraerNodo(Persona(cedula, "", "", fecha));
+	
+	// Primero buscamos si hay la cedula registrada
+	if (nodoPersona != nullptr) {
+		RegistroEntradaSalida registro(nodoPersona->getDato(), fecha, fecha);
+		
+		nodoRegistro = listaRegistros.extraerNodo(registro);
+		
+		// Si no existe un registro de esa cedula creamos uno
+		if(nodoRegistro == nullptr) {
+			RegistroEntradaSalida registroNuevo(nodoPersona->getDato(), fechaActual, fecha);
+			listaRegistros.insertar(registroNuevo);
+		} else {
+			// Si existe un registro con el contador en 1 es porque ya registro la salida
+			// y se debe crear uno nuevo para esa cedula
+			if (nodoRegistro->getDato().getContadorRegistro() == 1) {
+				RegistroEntradaSalida registroNuevo(nodoPersona->getDato(), fechaActual, fecha);
+				listaRegistros.insertar(registroNuevo);
+			} else {
+				// Si no es 1 es porque es 0, en este caso falta registrar la nueva salida
+				RegistroEntradaSalida registroNuevo = nodoRegistro->getDato();
+				registroNuevo.setFechaSalida(fechaActual);
+				registroNuevo.addContadorRegistro();
+				
+				nodoRegistro->setDato(registroNuevo);
+			}
+		}
+		
+		GestorArchivo::guardarListaRegistroComoCSV(listaRegistros, "registros.csv");
+	} else {
+		std::cout << "Cedula no registrada..." << std::endl;
+	}
 }
 
 void mostrarRegistroPorEntrada(ListaCircularDoble<RegistroEntradaSalida>& lista){

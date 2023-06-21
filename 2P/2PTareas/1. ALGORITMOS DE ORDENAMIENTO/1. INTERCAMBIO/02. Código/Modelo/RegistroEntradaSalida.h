@@ -27,6 +27,10 @@ public:
    void setFechaEntrada(Fecha newFechaEntrada);
    Fecha getFechaSalida(void) const;
    void setFechaSalida(Fecha newFechaSalida);
+   int getContadorRegistro(void);
+   void setContadorRegistro(int newContadorRegistro);
+   void addContadorRegistro(void);
+   
    RegistroEntradaSalida();
    RegistroEntradaSalida(Persona persona, Fecha fechaEntrada, Fecha fechaSalida);
    ~RegistroEntradaSalida();
@@ -40,7 +44,7 @@ private:
    Persona persona;
    Fecha fechaEntrada;
    Fecha fechaSalida;
-
+   int contadorRegistro;
 
 };
 
