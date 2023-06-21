@@ -17,7 +17,7 @@
 // Return:     Persona
 ////////////////////////////////////////////////////////////////////////
 
-Persona RegistroEntradaSalida::getPersona(void)
+Persona RegistroEntradaSalida::getPersona(void) const
 {
    return persona;
 }
@@ -41,7 +41,7 @@ void RegistroEntradaSalida::setPersona(Persona newPersona)
 // Return:     Fecha
 ////////////////////////////////////////////////////////////////////////
 
-Fecha RegistroEntradaSalida::getFechaEntrada(void)
+Fecha RegistroEntradaSalida::getFechaEntrada(void) const
 {
    return fechaEntrada;
 }
@@ -65,7 +65,7 @@ void RegistroEntradaSalida::setFechaEntrada(Fecha newFechaEntrada)
 // Return:     Fecha
 ////////////////////////////////////////////////////////////////////////
 
-Fecha RegistroEntradaSalida::getFechaSalida(void)
+Fecha RegistroEntradaSalida::getFechaSalida(void) const
 {
    return fechaSalida;
 }
@@ -133,3 +133,44 @@ bool RegistroEntradaSalida::operator==(RegistroEntradaSalida& registro) {
 	std::string cedula2 = registro.getPersona().getCedula();
 	return  cedula1 == cedula2;
 }
+
+bool RegistroEntradaSalida::operator>(const RegistroEntradaSalida& registro){
+	if (this->fechaEntrada.getAnio() != registro.getFechaEntrada().getAnio())
+        return this->fechaEntrada.getAnio() > registro.getFechaEntrada().getAnio();
+    
+	if (this->fechaEntrada.getMes() != registro.getFechaEntrada().getMes())
+    	return this->fechaEntrada.getMes() > registro.getFechaEntrada().getMes();
+    
+	if (this->fechaEntrada.getDia() != registro.getFechaEntrada().getDia())
+        return this->fechaEntrada.getDia() > registro.getFechaEntrada().getDia();
+    
+	if (this->fechaEntrada.getHora() != registro.getFechaEntrada().getHora())
+        return this->fechaEntrada.getHora() > registro.getFechaEntrada().getHora();
+    
+	if (this->fechaEntrada.getMinuto() != registro.getFechaEntrada().getMinuto())
+        return this->fechaEntrada.getMinuto() > registro.getFechaEntrada().getMinuto();
+    
+    return (this->fechaEntrada.getSegundo()>registro.getFechaEntrada().getSegundo());
+    //return(persona.getNombre()>registro.persona.getNombre());
+}
+
+bool RegistroEntradaSalida::operator<( const RegistroEntradaSalida& registro){
+	if (this->fechaSalida.getAnio() != registro.getFechaSalida().getAnio())
+        return this->fechaSalida.getAnio() > registro.getFechaSalida().getAnio();
+    
+	if (this->fechaSalida.getMes() != registro.getFechaSalida().getMes())
+    	return this->fechaSalida.getMes() > registro.getFechaSalida().getMes();
+    
+	if (this->fechaSalida.getDia() != registro.getFechaSalida().getDia())
+        return this->fechaSalida.getDia() > registro.getFechaSalida().getDia();
+    
+	if (this->fechaSalida.getHora() != registro.getFechaSalida().getHora())
+        return this->fechaSalida.getHora() > registro.getFechaSalida().getHora();
+    
+	if (this->fechaSalida.getMinuto() != registro.getFechaSalida().getMinuto())
+        return this->fechaSalida.getMinuto() > registro.getFechaSalida().getMinuto();
+    
+    return (this->fechaSalida.getSegundo()>registro.getFechaSalida().getSegundo());
+}
+
+

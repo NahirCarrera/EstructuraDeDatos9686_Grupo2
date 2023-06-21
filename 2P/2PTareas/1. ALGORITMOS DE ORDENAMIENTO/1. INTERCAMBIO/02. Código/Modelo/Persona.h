@@ -19,18 +19,20 @@ public:
    Persona();
    Persona(std::string cedula, std::string nombre, std::string apellido, Fecha fechaNacimiento);
    ~Persona();
-   std::string getCedula(void);
+   std::string getCedula(void) const;
    void setCedula(std::string newCedula);
-   std::string getNombre(void);
+   std::string getNombre(void) const;
    void setNombre(std::string newNombre);
-   std::string getApellido(void);
+   std::string getApellido(void) const;
    void setApellido(std::string newApellido);
-   Fecha getFechaNacimiento(void);
+   Fecha getFechaNacimiento(void) const;
    void setFechaNacimiento(Fecha);
    
    friend std::ostream& operator<<(std::ostream&, const Persona&);	
    bool operator==(Persona&);
-
+   bool operator>(const Persona&);
+   bool operator<(const Persona&);
+	
 private:
    std::string cedula;
    std::string nombre;

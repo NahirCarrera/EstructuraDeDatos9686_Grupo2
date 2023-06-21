@@ -29,6 +29,7 @@ public:
 	bool buscar(T)override;
 	void mostrar()override;
 	T extraer(T)override;
+	void ordenarPorIntercambio(int)override;
 	
 	NodoDoble<T>* getCabeza();
 	NodoDoble<T>* getCola();

@@ -16,17 +16,17 @@
 
 class Fecha {
 public:
-   int getAnio(void);
+   int getAnio(void) const;
    void setAnio(int newAnio);
-   int getMes(void);
+   int getMes(void) const;
    void setMes(int newMes);
-   int getDia(void);
+   int getDia(void) const;
    void setDia(int newDia);
-   int getHora(void);
+   int getHora(void) const;
    void setHora(int newHora);
-   int getMinuto(void);
+   int getMinuto(void) const;
    void setMinuto(int newMinuto);
-   int getSegundo(void);
+   int getSegundo(void) const;
    void setSegundo(int newSegundo);
    Fecha();
    Fecha(int, int, int, int, int, int);

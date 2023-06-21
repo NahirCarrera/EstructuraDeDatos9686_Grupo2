@@ -19,5 +19,6 @@ class OperacionListas{
 		virtual bool buscar(T)=0;
 		virtual void mostrar()=0;
 		virtual T extraer(T dato)=0;
+		virtual void ordenarPorIntercambio(int)=0;
 };
 #endif

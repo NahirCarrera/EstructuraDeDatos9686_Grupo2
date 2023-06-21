@@ -71,9 +71,11 @@ class Menu
 	    ListaCircularDoble<std::string> options;
 	    options.insertar("Registrar Empleado");
 	    options.insertar("Registrar Entrada/Salida");
-	    options.insertar("Mostrar Registro completo");
+	    options.insertar("Mostrar Registro ordenado por fecha de entrada");
+	    options.insertar("Mostrar Registro ordenado por fecha de salida");
 	    options.insertar("Mostrar Registro individual");
-	    options.insertar("Mostrar Empleados");
+	    options.insertar("Mostrar Empleados ordenado por nombre");
+	    options.insertar("Mostrar Empleados ordenado por apellido");
 	    options.insertar("Salir");
 	    Menu menu(options);
 	

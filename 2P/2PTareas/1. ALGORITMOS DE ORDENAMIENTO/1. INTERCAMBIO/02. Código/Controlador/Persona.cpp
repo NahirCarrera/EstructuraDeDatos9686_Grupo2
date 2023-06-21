@@ -58,7 +58,7 @@ Persona::~Persona()
 // Return:     std::string
 ////////////////////////////////////////////////////////////////////////
 
-std::string Persona::getCedula(void)
+std::string Persona::getCedula(void) const
 {
    return cedula;
 }
@@ -82,7 +82,7 @@ void Persona::setCedula(std::string newCedula)
 // Return:     std::string
 ////////////////////////////////////////////////////////////////////////
 
-std::string Persona::getNombre(void)
+std::string Persona::getNombre(void) const
 {
    return nombre;
 }
@@ -106,7 +106,7 @@ void Persona::setNombre(std::string newNombre)
 // Return:     std::string
 ////////////////////////////////////////////////////////////////////////
 
-std::string Persona::getApellido(void)
+std::string Persona::getApellido(void) const
 {
    return apellido;
 }
@@ -129,7 +129,7 @@ void Persona::setApellido(std::string newApellido)
 // Return:     Fecha
 ////////////////////////////////////////////////////////////////////////
 
-Fecha Persona::getFechaNacimiento(void)
+Fecha Persona::getFechaNacimiento(void) const
 {
    return fechaNacimiento;
 }
@@ -168,7 +168,13 @@ bool Persona::operator==(Persona& persona){
 	return (this->cedula == persona.cedula);
 }
 
+bool Persona::operator>(const Persona& persona){
+	return (this->nombre > persona.nombre);
+}
 
+bool Persona::operator<(const Persona& persona){
+	return (this->apellido > persona.apellido);
+}
 
 
 

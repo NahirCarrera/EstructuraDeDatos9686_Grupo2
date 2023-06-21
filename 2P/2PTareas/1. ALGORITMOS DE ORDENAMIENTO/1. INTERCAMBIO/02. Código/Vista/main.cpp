@@ -22,10 +22,14 @@
 
 void registrarEmpleado(ListaCircularDoble<Persona>&);
 void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>&);
-void mostrarRegistroCompleto(ListaCircularDoble<RegistroEntradaSalida>&);
+void mostrarRegistroPorEntrada(ListaCircularDoble<RegistroEntradaSalida>&);
+void mostrarRegistroPorSalida(ListaCircularDoble<RegistroEntradaSalida>&);
 void mostrarRegistroIndividual();
+void mostrarEmpleadosPorNombre(ListaCircularDoble<Persona>&);
+void mostrarEmpleadosPorApellido(ListaCircularDoble<Persona>&);
 
 int main() {
+	
 	ListaCircularDoble<Persona> listaPersonas;
 	ListaCircularDoble<RegistroEntradaSalida> listaRegistros;
 	std::string opcion;
@@ -47,16 +51,24 @@ int main() {
 			registrarEntradaSalida(listaRegistros);
 		}
 		
-		if (opcion == "Mostrar Registro completo") {
-			mostrarRegistroCompleto(listaRegistros);
+		if (opcion == "Mostrar Registro ordenado por fecha de entrada") {
+			mostrarRegistroPorEntrada(listaRegistros);
+		}
+		
+		if (opcion == "Mostrar Registro ordenado por fecha de salida") {
+			mostrarRegistroPorSalida(listaRegistros);
 		}
 		
 		if (opcion == "Mostrar Registro individual") {
 			mostrarRegistroIndividual();
 		}
 		
-		if (opcion == "Mostrar Empleados") {
-			listaPersonas.mostrar();
+		if (opcion == "Mostrar Empleados ordenado por nombre") {
+			mostrarEmpleadosPorNombre(listaPersonas);
+		}
+		
+		if (opcion == "Mostrar Empleados ordenado por apellido") {
+			mostrarEmpleadosPorApellido(listaPersonas);
 		}
 		
 		if (opcion == "Salir") {
@@ -107,11 +119,29 @@ void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>& listaRegi
 	GestorArchivo::guardarListaRegistroComoCSV(listaRegistros, "registros.csv");
 }
 
-void mostrarRegistroCompleto(ListaCircularDoble<RegistroEntradaSalida>& listaRegistros) {
-	std::cout << "registro completo" << std::endl;
-	listaRegistros.mostrar();
+void mostrarRegistroPorEntrada(ListaCircularDoble<RegistroEntradaSalida>& lista){
+	lista.ordenarPorIntercambio(1);
+	lista.mostrar();
 }
+
+void mostrarRegistroPorSalida(ListaCircularDoble<RegistroEntradaSalida>& lista){
+	lista.ordenarPorIntercambio(2);
+	lista.mostrar();
+}
+
 
 void mostrarRegistroIndividual() {
 	std::cout << "registro individual" << std::endl;
 }
+
+void mostrarEmpleadosPorNombre(ListaCircularDoble<Persona>& lista){
+	lista.ordenarPorIntercambio(1);
+	lista.mostrar();
+}
+
+void mostrarEmpleadosPorApellido(ListaCircularDoble<Persona>& lista){
+	lista.ordenarPorIntercambio(2);
+	lista.mostrar();
+}
+
+	

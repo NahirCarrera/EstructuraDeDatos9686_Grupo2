@@ -21,11 +21,11 @@
 class RegistroEntradaSalida
 {
 public:
-   Persona getPersona(void);
+   Persona getPersona(void) const;
    void setPersona(Persona newPersona);
-   Fecha getFechaEntrada(void);
+   Fecha getFechaEntrada(void) const;
    void setFechaEntrada(Fecha newFechaEntrada);
-   Fecha getFechaSalida(void);
+   Fecha getFechaSalida(void) const;
    void setFechaSalida(Fecha newFechaSalida);
    RegistroEntradaSalida();
    RegistroEntradaSalida(Persona persona, Fecha fechaEntrada, Fecha fechaSalida);
@@ -33,6 +33,8 @@ public:
    
    friend std::ostream& operator<<(std::ostream&, const RegistroEntradaSalida&);
    bool operator==(RegistroEntradaSalida&);
+   bool operator>(const RegistroEntradaSalida&);
+   bool operator<( const RegistroEntradaSalida&);
 
 private:
    Persona persona;

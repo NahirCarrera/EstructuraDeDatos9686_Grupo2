@@ -111,6 +111,46 @@ T ListaCircularDoble<T>::extraer(T dato){
 }
 
 template <typename T>
+void  ListaCircularDoble<T>::ordenarPorIntercambio(int criterio){
+	if (!estaVacia()){ //Si la lista no está vacía 
+		NodoDoble<T>* nodoActual = this->cabeza->getSiguiente(); // Nodo que va a recorrer la lista
+		NodoDoble<T>* nodoComparado; // Nodo para comparar
+		T datoTemporal; //Variable para no perder el dato del nodo a comparar en el cambio
+		bool condicion; //Variable para definir la operacion a realizar según el criterio por el cual se quiera ordenar
+		
+		do{
+			nodoComparado = this->cabeza; //El nodo a comparar inicia siendo la cabeza
+			
+			do{
+				
+				switch(criterio){
+				case 1: 
+					condicion = (nodoComparado->getDato() > nodoComparado->getSiguiente()->getDato());
+					break;
+				case 2:
+					condicion = (nodoComparado->getDato() < nodoComparado->getSiguiente()->getDato());
+					break;
+				}
+				if(condicion) {
+					datoTemporal = nodoComparado->getDato();                          //Guarda el dato del nodo a comparar en el temporal
+					nodoComparado->setDato(nodoComparado->getSiguiente()->getDato()); //Cambia el dato del nodo a comparar por el anexo
+					nodoComparado->getSiguiente()->setDato(datoTemporal);             //Cambia el dato del anexo por el temporal
+				}
+				
+				nodoComparado = nodoComparado->getSiguiente(); /*Avanza el nodo a comparar, debe comparar hasta el nodo
+				                                               n - 1 de la lista por eso el ciclo se repite mientras 
+				                                               el nodo a comparar sea diferente de la cola*/
+			} while (nodoComparado != this->cola);
+			
+			nodoActual = nodoActual->getSiguiente(); /*Como es una lista circular entonces en algún
+			                                         momento el nodo actual apuntará a la cabeza entonces ahí
+			                                         termina el ciclo*/
+			} while (nodoActual != this->cabeza);
+	}
+	
+}
+
+template <typename T>
 NodoDoble<T>* ListaCircularDoble<T>::getCabeza() {
 	return cabeza;
 }

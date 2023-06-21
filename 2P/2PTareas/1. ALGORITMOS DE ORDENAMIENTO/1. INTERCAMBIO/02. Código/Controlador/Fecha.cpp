@@ -19,7 +19,7 @@
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int Fecha::getAnio(void)
+int Fecha::getAnio(void) const
 {
    return anio;
 }
@@ -43,7 +43,7 @@ void Fecha::setAnio(int newAnio)
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int Fecha::getMes(void)
+int Fecha::getMes(void) const
 {
    return mes;
 }
@@ -67,7 +67,7 @@ void Fecha::setMes(int newMes)
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int Fecha::getDia(void)
+int Fecha::getDia(void) const
 {
    return dia;
 }
@@ -91,7 +91,7 @@ void Fecha::setDia(int newDia)
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int Fecha::getHora(void)
+int Fecha::getHora(void) const
 {
    return hora;
 }
@@ -115,7 +115,7 @@ void Fecha::setHora(int newHora)
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int Fecha::getMinuto(void)
+int Fecha::getMinuto(void) const
 {
    return minuto;
 }
@@ -139,7 +139,7 @@ void Fecha::setMinuto(int newMinuto)
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int Fecha::getSegundo(void)
+int Fecha::getSegundo(void) const
 {
    return segundo;
 }
