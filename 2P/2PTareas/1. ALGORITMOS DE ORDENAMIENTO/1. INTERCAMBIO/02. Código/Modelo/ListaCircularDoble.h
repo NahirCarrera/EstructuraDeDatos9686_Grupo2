@@ -13,7 +13,7 @@
 
 #pragma once
 #include "../Modelo/OperacionListas.h"
-#include "../Controlador/NodoDoble.cpp"
+#include "NodoDoble.h"
 
 template <typename T>
 class ListaCircularDoble:public OperacionListas<T>{
@@ -28,7 +28,9 @@ public:
 	void eliminar(T)override;
 	bool buscar(T)override;
 	void mostrar()override;
+	void mostrarRepetidos(T) override;
 	T extraer(T)override;
+	NodoDoble<T>* extraerNodo(T);
 	void ordenarPorIntercambio(int)override;
 	
 	NodoDoble<T>* getCabeza();

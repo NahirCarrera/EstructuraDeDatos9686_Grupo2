@@ -26,7 +26,7 @@ Fecha GestorArchivo::extraerFecha(std::string input) {
 	std::stringstream ss(input);
     char dl;
 
-    ss >> anio >> dl >> mes >> dl >> dia
+    ss >> dia >> dl >> mes >> dl >> anio
 		>> dl >> dl >> dl >> dl >> dl >> dl
 		>> hora >> dl >> minuto >> dl >> segundo;
 		
@@ -90,11 +90,13 @@ void GestorArchivo::guardarListaRegistroComoCSV(ListaCircularDoble<RegistroEntra
         if (actual != nullptr) {
         	archivo << "CEDULA" << ";"
                         << "FECHA / HORA ENTRADA" << ";"
-                        << "FECHA / HORA SALIDA" << std::endl;
+                        << "FECHA / HORA SALIDA" << ";"
+                        << "CONTADOR REGISTRO" << std::endl;
             do {
                 archivo << actual->getDato().getPersona().getCedula() << ";"
                         << actual->getDato().getFechaEntrada() << ";"
-                        << actual->getDato().getFechaSalida() << std::endl;
+                        << actual->getDato().getFechaSalida() << ";"
+                        << actual->getDato().getContadorRegistro() << std::endl;
                 actual = actual->getSiguiente();
             } while (actual != lista.getCabeza());
         }
@@ -115,15 +117,21 @@ void GestorArchivo::cargarCSVEnListaRegistro(ListaCircularDoble<RegistroEntradaS
         std::getline(archivo, linea);
         while (std::getline(archivo, linea)) {
             std::istringstream ss(linea);
-            std::string cedula, strFechaEntrada, strFechaSalida;
+            std::string cedula, strFechaEntrada, strFechaSalida, strContador;
+            int contadorRegistro;
             std::getline(ss, cedula, ';');
             std::getline(ss, strFechaEntrada, ';');
             std::getline(ss, strFechaSalida, ';');
+            std::getline(ss, strContador, ';');
+            
             fechaEntrada = extraerFecha(strFechaEntrada);
             fechaSalida = extraerFecha(strFechaSalida);
+            contadorRegistro = std::stoi(strContador);
+            
             Persona personaEncontrada(cedula, "", "", fechaEntrada);
             personaRegistro = listaPersonas.extraer(personaEncontrada);
             RegistroEntradaSalida registro(personaRegistro, fechaEntrada, fechaSalida);
+            registro.setContadorRegistro(contadorRegistro);
             listaRegistros.insertar(registro);
         }
         archivo.close();

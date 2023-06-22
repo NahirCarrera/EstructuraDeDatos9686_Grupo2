@@ -83,6 +83,39 @@ void RegistroEntradaSalida::setFechaSalida(Fecha newFechaSalida)
    fechaSalida = newFechaSalida;
 }
 
+
+////////////////////////////////////////////////////////////////////////
+// Name:       RegistroEntradaSalida::getContadorRegistro()
+// Purpose:    Implementation of RegistroEntradaSalida::getContadorRegistro()
+// Return:     int
+////////////////////////////////////////////////////////////////////////
+
+int RegistroEntradaSalida::getContadorRegistro() {
+	return contadorRegistro;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       RegistroEntradaSalida::setContadorRegistro(int newContadorRegistro)
+// Purpose:    Implementation of RegistroEntradaSalida::setContadorRegistro()
+// Parameters:
+// - newContadorRegistro
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void RegistroEntradaSalida::setContadorRegistro(int newContadorRegistro) {
+	contadorRegistro = newContadorRegistro;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       RegistroEntradaSalida::addContadorRegistro()
+// Purpose:    Implementation of RegistroEntradaSalida::addContadorRegistro()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void RegistroEntradaSalida::addContadorRegistro(void) {
+	contadorRegistro++;
+}
+
 ////////////////////////////////////////////////////////////////////////
 // Name:       RegistroEntradaSalida::RegistroEntradaSalida(Persona persona, Fecha fechaEntrada, Fecha fechaSalida)
 // Purpose:    Implementation of RegistroEntradaSalida::RegistroEntradaSalida()
@@ -98,6 +131,7 @@ RegistroEntradaSalida::RegistroEntradaSalida(Persona persona, Fecha fechaEntrada
    this->persona = persona;
    this->fechaEntrada = fechaEntrada;
    this->fechaSalida = fechaSalida;
+   this->contadorRegistro = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
