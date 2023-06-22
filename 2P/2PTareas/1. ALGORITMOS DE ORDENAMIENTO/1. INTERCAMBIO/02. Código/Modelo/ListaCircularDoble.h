@@ -28,6 +28,7 @@ public:
 	void eliminar(T)override;
 	bool buscar(T)override;
 	void mostrar()override;
+	void mostrarRepetidos(T) override;
 	T extraer(T)override;
 	NodoDoble<T>* extraerNodo(T);
 	void ordenarPorIntercambio(int)override;

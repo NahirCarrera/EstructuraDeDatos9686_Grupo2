@@ -83,6 +83,20 @@ void ListaCircularDoble<T>::mostrar(){
 }
 
 template <typename T>
+void ListaCircularDoble<T>::mostrarRepetidos(T dato) {
+	if (!estaVacia()){
+		NodoDoble<T>* aux = this->cabeza;
+		do{
+			if (aux->getDato() == dato) {
+				std::cout << aux->getDato() << " ";
+			}			
+			aux = aux->getSiguiente();
+		} while (aux != this->cabeza);
+		std::cout << std::endl;
+	}
+}
+
+template <typename T>
 bool ListaCircularDoble<T>::buscar(T dato){
 	if (!estaVacia()){
 		NodoDoble<T>* aux = this->cabeza;

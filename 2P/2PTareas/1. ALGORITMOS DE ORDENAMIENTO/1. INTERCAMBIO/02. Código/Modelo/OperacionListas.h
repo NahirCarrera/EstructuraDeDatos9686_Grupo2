@@ -20,5 +20,6 @@ class OperacionListas{
 		virtual void mostrar()=0;
 		virtual T extraer(T dato)=0;
 		virtual void ordenarPorIntercambio(int)=0;
+		virtual void mostrarRepetidos(T) = 0;
 };
 #endif

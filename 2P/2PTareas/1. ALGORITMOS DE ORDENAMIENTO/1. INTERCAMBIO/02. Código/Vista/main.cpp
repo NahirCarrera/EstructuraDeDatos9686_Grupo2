@@ -25,7 +25,7 @@ void registrarEmpleado(ListaCircularDoble<Persona>&);
 void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>&, ListaCircularDoble<Persona>&);
 void mostrarRegistroPorEntrada(ListaCircularDoble<RegistroEntradaSalida>&);
 void mostrarRegistroPorSalida(ListaCircularDoble<RegistroEntradaSalida>&);
-void mostrarRegistroIndividual();
+void mostrarRegistroIndividual(ListaCircularDoble<RegistroEntradaSalida>&, ListaCircularDoble<Persona>&);
 void mostrarEmpleadosPorNombre(ListaCircularDoble<Persona>&);
 void mostrarEmpleadosPorApellido(ListaCircularDoble<Persona>&);
 
@@ -61,7 +61,7 @@ int main() {
 		}
 		
 		if (opcion == "Mostrar Registro individual") {
-			mostrarRegistroIndividual();
+			mostrarRegistroIndividual(listaRegistros, listaPersonas);
 		}
 		
 		if (opcion == "Mostrar Empleados ordenado por nombre") {
@@ -169,8 +169,25 @@ void mostrarRegistroPorSalida(ListaCircularDoble<RegistroEntradaSalida>& lista){
 }
 
 
-void mostrarRegistroIndividual() {
-	std::cout << "registro individual" << std::endl;
+void mostrarRegistroIndividual(ListaCircularDoble<RegistroEntradaSalida>& listaRegistros, ListaCircularDoble<Persona>& personas) {
+	std::cout << "Registro individual" << std::endl;
+	std::string cedula;
+    Fecha fecha;
+    
+    std::cout << "Ingrese la cedula: ";
+    cedula = Dato::ingresarCedulaEcuador();
+    Persona persona(cedula, "", "", fecha);
+    NodoDoble<Persona>* nodoPersona = personas.extraerNodo(persona);
+    
+    if (nodoPersona != nullptr) {	
+    	RegistroEntradaSalida registroBusqueda(persona, fecha, fecha);
+    	
+    	std::cout << nodoPersona->getDato() << std::endl << std::endl;
+		listaRegistros.mostrarRepetidos(registroBusqueda);
+	} else {
+		std::cout << "Cedula no registrada..." << std::endl;
+	}
+	
 }
 
 void mostrarEmpleadosPorNombre(ListaCircularDoble<Persona>& lista){
