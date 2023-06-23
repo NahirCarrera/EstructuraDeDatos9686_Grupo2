@@ -2,21 +2,29 @@
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 14/06/23 18:57
- * Fecha de modificacion: 19/06/23 23:33
+ * Fecha de modificacion: 22/06/23 22:15
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y algoritmo de búsqueda por intercambio
  *
  *******************************************************************************/ 
-
 #include "Dato.h"
 #include "../Modelo/Fecha.h"
 #include <iostream>
 #include <cstdlib> //funcion atoi()
 #include <conio.h> //getch()
 #include <cctype>
-//Ingresar numeros de menu
-int Dato::ingresarMenuOpcion(char cnum1, char cnum2) {		
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarMenuOpcion(char limiteInferior, char limiteSuperior)
+// Purpose:    Ingresar opcion de menu utilizando limites inferior y superior de las opciones de un menu
+// Parameters:
+// - limiteInferior
+// - limiteSuperior
+// Return:     int
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int Dato::ingresarMenuOpcion(char limiteInferior, char limiteSuperior){		
 	char *entrada = new char[30];
 	char tecla;
 	int i = 0;
@@ -31,7 +39,7 @@ int Dato::ingresarMenuOpcion(char cnum1, char cnum2) {
 			i--;						
 			std::cout << "\b \b"; // borra el último caracter de la consola
 			entrada[i] = 0; // elimina el último caracter de la entrada
-		} else if (tecla >= cnum1 && tecla <= cnum2 && i<1) { // si el usuario ingresa un dígito
+		} else if (tecla >= limiteInferior && tecla <= limiteSuperior && i<1) { // si el usuario ingresa un dígito
 			  entrada[i++] = tecla;
 			  std::cout << tecla; // muestra el caracter ingresado en la consola
 		}
@@ -40,8 +48,16 @@ int Dato::ingresarMenuOpcion(char cnum1, char cnum2) {
 	return atoi(entrada); // convierte la entrada a un número int y lo retorna
 }
 
-//Ingresar dimensiones para matrices
-int Dato::ingresarDimension(char cnum1, char cnum2) {		
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarDimension(char filas, char columnas)
+// Purpose:    Ingresar dimensiones válidas para matrices utilizando filas y columnas
+// Parameters:
+// - filas
+// - columnas
+// Return:     int
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int Dato::ingresarDimension(char filas, char columnas){		
 	char *entrada = new char[30];
 	char tecla;
 	int i = 0;
@@ -63,7 +79,7 @@ int Dato::ingresarDimension(char cnum1, char cnum2) {
 			i--;						
 			std::cout << "\b \b"; // borra el último caracter de la consola
 			entrada[i] = 0; // elimina el último caracter de la entrada
-		} else if (tecla >= cnum1 && tecla <= cnum2 && i<1) { // si el usuario ingresa un dígito
+		} else if (tecla >= filas && tecla <= columnas && i<1) { // si el usuario ingresa un dígito
 			  entrada[i++] = tecla;
 			  std::cout << tecla; // muestra el caracter ingresado en la consola
 		}
@@ -72,7 +88,12 @@ int Dato::ingresarDimension(char cnum1, char cnum2) {
 	return dim; // convierte la entrada a un número int y lo retorna
 }
 
-//Ingresar numeros enteros
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarEntero()
+// Purpose:    Ingresar numeros enteros válidos de hasta 12 dígitos
+// Return:     int
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int Dato::ingresarEntero() {		
 	char *entrada = new char[30];
 	char tecla;
@@ -97,6 +118,11 @@ int Dato::ingresarEntero() {
 	return atoi(entrada); // convierte la entrada a un número int y lo retorna
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarFloat()
+// Purpose:    Ingresar numeros flotantes válidos de hasta 15 dígitos
+// Return:     float
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 float Dato::ingresarFloat() {
 	char *entrada = new char[30];
@@ -137,7 +163,17 @@ float Dato::ingresarFloat() {
 	return atof(entrada); // convierte la entrada a un número float y lo retorna
   
 }
-bool Dato::validarLetra(char letra, int posicion) {
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::validarLetra(char letra, int posicion)
+// Purpose:    Validar letras para matrícula ecuatoriana por posición
+// Parameters:
+// - letra
+// - posicion
+// Return:     bool
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool Dato::validarLetraMatricula(char letra, int posicion){
     const char* letrasPermitidas[] = {
         "ABUCHXOEWGILRVNQSPYJKTZMabuchxoewgilrvnqspyjktzm",   // Letras permitidas para la primera posición
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", // Letras permitidas para la segunda posición
@@ -147,6 +183,13 @@ bool Dato::validarLetra(char letra, int posicion) {
     return strchr(letrasPermitidas[posicion], letra) != nullptr; //Busca la primera aparición del caracter
     															// en la cadena correspondiente a la posición de la letra
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarPlacaEcuador() 
+// Purpose:    ingresar placa completa válida para Ecuador
+// Parameters:
+// Return:     std::string
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::string Dato::ingresarPlacaEcuador() {
 	char *entrada = new char[7];
@@ -162,7 +205,7 @@ std::string Dato::ingresarPlacaEcuador() {
 			i--;						
 			std::cout << "\b \b"; // borra el último caracter de la consola
 			entrada[i] = 0; // elimina el último caracter de la entrada
-		} else if (i<3 && validarLetra(tecla, i)) { // si el usuario ingresa un caracter (3 primeros caracteres de la placa)
+		} else if (i<3 && validarLetraMatricula(tecla, i)) { // si el usuario ingresa un caracter (3 primeros caracteres de la placa)
 			tecla = toupper(tecla);
 			entrada[i++] = tecla;
 			std::cout << tecla; // muestra el caracter ingresado en la consola
@@ -173,6 +216,13 @@ std::string Dato::ingresarPlacaEcuador() {
 	}
 	return entrada;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarCedulaEcuador() 
+// Purpose:    ingresar numero de cédula válido para Ecuador
+// Parameters:
+// Return:     std::string
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::string Dato::ingresarCedulaEcuador() {
     while (true) {
@@ -283,10 +333,25 @@ std::string Dato::ingresarCedulaEcuador() {
      
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::validarAnio(int anio)
+// Purpose:    Validar año entre un año limite inferior  y año actual
+// Parameters:
+// - anio
+// Return:     bool
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 bool Dato::validarAnio(int anio){
 	Fecha fechaActual;
     return (anio>= 1950 && anio<= fechaActual.getAnio());
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarAnio()
+// Purpose:    Ingresar año válido
+// Return:     int
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int Dato::ingresarAnio(){
 	Fecha fechaActual;
@@ -318,6 +383,13 @@ int Dato::ingresarAnio(){
         std::cout << "Anio invalido. Intente nuevamente (1950-" << fechaActual.getAnio() <<"): ";
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarNombreSimple()
+// Purpose:    Ingresar un solo nombre válido
+// Return:     std::string
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 std::string Dato::ingresarNombreSimple(){
 	char *entrada = new char[15];
 	char tecla;
@@ -340,6 +412,12 @@ std::string Dato::ingresarNombreSimple(){
 	entrada[i] = '\0';
 	return entrada;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarNombreCompleto()
+// Purpose:    Ingresar 2 elementos (nombre y apellido) para nombre válidos
+// Return:     std::string
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::string Dato::ingresarNombreCompleto(){
 	char *entrada = new char[15];
@@ -366,6 +444,12 @@ std::string Dato::ingresarNombreCompleto(){
 	entrada[i] = '\0';
 	return entrada;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarModelo()
+// Purpose:    Ingrsar modelo de vehículo válido
+// Return:     std::string
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::string Dato::ingresarModelo(){
 	char *entrada = new char[15];
@@ -395,7 +479,15 @@ std::string Dato::ingresarModelo(){
 }
 
 
-bool Dato::validarFecha(Fecha fecha) {
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::validarFecha(Fecha fecha)
+// Purpose:    Validar una fecha de tipo Fecha
+// Parameters:
+// - fecha
+// Return:     bool
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool Dato::validarFecha(Fecha fecha){
 	Fecha fechaActual;
 	int anio, mes, dia;
 	int anioA, mesA, diaA;
@@ -458,8 +550,13 @@ bool Dato::validarFecha(Fecha fecha) {
     return true;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Dato::ingresarFechaCumple()
+// Purpose:    Ingrsar fecha de cumpleaños o nacimiento válida
+// Return:     Fecha
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Fecha Dato::ingresarFechaCumple() {
+Fecha Dato::ingresarFechaCumple(){
 	Fecha fecha;
 	Fecha fechaActual;
 	int dia, mes, anio;

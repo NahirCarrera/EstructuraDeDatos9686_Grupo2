@@ -2,7 +2,7 @@
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 14/06/23 18:57
- * Fecha de modificacion: 14/06/23 22:40
+ * Fecha de modificacion: 22/06/23 22:15
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y algoritmo de búsqueda por intercambio
@@ -134,39 +134,81 @@ RegistroEntradaSalida::RegistroEntradaSalida(Persona persona, Fecha fechaEntrada
    this->contadorRegistro = 0;
 }
 
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // Name:       RegistroEntradaSalida::RegistroEntradaSalida()
 // Purpose:    Implementation of RegistroEntradaSalida::RegistroEntradaSalida()
 // Return:     
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 RegistroEntradaSalida::RegistroEntradaSalida()
 {
 }
 
-////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // Name:       RegistroEntradaSalida::~RegistroEntradaSalida()
 // Purpose:    Implementation of RegistroEntradaSalida::~RegistroEntradaSalida()
 // Return:     
-////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 RegistroEntradaSalida::~RegistroEntradaSalida()
 {
    // TODO : implement
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       RegistroEntradaSalida::operator <<(std::ostream& os, const RegistroEntradaSalida& registro)
+// Purpose:    Implementation of RegistroEntradaSalida::operator <<(std::ostream& os, const RegistroEntradaSalida& registro)
+// Parameters:
+// - os
+// - registro
+// Return:     bool
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 std::ostream& operator<<(std::ostream& os, const RegistroEntradaSalida& registro) {
-	os << "Registro: -> {" << registro.persona
-  		<< ", Fecha/hora Entrada: " << registro.fechaEntrada
-		<< ", Fecha/hora Salida: "<< registro.fechaSalida << "}"<< std::endl;
+	os << "           REGISTRO DE ENTRADA Y SALIDA        "<<std::endl;
+	os << "    ____________________   ____________________"<<std::endl;
+	os << ".-/|                     |                     |-."<<std::endl;
+	os << "|||| NOMBRE:                                   ||||"<<std::endl;
+	os << "     " + registro.persona.getNombre() + " " + registro.persona.getApellido() <<std::endl;
+	os << "|||| CEDULA:                                   ||||"<<std::endl;
+	os << "     " + registro.persona.getCedula()<<std::endl;
+	os << "|||| FECHA/HORA ENTRADA:                       ||||"<<std::endl;
+  	os << "     " << registro.fechaEntrada<<std::endl;
+  	os << "|||| FECHA/HORA SALIDA:                        ||||"<<std::endl;
+  	if(registro.fechaSalida.getAnio() == 0){
+  		os << "     NO SE REGISTRO SALIDA"<<std::endl;
+	  }else{
+	  	os << "     " << registro.fechaSalida<<std::endl;
+	  }
+	os << "||||____________________ | ____________________||||"<<std::endl;
+	os << "||/===================== | ===================== ||"<<std::endl;
+	os << "`----------------------~___~---------------------''"<<std::endl;
+	os << " "<<std::endl;
   return os;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       RegistroEntradaSalida::operator==(RegistroEntradaSalida& registro)
+// Purpose:    Implementation of RegistroEntradaSalida::operator==(RegistroEntradaSalida& registro)
+// Parameters:
+// - registro
+// Return:     bool
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool RegistroEntradaSalida::operator==(RegistroEntradaSalida& registro) {
 	std::string cedula1 = this->getPersona().getCedula();
 	std::string cedula2 = registro.getPersona().getCedula();
 	return  cedula1 == cedula2;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       RegistroEntradaSalida::operator>(const RegistroEntradaSalida& registro)
+// Purpose:    Implementation of RegistroEntradaSalida::operator>(const RegistroEntradaSalida& registro)
+// Parameters:
+// - registro
+// Return:     bool
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool RegistroEntradaSalida::operator>(const RegistroEntradaSalida& registro){
 	if (this->fechaEntrada.getAnio() != registro.getFechaEntrada().getAnio())
@@ -187,6 +229,14 @@ bool RegistroEntradaSalida::operator>(const RegistroEntradaSalida& registro){
     return (this->fechaEntrada.getSegundo()>registro.getFechaEntrada().getSegundo());
     //return(persona.getNombre()>registro.persona.getNombre());
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       RegistroEntradaSalida::operator<(const RegistroEntradaSalida& registro)
+// Purpose:    Implementation of RegistroEntradaSalida::operator<(const RegistroEntradaSalida& registro)
+// Parameters:
+// - registro
+// Return:     bool
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool RegistroEntradaSalida::operator<( const RegistroEntradaSalida& registro){
 	if (this->fechaSalida.getAnio() != registro.getFechaSalida().getAnio())

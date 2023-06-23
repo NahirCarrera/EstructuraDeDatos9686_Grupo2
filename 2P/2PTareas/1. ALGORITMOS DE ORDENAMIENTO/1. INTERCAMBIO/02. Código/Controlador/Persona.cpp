@@ -2,7 +2,7 @@
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 14/06/23 18:57
- * Fecha de modificacion: 14/06/23 22:40
+ * Fecha de modificacion: 22/06/23 22:15
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y algoritmo de búsqueda por intercambio
@@ -157,21 +157,52 @@ void Persona::setFechaNacimiento(Fecha newFechaNacimiento)
 ////////////////////////////////////////////////////////////////////////
 
 std::ostream& operator <<(std::ostream& os, const Persona& persona) {
-  os << "Persona: -> {Nombre: " + persona.nombre
-  		+ ", Apellido: " + persona.apellido
-		+ ", Cedula: "+ persona.cedula
-		+ ", FechaNacimiento: " << persona.fechaNacimiento << "}"<< std::endl;
+	 os << "     ______________________________________________________"<<std::endl;
+     os << "    /                                                     /"<<std::endl; 
+     os << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+     os << "     /''''''''''''''''''''''''''''''''''''''''''''''''''''''/"<<std::endl;;
+  	 os << "          __________ "<<std::endl;
+     os << "         |          | NOMBRE: " + persona.nombre<<std::endl;
+     os << "         |          | APELLIDO: " + persona.apellido<<std::endl;
+     os << "         |          | CEDULA: " + persona.cedula<<std::endl;
+     os << "         |          | FECHA DE NACIMIENTO: " << persona.fechaNacimiento<<std::endl;
+     os << "         |__________| "<<std::endl;
+     os << " "<<std::endl;
+     os << "      /''''''''''''''''''''''''''''''''''''''''''''''''''''''/"<<std::endl;
+     os << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+     os << "     /______________________________________________________/"<<std::endl;
   return os;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       Persona::operator ==(Persona& persona)
+// Purpose:    Implementation of Persona::operator ==()
+// Parameters:
+// - persona
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 bool Persona::operator==(Persona& persona){
 	return (this->cedula == persona.cedula);
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       Persona::operator >(Persona& persona)
+// Purpose:    Implementation of Persona::operator >()
+// Parameters:
+// - persona
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 bool Persona::operator>(const Persona& persona){
 	return (this->nombre > persona.nombre);
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       Persona::operator <(Persona& persona)
+// Purpose:    Implementation of Persona::operator <()
+// Parameters:
+// - persona
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 bool Persona::operator<(const Persona& persona){
 	return (this->apellido > persona.apellido);
 }

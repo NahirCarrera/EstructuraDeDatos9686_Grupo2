@@ -2,7 +2,7 @@
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 14/06/23 18:57
- * Fecha de modificacion: 14/06/23 19:12
+ * Fecha de modificacion: 22/06/23 22:15
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y algoritmo de búsqueda por intercambio
@@ -11,20 +11,94 @@
 #include "../Modelo/ListaCircularDoble.h"
 #include <iostream>
 
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::ListaCircularDoble()
+// Purpose:    Implementation of ListaCircularDoble<T>::ListaCircularDoble()
+// Return:     
+////////////////////////////////////////////////////////////////////////
+
 template <typename T>
 ListaCircularDoble<T>::ListaCircularDoble(){
 	this->cabeza = nullptr;
 	this->cola = nullptr;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::~ListaCircularDoble()
+// Purpose:    Implementation of ListaCircularDoble<T>::~ListaCircularDoble()
+// Return:     
+////////////////////////////////////////////////////////////////////////
+
 template <typename T>
 ListaCircularDoble<T>::~ListaCircularDoble(){
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::getCabeza()
+// Purpose:    Implementation of ListaCircularDoble<T>::getCabeza()
+// Return:     NodoDoble<T>*
+////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+NodoDoble<T>* ListaCircularDoble<T>::getCabeza() {
+	return cabeza;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::getCola()
+// Purpose:    Implementation of ListaCircularDoble<T>::getCola()
+// Return:     NodoDoble<T>*
+////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+NodoDoble<T>* ListaCircularDoble<T>::getCola(){
+	return cola;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::setCabeza(NodoDoble<T>* newCabeza)
+// Purpose:    Implementation of ListaCircularDoble<T>::setCabeza(NodoDoble<T>* newCabeza)
+// Parameters:
+// - newCabeza
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+void ListaCircularDoble<T>::setCabeza(NodoDoble<T>* newCabeza) {
+	this->cabeza = newCabeza;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::setCola(NodoDoble<T>* newCola)
+// Purpose:    Implementation of ListaCircularDoble<T>::setCola(NodoDoble<T>* newCola)
+// Parameters:
+// - newCola
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+void ListaCircularDoble<T>::setCola(NodoDoble<T>* newCola) {
+	this->cola = newCola;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::estaVacia()
+// Purpose:    Verificar si la cabeza de la lista es nula
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 bool ListaCircularDoble<T>::estaVacia() {
     return this->cabeza == nullptr;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::insertar(T dato)
+// Purpose:    Inserta un dato a final de la lista
+// Parameters:
+// - dato
+// Return:     void
+////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 void ListaCircularDoble<T>::insertar(T dato){
@@ -40,10 +114,18 @@ void ListaCircularDoble<T>::insertar(T dato){
 		this->cola->setSiguiente(nuevo);
 		nuevo->setAnterior(this->cola);
 		nuevo->setSiguiente(this->cabeza);
-		this->cabeza->setAnterior(nuevo);
+		this->cabeza->setAn	terior(nuevo);
 		this->cola = nuevo;
 	}
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::eliminar(T dato)
+// Purpose:    Elimina la primera coincidencia del dato
+// Parameters:
+// - dato
+// Return:     void
+////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 void ListaCircularDoble<T>::eliminar(T dato){
@@ -70,6 +152,11 @@ void ListaCircularDoble<T>::eliminar(T dato){
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::mostrar()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
 template <typename T>
 void ListaCircularDoble<T>::mostrar(){
 	if (!estaVacia()){
@@ -82,8 +169,16 @@ void ListaCircularDoble<T>::mostrar(){
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::mostrarRepetidos(T dato)
+// Purpose:    Imprime todos los datos de una lista que tienen un dato especfífico en común
+// Parameters:
+// - dato
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
 template <typename T>
-void ListaCircularDoble<T>::mostrarRepetidos(T dato) {
+void ListaCircularDoble<T>::mostrarRepetidos(T dato){
 	if (!estaVacia()){
 		NodoDoble<T>* aux = this->cabeza;
 		do{
@@ -95,6 +190,14 @@ void ListaCircularDoble<T>::mostrarRepetidos(T dato) {
 		std::cout << std::endl;
 	}
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::buscar(T dato)
+// Purpose:    Busca un dato específico dentro de la lista, devuelve la primera coincidecia
+// Parameters:
+// - dato
+// Return:     
+////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 bool ListaCircularDoble<T>::buscar(T dato){
@@ -110,8 +213,16 @@ bool ListaCircularDoble<T>::buscar(T dato){
 	return false;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::extraerDato(T dato)
+// Purpose:    busca un dato específico en la lista y devuelve el dato}
+// Parameters:
+// - dato
+// Return:     
+////////////////////////////////////////////////////////////////////////
+
 template <typename T>
-T ListaCircularDoble<T>::extraer(T dato){
+T ListaCircularDoble<T>::extraerDato(T dato){
 	if (!estaVacia()){
 		NodoDoble<T>* aux = this->cabeza;
 		do{
@@ -123,6 +234,14 @@ T ListaCircularDoble<T>::extraer(T dato){
 	}
 	return dato;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::extraerNodo(T dato)
+// Purpose:    Busca un dato específico en la lista y devuelve el nodo
+// Parameters:
+// - dato
+// Return:     NodoDoble<T>*
+////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 NodoDoble<T>* ListaCircularDoble<T>::extraerNodo(T dato){
@@ -138,6 +257,14 @@ NodoDoble<T>* ListaCircularDoble<T>::extraerNodo(T dato){
 	
 	return nullptr;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::ordenarPorIntercambio(int criterio)
+// Purpose:    Ordena una lista por intercambio según un criterio específico
+// Parameters:
+// - criterio
+// Return:     void
+////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 void  ListaCircularDoble<T>::ordenarPorIntercambio(int criterio){
@@ -179,22 +306,3 @@ void  ListaCircularDoble<T>::ordenarPorIntercambio(int criterio){
 	
 }
 
-template <typename T>
-NodoDoble<T>* ListaCircularDoble<T>::getCabeza() {
-	return cabeza;
-}
-
-template <typename T>
-NodoDoble<T>* ListaCircularDoble<T>::getCola() {
-	return cola;
-}
-
-template <typename T>
-void ListaCircularDoble<T>::setCabeza(NodoDoble<T>* newCabeza) {
-	this->cabeza = newCabeza;
-}
-
-template <typename T>
-void ListaCircularDoble<T>::setCola(NodoDoble<T>* newCola) {
-	this->cola = newCola;
-}

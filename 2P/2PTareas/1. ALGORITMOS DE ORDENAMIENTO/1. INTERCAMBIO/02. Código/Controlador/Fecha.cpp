@@ -2,7 +2,7 @@
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 14/06/23 18:57
- * Fecha de modificacion: 14/06/23 22:40
+ * Fecha de modificacion: 22/06/23 22:15
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y algoritmo de búsqueda por intercambio
@@ -13,6 +13,66 @@
 #include <ctime>
 #include <locale>
 #include<iostream>
+
+////////////////////////////////////////////////////////////////////////
+// Name:       Fecha::Fecha()
+// Purpose:    Implementation of Fecha::Fecha()
+// Return:     
+////////////////////////////////////////////////////////////////////////
+
+Fecha::Fecha()
+{
+   	// Establece la configuración regional en español
+    setlocale(LC_ALL, "es_ES.UTF-8");
+
+    // Obtiene el tiempo actual del sistema
+    std::time_t tiempoActual = std::time(nullptr);
+
+    // Convierte el tiempo en una estructura tm
+    std::tm* tiempoLocal = std::localtime(&tiempoActual);
+
+    // Obtiene los componentes de fecha y hora
+	this->dia = tiempoLocal->tm_mday;
+	this->mes = tiempoLocal->tm_mon+1;
+    this->anio = tiempoLocal->tm_year + 1900;
+    this->hora = tiempoLocal->tm_hour;
+    this->minuto = tiempoLocal->tm_min;
+    this->segundo = tiempoLocal->tm_sec;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       Fecha::~Fecha()
+// Purpose:    Implementation of Fecha::~Fecha()
+// Return:     
+////////////////////////////////////////////////////////////////////////
+
+Fecha::~Fecha()
+{
+   // TODO : implement
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       Fecha::Fecha(int anio, int mes, int dia, int hora, int minuto, int segundo)
+// Purpose:    Implementation of Fecha::Fecha()
+// Parameters:
+// - anio
+// - mes
+// - dia
+// - hora
+// - minuto
+// - segundo
+// Return:     
+////////////////////////////////////////////////////////////////////////
+
+Fecha::Fecha(int anio, int mes, int dia, int hora, int minuto, int segundo) {
+	this->dia = dia;
+	this->mes = mes;
+    this->anio = anio;
+    this->hora = hora;
+    this->minuto = minuto;
+    this->segundo = segundo;
+}
+
 ////////////////////////////////////////////////////////////////////////
 // Name:       Fecha::getAnio()
 // Purpose:    Implementation of Fecha::getAnio()
@@ -155,66 +215,6 @@ int Fecha::getSegundo(void) const
 void Fecha::setSegundo(int newSegundo)
 {
    segundo = newSegundo;
-}
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Fecha::Fecha()
-// Purpose:    Implementation of Fecha::Fecha()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Fecha::Fecha()
-{
-   	// Establece la configuración regional en español
-    setlocale(LC_ALL, "es_ES.UTF-8");
-
-    // Obtiene el tiempo actual del sistema
-    std::time_t tiempoActual = std::time(nullptr);
-
-    // Convierte el tiempo en una estructura tm
-    std::tm* tiempoLocal = std::localtime(&tiempoActual);
-
-    // Obtiene los componentes de fecha y hora
-	this->dia = tiempoLocal->tm_mday;
-	this->mes = tiempoLocal->tm_mon+1;
-    this->anio = tiempoLocal->tm_year + 1900;
-    this->hora = tiempoLocal->tm_hour;
-    this->minuto = tiempoLocal->tm_min;
-    this->segundo = tiempoLocal->tm_sec;
-}
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Fecha::~Fecha()
-// Purpose:    Implementation of Fecha::~Fecha()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Fecha::~Fecha()
-{
-   // TODO : implement
-}
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Fecha::Fecha(int anio, int mes, int dia, int hora, int minuto, int segundo)
-// Purpose:    Implementation of Fecha::Fecha()
-// Parameters:
-// - anio
-// - mes
-// - dia
-// - hora
-// - minuto
-// - segundo
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-
-Fecha::Fecha(int anio, int mes, int dia, int hora, int minuto, int segundo) {
-	this->dia = dia;
-	this->mes = mes;
-    this->anio = anio;
-    this->hora = hora;
-    this->minuto = minuto;
-    this->segundo = segundo;
 }
 
 ////////////////////////////////////////////////////////////////////////
