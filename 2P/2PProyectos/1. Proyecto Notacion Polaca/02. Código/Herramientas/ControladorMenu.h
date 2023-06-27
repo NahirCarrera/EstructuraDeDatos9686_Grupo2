@@ -10,8 +10,7 @@
 #ifndef CONTROLADORMENU_H
 #define CONTROLADORMENU_H
 #include "../Modelo/ListaCircularDoble.h"
-#include "../Modelo/Persona.h"
-#include "../Modelo/RegistroEntradaSalida.h"
+#include <string>
 
 class ControladorMenu{
 	public:

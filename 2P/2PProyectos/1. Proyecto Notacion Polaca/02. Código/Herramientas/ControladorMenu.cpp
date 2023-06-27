@@ -11,11 +11,7 @@
 #include "ControladorMenu.h"
 #include "../Controlador/ListaCircularDoble.cpp"
 #include "../Controlador/NodoDoble.cpp"
-#include "../Modelo/RegistroEntradaSalida.h"
-#include "../Modelo/Fecha.h"
-#include "../Modelo/Persona.h"
 #include "../Herramientas/Menu.h"
-#include "../Herramientas/GestorArchivo.h"
 #include "../Herramientas/Dato.h"
 #include <string>
 #include <cstdlib> // para usar system("cls") y system("pause")
