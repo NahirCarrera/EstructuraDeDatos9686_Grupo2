@@ -31,6 +31,7 @@ void ControladorMenu::operarPostfijo(std::string infijo) {
 	std::cout << "Expresion Posfijo: " << std::endl;
 	std::cout << infijo << std::endl;
 	std::cout << "\nResultado: " << 0 << std::endl;
+	system("pause");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,6 +47,7 @@ void ControladorMenu::operarPrefijo(std::string infijo) {
 	std::cout << "Expresion Prefijo: " << std::endl;
 	std::cout << infijo << std::endl;
 	std::cout << "\nResultado: " << 0 << std::endl;
+	system("pause");
 }
 
 
@@ -111,5 +113,6 @@ void ControladorMenu::correrMenu() {
 	while (menuEjecutando) {
 		menu.correr();
 	}
-	
+	std::cout << "\nSaliendo...\n" << std::endl;
+	system("pause");
 }

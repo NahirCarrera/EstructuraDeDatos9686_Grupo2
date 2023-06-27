@@ -54,8 +54,6 @@ void Opcion::ejecutar() {
     if (funcion) {    		
     	system("cls");
         funcion();
-        std::cout << std::endl;
-        system("pause");
     } else {
     	std::cout << "No se ha asignado ninguna funcion." << std::endl;	
 	}        
