@@ -114,7 +114,7 @@ void ListaCircularDoble<T>::insertar(T dato){
 		this->cola->setSiguiente(nuevo);
 		nuevo->setAnterior(this->cola);
 		nuevo->setSiguiente(this->cabeza);
-		this->cabeza->setAn	terior(nuevo);
+		this->cabeza->setAnterior(nuevo);
 		this->cola = nuevo;
 	}
 }
@@ -269,7 +269,7 @@ NodoDoble<T>* ListaCircularDoble<T>::extraerNodo(T dato){
 template <typename T>
 void  ListaCircularDoble<T>::ordenarPorIntercambio(int criterio){
 	if (!estaVacia()){ //Si la lista no está vacía 
-		NodoDoble<T>* nodoActual = this->cabeza->getSiguiente(); // Nodo que va a recorrer la lista
+		NodoDoble<T>* nodoActual = this->cabeza; // Nodo que va a recorrer la lista
 		NodoDoble<T>* nodoComparado; // Nodo para comparar
 		T datoTemporal; //Variable para no perder el dato del nodo a comparar en el cambio
 		bool condicion; //Variable para definir la operacion a realizar según el criterio por el cual se quiera ordenar

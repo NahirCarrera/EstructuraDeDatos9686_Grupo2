@@ -32,28 +32,28 @@
 void ControladorMenu::registrarEmpleado(ListaCircularDoble<Persona>& lista) {
 	std::string cedula, nombre, apellido;
     Fecha fecha;
-	
-	std::cout << "registrando empleado" << std::endl;
+	std::cout<< "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+	std::cout << "                      REGISTRO DE EMPLEADO" << std::endl;
 	// Obtener datos para una persona
     
-    std::cout << "Ingrese la cedula: ";
+    std::cout << "(O)===)> Ingrese la cedula: ";
     cedula = Dato::ingresarCedulaEcuador();
     
     if (!lista.buscar(Persona(cedula, "", "", fecha))) {
-    	std::cout << "Ingrese un nombre: ";
+    	std::cout << "(O)===)> Ingrese un nombre: ";
 	    nombre = Dato::ingresarNombreSimple();
-	    std::cout << "Ingrese un apellido: ";
+	    std::cout << "(O)===)> Ingrese un apellido: ";
 	    apellido = Dato::ingresarNombreSimple();;
-		std::cout << "Ingrese la fecha de nacimiento:\n";
+		std::cout << "(O)===)> Ingrese la fecha de nacimiento:\n";
 		fecha = Dato::ingresarFechaCumple();
-		
+		std::cout<< "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
 	    // Crear una persona con los datos ingresados
 	    Persona persona(cedula, nombre, apellido, fecha);
 	    
 	    lista.insertar(persona);
 	    GestorArchivo::guardarListaPersonaComoCSV(lista, "personas.csv");
 	} else {
-		std::cout << "Cedula ya registrada..." << std::endl;
+		std::cout << " Cedula ya registrada..." << std::endl;
 	}
     
 }
@@ -76,10 +76,11 @@ void ControladorMenu::registrarEntradaSalida(ListaCircularDoble<RegistroEntradaS
 	listaRegistros = ListaCircularDoble<RegistroEntradaSalida>();
 	GestorArchivo::cargarCSVEnListaRegistro(listaRegistros, personas, "registros.csv");
 	
-	std::cout << "Registrando entrada o salida" << std::endl;	
-	std::cout << "Ingrese la cedula: ";
+	std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+	std::cout << "                 REGISTRO DE ENTRADA Y SALIDA" << std::endl;	
+	std::cout << "(O)===)> Ingrese la cedula: ";
     cedula = Dato::ingresarCedulaEcuador();
-    		
+    std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;		
 	nodoPersona = personas.extraerNodo(Persona(cedula, "", "", fecha));
 	
 	// Primero buscamos si hay la cedula registrada
@@ -110,7 +111,7 @@ void ControladorMenu::registrarEntradaSalida(ListaCircularDoble<RegistroEntradaS
 		
 		GestorArchivo::guardarListaRegistroComoCSV(listaRegistros, "registros.csv");
 	} else {
-		std::cout << "Cedula no registrada..." << std::endl;
+		std::cout << " ¡¡ Cedula no registrada..." << std::endl;
 	}
 }
 
@@ -150,12 +151,15 @@ void ControladorMenu::mostrarRegistroPorSalida(ListaCircularDoble<RegistroEntrad
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::mostrarRegistroIndividual(ListaCircularDoble<RegistroEntradaSalida>& listaRegistros, ListaCircularDoble<Persona>& personas){
-	std::cout << "Registro individual" << std::endl;
+	std::cout<< "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+	std::cout << "                      REGISTRO INDIVIDUAL" << std::endl;
 	std::string cedula;
     Fecha fecha;
     
-    std::cout << "Ingrese la cedula: ";
+    std::cout << "(O)===)> Ingrese la cedula: ";
     cedula = Dato::ingresarCedulaEcuador();
+    std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+    system("cls");
     Persona persona(cedula, "", "", fecha);
     NodoDoble<Persona>* nodoPersona = personas.extraerNodo(persona);
     
@@ -165,7 +169,7 @@ void ControladorMenu::mostrarRegistroIndividual(ListaCircularDoble<RegistroEntra
     	std::cout << nodoPersona->getDato() << std::endl << std::endl;
 		listaRegistros.mostrarRepetidos(registroBusqueda);
 	} else {
-		std::cout << "Cedula no registrada..." << std::endl;
+		std::cout << " ¡¡ Cedula no registrada..." << std::endl;
 	}
 	
 }

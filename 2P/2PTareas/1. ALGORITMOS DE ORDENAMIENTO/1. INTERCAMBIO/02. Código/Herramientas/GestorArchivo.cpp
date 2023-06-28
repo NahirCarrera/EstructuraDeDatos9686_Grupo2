@@ -95,9 +95,9 @@ void GestorArchivo::cargarCSVEnListaPersona(ListaCircularDoble<Persona>& lista, 
             lista.insertar(persona);
         }
         archivo.close();
-        std::cout << "Archivo cargado correctamente." << std::endl;
+        std::cout << "(O)===)> Archivo cargado correctamente." << std::endl;
     } else {
-        std::cerr << "No se pudo abrir el archivo para lectura." << std::endl;
+        std::cerr << "(O)===)> No se pudo abrir el archivo para lectura." << std::endl;
     }
 }
 
@@ -128,9 +128,9 @@ void GestorArchivo::guardarListaRegistroComoCSV(ListaCircularDoble<RegistroEntra
             } while (actual != lista.getCabeza());
         }
         archivo.close();
-        std::cout << "Archivo guardado correctamente." << std::endl;
+        std::cout << "(O)===)> Archivo guardado correctamente." << std::endl;
     } else {
-        std::cerr << "No se pudo abrir el archivo para escritura." << std::endl;
+        std::cerr << "(O)===)> No se pudo abrir el archivo para escritura." << std::endl;
     }
 }
 
@@ -172,8 +172,8 @@ void GestorArchivo::cargarCSVEnListaRegistro(ListaCircularDoble<RegistroEntradaS
             listaRegistros.insertar(registro);
         }
         archivo.close();
-        std::cout << "Archivo cargado correctamente." << std::endl;
+        std::cout << "(O)===)> Archivo cargado correctamente." << std::endl;
     } else {
-        std::cerr << "No se pudo abrir el archivo para lectura." << std::endl;
+        std::cerr << "(O)===)> No se pudo abrir el archivo para lectura." << std::endl;
     }
 }
