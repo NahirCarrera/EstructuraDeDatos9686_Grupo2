@@ -48,20 +48,23 @@ NodoArbol<T>* ArbolBinario<T>::encontrarNodoMinimo(NodoArbol<T>* nodo) {
 
 template<typename T>
 void ArbolBinario<T>::insertarNodo(T valor) {
-	//función lambda recursiva para insertar el nodo
-	std::function<NodoArbol<T>*(NodoArbol<T>*, T)> insertarNodoRecursivo =[&] (NodoArbol<T>* nodo, T valor) -> NodoArbol<T>*{
-    if (nodo == nullptr) {
-        nodo = new NodoArbol<T>(valor);
-    } else {
-        if (valor == nodo->getDato()) {
-            nodo->setIzquierdo(insertarNodoRecursivo(nodo->getIzquierdo(), valor));
-        } else {
-            nodo->setDerecho(insertarNodoRecursivo(nodo->getDerecho(), valor));
-        }
-    }
-    return nodo;
+	// función lambda recursiva para insertar el nodo
+	std::function<NodoArbol<T>*(NodoArbol<T>*, T)> insertarNodoRecursivo = [&](NodoArbol<T>* nodo, T valor) -> NodoArbol<T>* {
+		if (nodo == nullptr) {
+			nodo = new NodoArbol<T>(valor);
+		} else {
+			if (valor < nodo->getDato()) {
+				nodo->setIzquierdo(insertarNodoRecursivo(nodo->getIzquierdo(), valor));
+			} else if (valor > nodo->getDato()) {
+				nodo->setDerecho(insertarNodoRecursivo(nodo->getDerecho(), valor));
+			} else if (valor = nodo->getDato()){
+				nodo->setDerecho(insertarNodoRecursivo(nodo->getDerecho(), valor));
+			}
+		}
+		return nodo;
 	};
-    raiz = insertarNodoRecursivo(raiz, valor);
+
+	raiz = insertarNodoRecursivo(raiz, valor);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -146,7 +149,7 @@ void ArbolBinario<T>::mostrarArbol() {
 	    mostrarArbolRecursivo(nodo->getDerecho(), nivel + 1);
 	    
 	    for (int i = 0; i < nivel; i++) {
-	        std::cout << "   ";
+	        std::cout << "    ";
 	    }
 	    
 	    std::cout << "|--" << nodo->getDato() << std::endl;
@@ -157,6 +160,8 @@ void ArbolBinario<T>::mostrarArbol() {
     mostrarArbolRecursivo(raiz, 0);
     std::cout<<"---------------------------------------"<<std::endl;
 }
+
+
 
 //////////////////////////////////////////////////////////////////////
 // Name: ArbolBinario<T>::obtenerRecorridoPreorden

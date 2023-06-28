@@ -103,8 +103,6 @@ void ControladorMenu::subMenuPolaca(std::string infijo) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::correrMenu() {	
-	std::string infijo;
-	
 	Menu menu("\n-----------Menu Principal-------------\n");
 	menu.insertarOpcion("Ingresar expresion Infijo", [&]() { ingresarInfijo(); });
 	menu.insertarOpcion("Salir", [&]() { salir(); }); // Para salir del bucle siempre se debe usar esta funcion de salir()
