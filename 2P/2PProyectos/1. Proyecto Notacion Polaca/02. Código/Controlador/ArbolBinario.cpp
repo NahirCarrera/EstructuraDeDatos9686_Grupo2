@@ -13,6 +13,40 @@
 #include <iostream>
 #include <functional>
 
+
+//////////////////////////////////////////////////////////////////////
+// Name: ArbolBinario<T>::~ArbolBinario
+// Purpose: Destruye le objeto
+// Return: 
+//////////////////////////////////////////////////////////////////////
+template<typename T>
+ArbolBinario<T>::~ArbolBinario() {
+	
+}
+
+//////////////////////////////////////////////////////////////////////
+// Name: ArbolBinario<T>::getRaiz
+// Purpose: Obtiene el valor de la raiz
+// Return: NodoArbol<T>*
+//////////////////////////////////////////////////////////////////////
+template<typename T>
+NodoArbol<T>* ArbolBinario<T>::getRaiz() {
+	return raiz;
+}
+
+//////////////////////////////////////////////////////////////////////
+// Name: ArbolBinario<T>::setRaiz
+// Purpose: Establece el valor de la raiz
+// Parameters:
+// - raiz: Valor a asignar a la raiz
+// Return: void
+//////////////////////////////////////////////////////////////////////
+
+template<typename T>
+void ArbolBinario<T>::setRaiz(NodoArbol<T>* raiz) {
+	this->raiz = raiz;
+}
+
 ///////////////////////////////////////////////////////////////////////
 // Name: ArbolBinario<T>::ArbolBinario
 // Purpose: Constructor de la clase ArbolBinario
@@ -57,7 +91,7 @@ void ArbolBinario<T>::insertarNodo(T valor) {
 				nodo->setIzquierdo(insertarNodoRecursivo(nodo->getIzquierdo(), valor));
 			} else if (valor > nodo->getDato()) {
 				nodo->setDerecho(insertarNodoRecursivo(nodo->getDerecho(), valor));
-			} else if (valor = nodo->getDato()){
+			} else if (valor == nodo->getDato()){
 				nodo->setDerecho(insertarNodoRecursivo(nodo->getDerecho(), valor));
 			}
 		}
@@ -171,12 +205,11 @@ void ArbolBinario<T>::mostrarArbol() {
 
 template<typename T>
 std::string ArbolBinario<T>::obtenerRecorridoPreorden() {
-	std::cout << "Recorrido Preorden: ";
     std::string recorrido;
     //función lambda recursiva para realizar el recorrido
     std::function <void(NodoArbol<T>*)> recorridoPreordenRecursivo = [&](NodoArbol<T>* nodo) {
 	    if (nodo != nullptr) {
-	        recorrido = recorrido + std::to_string(nodo->getDato()) + " ";
+	        recorrido = recorrido + nodo->getDato() + " ";
 	        recorridoPreordenRecursivo(nodo->getIzquierdo());
 	        recorridoPreordenRecursivo(nodo->getDerecho());
 	    }
@@ -194,13 +227,12 @@ std::string ArbolBinario<T>::obtenerRecorridoPreorden() {
 
 template<typename T>
 std::string ArbolBinario<T>::obtenerRecorridoInorden() {
-    std::cout << "Recorrido Inorden: ";
     std::string recorrido;
     //función lambda recursiva para realizar el recorrido
     std::function<void(NodoArbol<T>*)> recorridoInordenRecursivo = [&](NodoArbol<T>* nodo) {
 	    if (nodo != nullptr) {
 	        recorridoInordenRecursivo(nodo->getIzquierdo());
-	        std::cout << nodo->getDato() << " ";
+	        recorrido = recorrido + nodo->getDato() + " ";
 	        recorridoInordenRecursivo(nodo->getDerecho());
 	    }
 	};
@@ -216,14 +248,13 @@ std::string ArbolBinario<T>::obtenerRecorridoInorden() {
 
 template<typename T>
 std::string ArbolBinario<T>::obtenerRecorridoPostorden() {
-    std::cout << "Recorrido Postorden: ";
     std::string recorrido;
     //función lambda recursiva para realizar el recorrido
     std::function <void(NodoArbol<T>*)> recorridoPostordenRecursivo = [&](NodoArbol<T>* nodo) {
 	    if (nodo != nullptr) {
 	        recorridoPostordenRecursivo(nodo->getIzquierdo());
 	        recorridoPostordenRecursivo(nodo->getDerecho());
-	        std::cout << nodo->getDato() << " ";
+	        recorrido = recorrido + nodo->getDato() + " ";
 	    }
 	};
     

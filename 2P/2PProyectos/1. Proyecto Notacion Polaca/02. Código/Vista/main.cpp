@@ -11,21 +11,11 @@
 #include <iostream>
 #include <stdlib.h>
 #include "../Herramientas/ControladorMenu.h"
-#include "../Controlador/ArbolBinario.cpp"
+
 int main() {
-	//ControladorMenu ctrlMenu;
-	//ctrlMenu.correrMenu();
-	ArbolBinario<int> arbol;
-	for(int i = 0; i <10; i++){
-		int n = rand() % 40;
-		std::cout<<n<< " ";
-		arbol.insertarNodo(n);
-	}
-	std::cout<<std::endl;
-	arbol.eliminarNodo(1);
-	arbol.mostrarArbol();
-	
-	
+	ControladorMenu ctrlMenu;
+	ctrlMenu.correrMenu();
+
     return 0;
 }
 

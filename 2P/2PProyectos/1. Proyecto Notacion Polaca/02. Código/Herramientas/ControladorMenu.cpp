@@ -18,35 +18,35 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Name:       ControladorMenu::operarPosfijo(std::string infijo)
-// Purpose:    Muestra la expreio
+// Name:       ControladorMenu::operarPosfijo(CalculadoraPolaca calculadora)
+// Purpose:    Muestra la expresion
 // Parameters:
-// - infijo
+// - calculadora
 // Return:     void
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ControladorMenu::operarPostfijo(std::string infijo) {
+void ControladorMenu::operarPostfijo(CalculadoraPolaca calculadora) {
 	std::cout << "Expresion Infijo: " << std::endl;
-	std::cout << infijo << std::endl;
+	std::cout << calculadora.getExpresionInfijo() << std::endl;
 	std::cout << "Expresion Posfijo: " << std::endl;
-	std::cout << infijo << std::endl;
-	std::cout << "\nResultado: " << 0 << std::endl;
+	std::cout << calculadora.getExpresionPostfijo() << std::endl;
+	std::cout << "\nResultado: " << calculadora.evaluarExpresionPostfija() << std::endl;
 	system("pause");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Name:       ControladorMenu::operarPrefijo(std::string infijo)
-// Purpose:    Transforma de infijo a Prefijo
-// - infijo
+// Name:       ControladorMenu::operarPrefijo(CalculadoraPolaca calculadora)
+// Purpose:    Muestra los valores de la notacio prefijo
+// - calculadora
 // Return:     void
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ControladorMenu::operarPrefijo(std::string infijo) {
+void ControladorMenu::operarPrefijo(CalculadoraPolaca calculadora) {
 	std::cout << "Expresion Infijo: " << std::endl;
-	std::cout << infijo << std::endl;
+	std::cout << calculadora.getExpresionInfijo() << std::endl;
 	std::cout << "Expresion Prefijo: " << std::endl;
-	std::cout << infijo << std::endl;
-	std::cout << "\nResultado: " << 0 << std::endl;
+	std::cout << calculadora.getExpresionPrefijo() << std::endl;
+	std::cout << "\nResultado: " << calculadora.evaluarExpresionPrefija() << std::endl;
 	system("pause");
 }
 
@@ -58,11 +58,11 @@ void ControladorMenu::operarPrefijo(std::string infijo) {
 // Return:     void
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ControladorMenu::ingresarInfijo() {
+void ControladorMenu::ingresarInfijo() {	
 	std::string infijo;
 	std::cout << "Ingrese la expresion Infijo: " << std::endl;
 	std::getline(std::cin, infijo);
-	
+
 	subMenuPolaca(infijo);
 }
 
@@ -83,11 +83,13 @@ void ControladorMenu::salir() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::subMenuPolaca(std::string infijo) {
-	std::string titulo = "\n-----------Menu Operaciones-------------\nExpresion infijo: " +  infijo + "\n";
-	Menu menu(titulo);
+	CalculadoraPolaca calculadora(infijo);	
 	
-	menu.insertarOpcion("Mostrar notacion Polaca (prefija)", [&]() { operarPrefijo(infijo); });
-	menu.insertarOpcion("Mostrar notacion Polaca Inversa (postfija)", [&]() { operarPostfijo(infijo); });
+	std::string titulo = "\n-----------Menu Operaciones-------------\nExpresion infijo:\n" +  calculadora.getExpresionInfijo() + "\n\n";
+	
+	Menu menu(titulo);
+	menu.insertarOpcion("Mostrar notacion Polaca (prefija)", [&]() { operarPrefijo(calculadora); });
+	menu.insertarOpcion("Mostrar notacion Polaca Inversa (postfija)", [&]() { operarPostfijo(calculadora); });
 	menu.insertarOpcion("Regresar a insertar expresion", [&]() { salir(); }); // Para salir del bucle siempre se debe usar esta funcion de salir()
 	
 	while (menuEjecutando) {
