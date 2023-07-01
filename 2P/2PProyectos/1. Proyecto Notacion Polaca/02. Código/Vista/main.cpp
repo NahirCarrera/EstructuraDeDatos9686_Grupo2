@@ -9,13 +9,14 @@
  *******************************************************************************/
  
 #include <iostream>
-#include <stdlib.h>
 #include "../Herramientas/ControladorMenu.h"
+#include <iomanip>
 
 int main() {
+	std::cout << std::setprecision(12);
 	ControladorMenu ctrlMenu;
 	ctrlMenu.correrMenu();
-
+	
     return 0;
 }
 

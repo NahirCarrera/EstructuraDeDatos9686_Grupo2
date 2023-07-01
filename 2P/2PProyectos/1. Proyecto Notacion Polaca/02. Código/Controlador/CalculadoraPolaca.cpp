@@ -9,9 +9,9 @@
  *******************************************************************************/
 
 #include "../Modelo/CalculadoraPolaca.h"
+#include "../Herramientas/Matematica.h"
 #include <iostream>
 #include <stack>
-#include <cmath>
 #include <algorithm>
 
 ////////////////////////////////////////////////////////////////////////
@@ -190,17 +190,13 @@ std::string CalculadoraPolaca::removerParentesis(std::string expresion)
 // Return:     Nodo*
 ////////////////////////////////////////////////////////////////////////
 
-NodoArbol<std::string>* CalculadoraPolaca::crearArbol(std::string expresion)
-{
-       // Buscar el operador de menor jerarquía más al exterior
+int obtenerPosicionOperador(std::string expresion) {
+	// Buscar el operador de menor jerarquía más al exterior
     int nivel = 5; // Nivel más alto posible
     int pos = -1;  // Posición del operador
     int par = 0;   // Contador de paréntesis
-
-    // eliminamos parentesis si no hay mas elementos fuera de ellos
-    expresion = removerParentesis(expresion);
-
-    for (int i = 0; i < expresion.length(); i++)
+    
+	for (int i = 0; i < expresion.length(); i++)
     {
         char c = expresion[i];
         if (c == '(')
@@ -239,6 +235,18 @@ NodoArbol<std::string>* CalculadoraPolaca::crearArbol(std::string expresion)
             }
         }
     }
+    
+    return pos;
+}
+
+NodoArbol<std::string>* CalculadoraPolaca::crearArbol(std::string expresion)
+{
+    int pos;  // Posición del operador
+
+    // eliminamos parentesis si no hay mas elementos fuera de ellos
+    expresion = removerParentesis(expresion);
+
+	pos = obtenerPosicionOperador(expresion);
 
     // Si no se encontró ningún operador, retornar un nodo con el valor de la expresión
     if (pos == -1)
@@ -290,7 +298,8 @@ NodoArbol<std::string>* CalculadoraPolaca::crearArbol(std::string expresion)
 
 double CalculadoraPolaca::operar(double numero1, double numero2, char operador)
 {
-   double resultado;
+	Matematica mat;
+    double resultado;
     switch (operador)
     {
     case '+':
@@ -305,8 +314,8 @@ double CalculadoraPolaca::operar(double numero1, double numero2, char operador)
         }
         return numero1 / numero2;
     case '^':
-        resultado = pow(numero1, numero2);
-        if (std::isnan(resultado)) {
+        resultado = mat.pow(numero1, numero2);
+        if (mat.isNaN(resultado)) {
             std::cout << "Error: Potencia (" << numero1 << ")^(" << numero2 << ") no valida" << std::endl;
         }
         return resultado;
@@ -323,6 +332,7 @@ double CalculadoraPolaca::operar(double numero1, double numero2, char operador)
 
 double CalculadoraPolaca::evaluarExpresionPostfija()
 {
+	Matematica mat;
 	std::string expresion = expresionPostfijo;
     std::stack<double> pila;
     char c;
@@ -361,7 +371,7 @@ double CalculadoraPolaca::evaluarExpresionPostfija()
             pila.pop();
 
             double resultado = operar(num1, num2, c);
-            if (std::isnan(resultado)) {
+            if (mat.isNaN(resultado)) {
                 return resultado;
             }
             pila.push(resultado);
@@ -378,7 +388,7 @@ double CalculadoraPolaca::evaluarExpresionPostfija()
                     std::cout << "Error: raiz cuadrada de numero negativo" << std::endl;
                     return 0.0/0.0;
                 }
-                double resultado = sqrt(num);
+                double resultado = mat.sqrt(num);
                 pila.push(resultado);
                 i += 3;
             }
@@ -388,7 +398,7 @@ double CalculadoraPolaca::evaluarExpresionPostfija()
             {
                 double num = pila.top();
                 pila.pop();
-                double resultado = sin(num);
+                double resultado = mat.sin(num);
                 pila.push(resultado);
                 i += 2;
             }
@@ -397,7 +407,7 @@ double CalculadoraPolaca::evaluarExpresionPostfija()
             {
                 double num = pila.top();
                 pila.pop();
-                double resultado = cos(num);
+                double resultado = mat.cos(num);
                 pila.push(resultado);
                 i += 2;
             }
@@ -412,7 +422,7 @@ double CalculadoraPolaca::evaluarExpresionPostfija()
                     return 0.0/0.0;
                 }
 
-                double resultado = tan(num);
+                double resultado = mat.tan(num);
                 pila.push(resultado);
                 i += 2;
             }
@@ -437,6 +447,7 @@ double CalculadoraPolaca::evaluarExpresionPostfija()
 
 double CalculadoraPolaca::evaluarExpresionPrefija()
 {
+	Matematica mat;
 	std::string expresion = expresionPrefijo;
     std::stack<double> pila;
     char c;
@@ -479,7 +490,7 @@ double CalculadoraPolaca::evaluarExpresionPrefija()
             pila.pop();
     
             double resultado = operar(num1, num2, c);
-            if (std::isnan(resultado)) {
+            if (mat.isNaN(resultado)) {
                 return resultado;
             }
             pila.push(resultado);
@@ -495,7 +506,7 @@ double CalculadoraPolaca::evaluarExpresionPrefija()
                     std::cout << "Error: raiz cuadrada de numero negativo" << std::endl;
                     return 0.0/0.0;
                 }
-                double resultado = sqrt(num);
+                double resultado = mat.sqrt(num);
                 pila.push(resultado);
                 i -= 3;
             }
@@ -504,7 +515,7 @@ double CalculadoraPolaca::evaluarExpresionPrefija()
             {
                 double num = pila.top();
                 pila.pop();
-                double resultado = sin(num);
+                double resultado = mat.sin(num);
                 pila.push(resultado);
                 i -= 2;
             }
@@ -513,7 +524,7 @@ double CalculadoraPolaca::evaluarExpresionPrefija()
             {
                 double num = pila.top();
                 pila.pop();
-                double resultado = cos(num);
+                double resultado = mat.cos(num);
                 pila.push(resultado);
                 i -= 2;
             }
@@ -527,7 +538,7 @@ double CalculadoraPolaca::evaluarExpresionPrefija()
                     std::cout << "Error: tan(pi/2) no valido" << std::endl;
                     return 0.0/0.0;
                 }
-                double resultado = tan(num);
+                double resultado = mat.tan(num);
                 pila.push(resultado);
                 i -= 2; 
             }

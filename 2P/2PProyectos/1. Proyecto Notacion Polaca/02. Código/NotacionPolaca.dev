@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0;0
-UnitCount=21
+UnitCount=23
 
 [VersionInfo]
 Major=1
@@ -201,7 +201,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit22]
-FileName=Herramientas\Opcion.cpp
+FileName=Herramientas\Matematica.cpp
 CompileCpp=1
 Folder=Herramientas
 Compile=1
@@ -262,6 +262,16 @@ BuildCmd=
 
 [Unit12]
 FileName=Herramientas\Opcion.cpp
+CompileCpp=1
+Folder=Herramientas
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit23]
+FileName=Herramientas\Matematica.h
 CompileCpp=1
 Folder=Herramientas
 Compile=1
