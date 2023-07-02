@@ -10,7 +10,9 @@
 #ifndef CONTROLADORMENU_H
 #define CONTROLADORMENU_H
 #include "../Modelo/ListaCircularDoble.h"
+#include "../Modelo/CalculadoraPolaca.h"
 #include <string>
+
 
 class ControladorMenu{
 	public:
@@ -18,8 +20,8 @@ class ControladorMenu{
 		void correrMenu();
 	private:		
 		bool menuEjecutando = false;
-		void operarPostfijo(std::string infijo);
-		void operarPrefijo(std::string infijo);
+		void operarPostfijo(CalculadoraPolaca calculadora);
+		void operarPrefijo(CalculadoraPolaca calculadora);
 		void ingresarInfijo();
 		void subMenuPolaca(std::string infijo);
 		void salir();

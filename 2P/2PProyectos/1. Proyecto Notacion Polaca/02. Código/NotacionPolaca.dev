@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0;0
-UnitCount=19
+UnitCount=23
 
 [VersionInfo]
 Major=1
@@ -191,9 +191,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=Herramientas\ControladorMenu.h
+FileName=Modelo\CalculadoraPolaca.h
 CompileCpp=1
-Folder=Herramientas
+Folder=Modelo
 Compile=1
 Link=1
 Priority=1000
@@ -201,7 +201,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit22]
-FileName=Herramientas\Opcion.cpp
+FileName=Herramientas\Matematica.cpp
 CompileCpp=1
 Folder=Herramientas
 Compile=1
@@ -211,9 +211,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit21]
-FileName=Herramientas\Opcion.h
+FileName=Controlador\CalculadoraPolaca.cpp
 CompileCpp=1
-Folder=Herramientas
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
@@ -262,6 +262,16 @@ BuildCmd=
 
 [Unit12]
 FileName=Herramientas\Opcion.cpp
+CompileCpp=1
+Folder=Herramientas
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit23]
+FileName=Herramientas\Matematica.h
 CompileCpp=1
 Folder=Herramientas
 Compile=1

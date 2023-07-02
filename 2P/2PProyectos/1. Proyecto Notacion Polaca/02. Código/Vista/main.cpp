@@ -14,23 +14,11 @@
 #include "../Herramientas/ControladorMenu.h"
 #include "../Controlador/ArbolBinario.cpp"
 #include "../Herramientas/Dato.h"
+#include <iomanip>
+
 int main() {
+	std::cout << std::setprecision(12);
 	ControladorMenu ctrlMenu;
 	ctrlMenu.correrMenu();
-	ArbolBinario<int> arbol;
-	for(int i = 0; i <10; i++){
-		int n = rand() % 40;
-		std::cout<<n<< " ";
-		arbol.insertarNodo(n);
-	}
-	std::cout<<std::endl;
-	arbol.eliminarNodo(1);
-	arbol.mostrarArbol();
-	
     return 0;
 }
-
-
-
-
-	

@@ -10,8 +10,8 @@
  
 #ifndef ARBOLBINARIO_H
 #define ARBOLBINARIO_H
-#include "NodoArbol.h"
 #include "OperacionArboles.h"
+#include "NodoArbol.h"
 #include <string>
 
 template <typename T>
@@ -19,6 +19,12 @@ class ArbolBinario: public OperacionArboles<T>{
 	public:
 		//Constructor
 	    ArbolBinario();
+	    ~ArbolBinario();
+	    
+	    //Getter y Setter
+	    NodoArbol<T>* getRaiz();
+	    void setRaiz(NodoArbol<T>*);
+	    
 	    //Operaciones
 	    void insertarNodo(T)override;
 	    bool buscarNodo(T)override;
