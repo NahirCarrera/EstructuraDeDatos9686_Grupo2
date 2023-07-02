@@ -10,11 +10,13 @@
  
 #include <iostream>
 #include <stdlib.h>
+#include <string>
 #include "../Herramientas/ControladorMenu.h"
 #include "../Controlador/ArbolBinario.cpp"
+#include "../Herramientas/Dato.h"
 int main() {
-	//ControladorMenu ctrlMenu;
-	//ctrlMenu.correrMenu();
+	ControladorMenu ctrlMenu;
+	ctrlMenu.correrMenu();
 	ArbolBinario<int> arbol;
 	for(int i = 0; i <10; i++){
 		int n = rand() % 40;
@@ -24,7 +26,6 @@ int main() {
 	std::cout<<std::endl;
 	arbol.eliminarNodo(1);
 	arbol.mostrarArbol();
-	
 	
     return 0;
 }

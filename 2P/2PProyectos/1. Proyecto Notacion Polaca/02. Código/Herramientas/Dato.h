@@ -18,9 +18,11 @@ class Dato{
 		static int ingresarEntero(void);
    		static float ingresarFloat(void);
    		static int ingresarDimension(char cnum1, char cnum2);
-
+		static std::string ingresarExpresion(void);
 	private:
-
+		static bool esEspecial(char);
+		static bool esOperador(char);
+		static bool esParentesis(char);
 };
 
 #endif
