@@ -12,7 +12,7 @@
 #define __Class_Diagram_1_CalculadoraPolaca_h
 
 #include <string>
-#include "../Controlador/ArbolBinario.cpp"
+#include "../Modelo/ArbolBinario.h"
 
 class CalculadoraPolaca
 {

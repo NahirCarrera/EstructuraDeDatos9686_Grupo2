@@ -10,6 +10,7 @@
 
 #include "../Modelo/CalculadoraPolaca.h"
 #include "../Herramientas/Matematica.h"
+#include "../Controlador/ArbolBinario.cpp"
 #include <iostream>
 #include <stack>
 #include <algorithm>

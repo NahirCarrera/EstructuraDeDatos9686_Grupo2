@@ -61,7 +61,7 @@ void ControladorMenu::operarPrefijo(CalculadoraPolaca calculadora) {
 void ControladorMenu::ingresarInfijo() {	
 	std::string infijo;
 	std::cout << "Ingrese la expresion Infijo: " << std::endl;
-	std::getline(std::cin, infijo);
+	infijo = Dato::ingresarExpresion();
 
 	subMenuPolaca(infijo);
 }
