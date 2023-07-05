@@ -176,12 +176,12 @@ std::string Dato::ingresarExpresion() {
 	bool eliminarEspeciales = false; //Verificador de eliminación de sin(, cos(, tan(, raiz( y pi
 	int caracteresEliminar= 0;       //Cantidad de caracteres de expresiones especiales para eliminar
 	char elementoAnterior = '\0';    //Caracter anterior al actual
-	
+	bool hayPunto = false;           //Indicador de aparición de punto '.'
     while (true) {
         tecla = getch(); // lee la tecla ingresada por el usuario sin mostrarla en la consola
         elementoAnterior = (i > 0) ? entrada[i - 1] : '\0'; //Guarda el elemento anterior del arreglo de la entrada
     // Si el usuario presiona Enter
-		if (tecla == '\r' && i > 0) { 
+		if (tecla == '\r' && i > 0 && !esOperador(elementoAnterior) && elementoAnterior !='.') { //Si hay almenos un caracter en la entrada y el último no es operador
             if (parentesisApertura == parentesisCierre){ // Validar que se encuentren cerrados todos los paréntesis
             	break;
 			}
@@ -223,7 +223,7 @@ std::string Dato::ingresarExpresion() {
 				eliminarEspeciales = false;
 			}
 	// Si el usuario ingresa una letra que además puede ser el primer caracter o puede precedida por un operador o paréntesis de apertura
-        } else if (isalpha(tecla) && (esOperador(elementoAnterior) || elementoAnterior == '('|| i == 0)) {
+        } else if (isalpha(tecla) && elementoAnterior !='.' && (esOperador(elementoAnterior) || elementoAnterior == '('|| i == 0)) {
         // Si la legra es 's', 'c', 't' o 'r'
 			if (esEspecial(tecla)){
 			    const char* texto = "";
@@ -266,12 +266,12 @@ std::string Dato::ingresarExpresion() {
 	//Si el usuario ingresa un paréntesis
         }else if(esParentesis(tecla)){
        	//Paréntesis de apertura: puede ser el primer caracter o puede ser precedido por un operador u otro paréntesis de apertura
-        	if (tecla == '(' && (esOperador(elementoAnterior) || elementoAnterior == '(' || i == 0)) {
+        	if (tecla == '(' && elementoAnterior !='.' && (esOperador(elementoAnterior) || elementoAnterior == '(' || i == 0)) {
 			    parentesisApertura++;
 			    entrada[i++] = tecla;
 				std::cout << tecla;
 		//Paréntesis de cierre: no puede ser precedido por uno de apertura o un operador pero si por un número, otro paréntesis de cierre o pi
-			} else if (tecla == ')' && elementoAnterior != '(' && !esOperador(elementoAnterior) && (isdigit(elementoAnterior) || elementoAnterior == ')'|| elementoAnterior == 'i')) {
+			} else if (tecla == ')' && elementoAnterior !='.' && elementoAnterior != '(' && !esOperador(elementoAnterior) && (isdigit(elementoAnterior) || elementoAnterior == ')'|| elementoAnterior == 'i')) {
 			    parentesisCierre++;
 				if(parentesisApertura>0 && parentesisCierre <= parentesisApertura){
 				    entrada[i++] = tecla;
@@ -283,18 +283,35 @@ std::string Dato::ingresarExpresion() {
 	//Si el usuario ingresa un número entonces no puede ser precedido por pi pero si por 
 	//un operador, un paréntesis de apertura u otro número, así también puede ser el primer caracter de la expresión
 		} else if (isdigit(tecla) && elementoAnterior!= 'i' && (esOperador(elementoAnterior)|| 
-		                       elementoAnterior == '(' || isdigit(elementoAnterior) || i == 0)){
-			entrada[i++] = tecla;
-			std::cout << tecla;
+		                       elementoAnterior == '(' || isdigit(elementoAnterior) || i == 0 || elementoAnterior =='.')){
+			int k = 1;
+			while(isdigit(entrada[i-k])){
+				k++;
+			}
+			if(k<7){ //Para delimitar la cantidad de números permitidos (6)
+				entrada[i++] = tecla;
+				std::cout << tecla;
+			}
+			
 	//Si el usuario ingresa un operador entonces no puede ser precedido por otro operador
-	//a excepción del '-' (menos) los operadores no pueden ser precedidos por un paréntesis de apertura ni ser el primer caracter de la expresión
-		} else if(esOperador(tecla) && !esOperador(elementoAnterior) && tecla != '-' && (elementoAnterior!='(' || i>0)){	
+	//a excepción del '-' (menos) los operadores no pueden ser precedidos por un punto,  paréntesis de apertura ni ser el primer caracter de la expresión
+		} else if(esOperador(tecla) && elementoAnterior !='.' && !esOperador(elementoAnterior) && tecla != '-' && elementoAnterior!='(' && i>0){	
 			entrada[i++] = tecla;
 			std::cout << tecla;
-	//Si el usuario ingresa un signo negativo entonces solo no puede ser precedido por otro operador
-		} else if(tecla == '-' && !esOperador(elementoAnterior)){
+			hayPunto = false; //Cuando se ingresa un operador se reinicia el indicador de punto a falso
+	//Si el usuario ingresa un signo negativo entonces solo no puede ser precedido por otro operador o un punto
+		} else if(tecla == '-' && !esOperador(elementoAnterior) && elementoAnterior !='.'){
 			entrada[i++] = tecla;
 			std::cout << tecla;
+			hayPunto = false; //Cuando se ingresa un operador se reinicia el indicador de punto a falso
+	//Si el usuario ingresa un punto, entonces debe estar precedido de almenos un número
+		} else if(tecla =='.' && isdigit(elementoAnterior)){
+			if(!hayPunto){ //Si el indicador muestra que no se ha añadido un punto en ese conjunto de números
+				entrada[i++] = tecla;
+				std::cout << tecla;
+				hayPunto = true; //Se marca verdadero la presencia del punto	
+			}
+			
 		}
     }
     entrada[i] = '\0';
