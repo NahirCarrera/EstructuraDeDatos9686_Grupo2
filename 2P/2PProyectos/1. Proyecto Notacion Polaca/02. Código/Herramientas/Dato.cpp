@@ -168,7 +168,7 @@ float Dato::ingresarFloat() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::string Dato::ingresarExpresion() {		
-    char *entrada = new char[30];    //Arreglo dinámico para la entrada
+    char *entrada = new char[300];    //Arreglo dinámico para la entrada
     char tecla;                      //Caracter de entrada
     int i = 0;                       //Contador de caracteres
     int parentesisApertura = 0;      //Contador de paréntesis de apertura
