@@ -40,6 +40,8 @@ CalculadoraPolaca::CalculadoraPolaca(std::string expresionInfijo) {
 	expresion = eliminarEspaciosConsecutivos(expresion);
 	this->expresionPrefijo = expresion;
 	
+	arbol.mostrarArbol();
+	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -135,7 +137,7 @@ void CalculadoraPolaca::setExpresionPrefijo(std::string newExpresionPrefijo)
 
 std::string CalculadoraPolaca::removerParentesis(std::string expresion)
 {
-   int indiceParA = -1;
+    int indiceParA = -1;
     int indiceParB = -1;
     int indiceNumFuera = -1;
     int par = 0;
@@ -310,8 +312,9 @@ double CalculadoraPolaca::operar(double numero1, double numero2, char operador)
     case '*':
         return numero1 * numero2;
     case '/':
-        if (numero1 == 0 && numero2 == 0) {
-            std::cout << "Error: Division para 0/0" << std::endl;
+        if (numero2 == 0) {        	
+            std::cout << "Error: No se puede dividir para cero" << std::endl;
+            return 0.0/0.0;
         }
         return numero1 / numero2;
     case '^':
@@ -545,6 +548,7 @@ double CalculadoraPolaca::evaluarExpresionPrefija()
             }
             
         }
+        
     }
 
     if (pila.size() != 1)

@@ -244,7 +244,14 @@ double Matematica::log(double operando) {
 double Matematica::pow(double base, double exponente)
 {
 	if (exponente == 0) {
+		if (base == 0) {
+			return 0.0/0.0;
+		}
 		return 1;
+	}
+	
+	if (base == 0) {
+		return 0;
 	}
 	
     double resultado = 1;
