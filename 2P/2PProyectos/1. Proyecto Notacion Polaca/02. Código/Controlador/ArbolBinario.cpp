@@ -140,20 +140,20 @@ void ArbolBinario<T>::eliminarNodo(T valor) {
 	    if (nodo == nullptr) {
 	        return nodo;
 	    } else if (valor < nodo->getDato()) {
-	        nodo->getIzquierdo() = eliminarNodoRecursivo(nodo->getIzquierdo(), valor);
+	        nodo->setIzquierdo(eliminarNodoRecursivo(nodo->getIzquierdo(), valor));
 	    } else if (valor > nodo->getDato()) {
-	        nodo->getDerecho() = eliminarNodoRecursivo(nodo->getDerecho(), valor);
+	        nodo->setDerecho(eliminarNodoRecursivo(nodo->getDerecho(), valor));
 	    } else {
 	        if (nodo->getIzquierdo() == nullptr && nodo->getDerecho() == nullptr) {
 	            delete nodo;
 	            nodo = nullptr;
 	        } else if (nodo->getIzquierdo() == nullptr) {
 	            NodoArbol<T>* temp = nodo;
-	            nodo = nodo->getDerecho();
+	            nodo = temp->getDerecho();
 	            delete temp;
 	        } else if (nodo->getDerecho() == nullptr) {
 	            NodoArbol<T>* temp = nodo;
-	            nodo = nodo->getIzquierdo();
+	            nodo = temp->getIzquierdo();
 	            delete temp;
 	        } else {
 	            NodoArbol<T>* temp = encontrarNodoMinimo(nodo->getDerecho());
