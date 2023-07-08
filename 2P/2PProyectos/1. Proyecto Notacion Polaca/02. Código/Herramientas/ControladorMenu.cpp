@@ -62,7 +62,6 @@ void ControladorMenu::ingresarInfijo() {
 	std::string infijo;
 	std::cout << "Ingrese la expresion Infijo: " << std::endl;
 	infijo = Dato::ingresarExpresion();
-
 	subMenuPolaca(infijo);
 }
 

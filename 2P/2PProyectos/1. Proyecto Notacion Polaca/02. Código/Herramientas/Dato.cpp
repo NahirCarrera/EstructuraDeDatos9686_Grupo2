@@ -204,18 +204,21 @@ std::string Dato::ingresarExpresion() {
 			    i--;
 			    parentesisCierre -= (elementoAnterior == ')'); //Disminución de contadores
 			    parentesisApertura -= (elementoAnterior == '(');
-			} else if (elementoAnterior == '.'){
+		    	// Si el usuario borra un punto entonces la bandera de punto debe reiniciarse
+		    } 
+				else if (elementoAnterior == '.'){
 				std::cout << "\b \b";
 		        i--;
 		        entrada[i] = 0;// elimina el último caracter de la entrada
 				hayPunto = false;
-		//Si el usuario intneta eliminar cualquier caracter fuera de las categorías anteriores	    
+				//Si el usuario borra un operador y ya se ingresó un número entonces no debe reiniciar la bandera del punto
 		    } else if (esOperador(elementoAnterior)){
 		    	std::cout << "\b \b";
 		        i--;
 		        entrada[i] = 0;// elimina el último caracter de la entrada
-		    	if(!hayPunto){
+		    	if(!hayPunto)
 		    		hayPunto = true;
+
 			}else {
 		        std::cout << "\b \b";
 		        i--;
