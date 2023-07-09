@@ -13,7 +13,7 @@
 #if !defined(__Class_Diagram_1_RegistroEntradaSalida_h)
 #define __Class_Diagram_1_RegistroEntradaSalida_h
 
-#include "Persona.h"
+#include "Empleado.h"
 #include "Fecha.h"
 #include <iostream>
 
@@ -21,11 +21,11 @@ class RegistroEntradaSalida{
 	public:
 	   //Contructor
 	   RegistroEntradaSalida();
-	   RegistroEntradaSalida(Persona persona, Fecha fechaEntrada, Fecha fechaSalida);
+	   RegistroEntradaSalida(Empleado empleado, Fecha fechaEntrada, Fecha fechaSalida);
 	   ~RegistroEntradaSalida();
 	   //Getters y Setters
-	   Persona getPersona(void) const;
-	   void setPersona(Persona newPersona);
+	   Empleado getEmpleado(void) const;
+	   void setEmpleado(Empleado newEmpleado);
 	   Fecha getFechaEntrada(void) const;
 	   void setFechaEntrada(Fecha newFechaEntrada);
 	   Fecha getFechaSalida(void) const;
@@ -35,11 +35,11 @@ class RegistroEntradaSalida{
 	   void addContadorRegistro(void);
 	   //Sobrecarga de operadores
 	   friend std::ostream& operator<<(std::ostream&, const RegistroEntradaSalida&);
-	   bool operator==(RegistroEntradaSalida&);
+	   bool operator==(const RegistroEntradaSalida&);
 	   bool operator>(const RegistroEntradaSalida&);
 	   bool operator<( const RegistroEntradaSalida&);
 	private:
-	   Persona persona;
+	   Empleado empleado;
 	   Fecha fechaEntrada;
 	   Fecha fechaSalida;
 	   int contadorRegistro;

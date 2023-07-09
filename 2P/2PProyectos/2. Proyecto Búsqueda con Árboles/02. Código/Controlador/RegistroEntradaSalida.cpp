@@ -13,27 +13,27 @@
 #include "../Modelo/RegistroEntradaSalida.h"
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       RegistroEntradaSalida::getPersona()
-// Purpose:    Implementation of RegistroEntradaSalida::getPersona()
-// Return:     Persona
+// Name:       RegistroEntradaSalida::getEmpleado()
+// Purpose:    Implementation of RegistroEntradaSalida::getEmpleado()
+// Return:     Empleado
 ////////////////////////////////////////////////////////////////////////
 
-Persona RegistroEntradaSalida::getPersona(void) const
+Empleado RegistroEntradaSalida::getEmpleado(void) const
 {
-   return persona;
+   return empleado;
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       RegistroEntradaSalida::setPersona(Persona newPersona)
-// Purpose:    Implementation of RegistroEntradaSalida::setPersona()
+// Name:       RegistroEntradaSalida::setEmpleado(Empleado newEmpleado)
+// Purpose:    Implementation of RegistroEntradaSalida::setEmpleado()
 // Parameters:
-// - newPersona
+// - newEmpleado
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-void RegistroEntradaSalida::setPersona(Persona newPersona)
+void RegistroEntradaSalida::setEmpleado(Empleado newEmpleado)
 {
-   persona = newPersona;
+   empleado = newEmpleado;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -118,18 +118,18 @@ void RegistroEntradaSalida::addContadorRegistro(void) {
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       RegistroEntradaSalida::RegistroEntradaSalida(Persona persona, Fecha fechaEntrada, Fecha fechaSalida)
+// Name:       RegistroEntradaSalida::RegistroEntradaSalida(Empleado empleado, Fecha fechaEntrada, Fecha fechaSalida)
 // Purpose:    Implementation of RegistroEntradaSalida::RegistroEntradaSalida()
 // Parameters:
-// - persona
+// - empleado
 // - fechaEntrada
 // - fechaSalida
 // Return:     
 ////////////////////////////////////////////////////////////////////////
 
-RegistroEntradaSalida::RegistroEntradaSalida(Persona persona, Fecha fechaEntrada, Fecha fechaSalida)
+RegistroEntradaSalida::RegistroEntradaSalida(Empleado empleado, Fecha fechaEntrada, Fecha fechaSalida)
 {
-   this->persona = persona;
+   this->empleado = empleado;
    this->fechaEntrada = fechaEntrada;
    this->fechaSalida = fechaSalida;
    this->contadorRegistro = 0;
@@ -171,9 +171,9 @@ std::ostream& operator<<(std::ostream& os, const RegistroEntradaSalida& registro
 	os << "    ____________________   ____________________"<<std::endl;
 	os << ".-/|                     |                     |-."<<std::endl;
 	os << "|||| NOMBRE:                                   ||||"<<std::endl;
-	os << "     " + registro.persona.getNombre() + " " + registro.persona.getApellido() <<std::endl;
+	os << "     " + registro.empleado.getNombre() + " " + registro.empleado.getApellido() <<std::endl;
 	os << "|||| CEDULA:                                   ||||"<<std::endl;
-	os << "     " + registro.persona.getCedula()<<std::endl;
+	os << "     " + registro.empleado.getCedula()<<std::endl;
 	os << "|||| FECHA/HORA ENTRADA:                       ||||"<<std::endl;
   	os << "     " << registro.fechaEntrada<<std::endl;
   	os << "|||| FECHA/HORA SALIDA:                        ||||"<<std::endl;
@@ -197,9 +197,9 @@ std::ostream& operator<<(std::ostream& os, const RegistroEntradaSalida& registro
 // Return:     bool
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool RegistroEntradaSalida::operator==(RegistroEntradaSalida& registro) {
-	std::string cedula1 = this->getPersona().getCedula();
-	std::string cedula2 = registro.getPersona().getCedula();
+bool RegistroEntradaSalida::operator==(const RegistroEntradaSalida& registro) {
+	std::string cedula1 = this->getEmpleado().getCedula();
+	std::string cedula2 = registro.getEmpleado().getCedula();
 	return  cedula1 == cedula2;
 }
 
@@ -212,6 +212,10 @@ bool RegistroEntradaSalida::operator==(RegistroEntradaSalida& registro) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool RegistroEntradaSalida::operator>(const RegistroEntradaSalida& registro){
+	std::string cedula1 = this->getEmpleado().getCedula();
+	std::string cedula2 = registro.getEmpleado().getCedula();
+	return  cedula1 > cedula2;
+	/*
 	if (this->fechaEntrada.getAnio() != registro.getFechaEntrada().getAnio())
         return this->fechaEntrada.getAnio() > registro.getFechaEntrada().getAnio();
     
@@ -228,7 +232,7 @@ bool RegistroEntradaSalida::operator>(const RegistroEntradaSalida& registro){
         return this->fechaEntrada.getMinuto() > registro.getFechaEntrada().getMinuto();
     
     return (this->fechaEntrada.getSegundo()>registro.getFechaEntrada().getSegundo());
-    //return(persona.getNombre()>registro.persona.getNombre());
+    */
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,7 +244,10 @@ bool RegistroEntradaSalida::operator>(const RegistroEntradaSalida& registro){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool RegistroEntradaSalida::operator<( const RegistroEntradaSalida& registro){
-	if (this->fechaSalida.getAnio() != registro.getFechaSalida().getAnio())
+	std::string cedula1 = this->getEmpleado().getCedula();
+	std::string cedula2 = registro.getEmpleado().getCedula();
+	return  cedula1 < cedula2; 
+	/*if (this->fechaSalida.getAnio() != registro.getFechaSalida().getAnio())
         return this->fechaSalida.getAnio() > registro.getFechaSalida().getAnio();
     
 	if (this->fechaSalida.getMes() != registro.getFechaSalida().getMes())
@@ -255,7 +262,7 @@ bool RegistroEntradaSalida::operator<( const RegistroEntradaSalida& registro){
 	if (this->fechaSalida.getMinuto() != registro.getFechaSalida().getMinuto())
         return this->fechaSalida.getMinuto() > registro.getFechaSalida().getMinuto();
     
-    return (this->fechaSalida.getSegundo()>registro.getFechaSalida().getSegundo());
+    return (this->fechaSalida.getSegundo()>registro.getFechaSalida().getSegundo());*/
 }
 
 

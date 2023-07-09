@@ -12,7 +12,7 @@
 #ifndef GESTORARCHIVO_H
 #define GESTORARCHIVO_H
 
-#include "../Modelo/Persona.h"
+#include "../Modelo/Empleado.h"
 #include "../Modelo/RegistroEntradaSalida.h"
 #include <string>
 
@@ -21,10 +21,10 @@ class ListaCircularDoble;
 
 class GestorArchivo{
 	public:
-		static void guardarListaPersonaComoCSV(ListaCircularDoble<Persona>&, std::string);
-		static void cargarCSVEnListaPersona(ListaCircularDoble<Persona>&, std::string);
+		static void guardarListaEmpleadoComoCSV(ListaCircularDoble<Empleado>&, std::string);
+		static void cargarCSVEnListaEmpleado(ListaCircularDoble<Empleado>&, std::string);
 		static void guardarListaRegistroComoCSV(ListaCircularDoble<RegistroEntradaSalida>&, std::string);
-		static void cargarCSVEnListaRegistro(ListaCircularDoble<RegistroEntradaSalida>&, ListaCircularDoble<Persona>&, std::string);
+		static void cargarCSVEnListaRegistro(ListaCircularDoble<RegistroEntradaSalida>&, ListaCircularDoble<Empleado>&, std::string);
 	private:
 		static Fecha extraerFecha(std::string input);		
 };
