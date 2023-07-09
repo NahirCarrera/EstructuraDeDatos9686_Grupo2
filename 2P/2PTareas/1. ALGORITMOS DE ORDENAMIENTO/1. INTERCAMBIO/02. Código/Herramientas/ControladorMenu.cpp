@@ -219,7 +219,6 @@ void ControladorMenu::correrMenu(){
 		opcion = Menu::crearMenu();
 		
 		system("cls");
-		
 		if (opcion == "Registrar Empleado                            ") {
 			registrarEmpleado(listaPersonas);
 		}

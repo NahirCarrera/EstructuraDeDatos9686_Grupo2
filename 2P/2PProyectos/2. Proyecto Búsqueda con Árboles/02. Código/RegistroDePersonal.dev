@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;12;0;0;0
-UnitCount=16
+UnitCount=18
 
 [VersionInfo]
 Major=1
@@ -60,27 +60,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit2]
-FileName=Controlador\ListaCircularDoble.cpp
-CompileCpp=1
-Folder=Controlador
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit3]
-FileName=Controlador\NodoDoble.cpp
-CompileCpp=1
-Folder=Controlador
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit4]
 FileName=Controlador\Persona.cpp
 CompileCpp=1
 Folder=Controlador
@@ -90,7 +70,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit5]
+[Unit4]
 FileName=Controlador\RegistroEntradaSalida.cpp
 CompileCpp=1
 Folder=Controlador
@@ -100,7 +80,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit6]
+[Unit5]
 FileName=Herramientas\Dato.cpp
 CompileCpp=1
 Folder=Herramientas
@@ -110,7 +90,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
+[Unit6]
 FileName=Herramientas\Dato.h
 CompileCpp=1
 Folder=Herramientas
@@ -120,7 +100,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit8]
+[Unit7]
 FileName=Herramientas\GestorArchivo.cpp
 CompileCpp=1
 Folder=Herramientas
@@ -130,7 +110,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit9]
+[Unit8]
 FileName=Herramientas\GestorArchivo.h
 CompileCpp=1
 Folder=Herramientas
@@ -140,7 +120,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit10]
+[Unit9]
 FileName=Modelo\Fecha.h
 CompileCpp=1
 Folder=Modelo
@@ -151,26 +131,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=Modelo\ListaCircularDoble.h
-CompileCpp=1
-Folder=Modelo
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit12]
-FileName=Modelo\NodoDoble.h
-CompileCpp=1
-Folder=Modelo
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit13]
 FileName=Modelo\OperacionListas.h
 CompileCpp=1
 Folder=Modelo
@@ -180,7 +140,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit14]
+[Unit12]
 FileName=Modelo\Persona.h
 CompileCpp=1
 Folder=Modelo
@@ -190,7 +150,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit15]
+[Unit13]
 FileName=Modelo\RegistroEntradaSalida.h
 CompileCpp=1
 Folder=Modelo
@@ -200,10 +160,70 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit16]
+[Unit14]
 FileName=Vista\main.cpp
 CompileCpp=1
 Folder=Vista
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit15]
+FileName=Modelo\Empleado.h
+CompileCpp=1
+Folder=Modelo
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit16]
+FileName=Controlador\Empleado.cpp
+CompileCpp=1
+Folder=Controlador
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit17]
+FileName=Controlador\ListaCircularDoble.cpp
+CompileCpp=1
+Folder=Controlador
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit18]
+FileName=Modelo\ListaCircularDoble.h
+CompileCpp=1
+Folder=Modelo
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit2]
+FileName=Controlador\NodoDoble.cpp
+CompileCpp=1
+Folder=Controlador
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit10]
+FileName=Modelo\NodoDoble.h
+CompileCpp=1
+Folder=Modelo
 Compile=1
 Link=1
 Priority=1000

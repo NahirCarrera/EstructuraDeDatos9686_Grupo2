@@ -15,7 +15,6 @@
 
 #pragma once
 #include "../Modelo/OperacionListas.h"
-#include "NodoDoble.h"
 
 template <typename T>
 class ListaCircularDoble:public OperacionListas<T>{

@@ -11,7 +11,6 @@
  *******************************************************************************/ 
 #include "GestorArchivo.h"
 #include "../Controlador/ListaCircularDoble.cpp"
-#include "../Controlador/NodoDoble.cpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>

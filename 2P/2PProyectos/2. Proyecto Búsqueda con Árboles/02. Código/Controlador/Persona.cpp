@@ -19,6 +19,7 @@
 // - cedula
 // - nombre
 // - apellido
+// - fechaNacimiento
 // Return:     
 ////////////////////////////////////////////////////////////////////////
 
@@ -207,6 +208,4 @@ bool Persona::operator>(const Persona& persona){
 bool Persona::operator<(const Persona& persona){
 	return (this->apellido > persona.apellido);
 }
-
-
 
