@@ -13,7 +13,7 @@
 #define __Class_Diagram_1_Fecha_h
 
 #include <iostream>
-
+#include <string>
 class Fecha{
 	public:
 		//Constructor y destructor
@@ -35,6 +35,8 @@ class Fecha{
 	   void setSegundo(int newSegundo);
 	   //Sobrecarga de operadores
 	   friend std::ostream& operator<<(std::ostream&, const Fecha&);
+	   //Funciones
+	   std::string obtenerFechaFormateada();
 	private:
 	   int mes;
 	   int dia;

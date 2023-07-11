@@ -10,26 +10,16 @@
  *
  *******************************************************************************/ 
  
-#ifndef NODODOBLE_H
-#define NODODOBLE_H
-#pragma once
-template <typename T>
-class NodoDoble{
+#ifndef BACKUP_H
+#define BACKUP_H
+#include "../Modelo/Fecha.h"
+#include <string>
+class Backup{
 	public:
-		//Contructor y destructor
-		NodoDoble(T);
-		~NodoDoble();
-		//Getters y Setters
-		void setDato(T);
-		T getDato();
-		void setSiguiente(NodoDoble*);
-		NodoDoble* getSiguiente();
-		void setAnterior(NodoDoble*);
-		NodoDoble* getAnterior();
+		static void crearBackup();
 	private:
-		T dato;
-		NodoDoble<T>* siguiente;
-		NodoDoble<T>* anterior;
+		static bool directorioExiste(const std::string&);
+		static void crearCopia(std::string, std::string);
 };
 #endif
 

@@ -9,16 +9,16 @@
  * enlazadas y búsqueda con árboles binarios + Extras
  *
  *******************************************************************************/ 
-#include "../Controlador/ListaCircularDoble.cpp"
-#include "../Controlador/ArbolBinario.cpp"
-#include <string>
-#include "../Modelo/Empleado.h"
-#include "../Modelo/RegistroEntradaSalida.h"
-#include "../Modelo/Fecha.h"
-#include "../Herramientas/GestorArchivo.h"
+//#include "../Controlador/ListaCircularDoble.cpp"
+//#include "../Controlador/ArbolBinario.cpp"
+//#include <string>
+//#include "../Modelo/Empleado.h"
+//#include "../Modelo/RegistroEntradaSalida.h"
+//#include "../Modelo/Fecha.h"
+//#include "../Herramientas/GestorArchivo.h"
+#include "../Herramientas/ControladorMenu.h"
 
-
-void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>& listaRegistros, ListaCircularDoble<Empleado>& empleados, std::string cedula){
+/*void registrarEntradaSalida(ListaCircularDoble<RegistroEntradaSalida>& listaRegistros, ListaCircularDoble<Empleado>& empleados, std::string cedula){
 	Fecha fecha(0,0,0,0,0,0);
 	Fecha fechaActual;
 	NodoDoble<RegistroEntradaSalida>* nodoRegistro;
@@ -70,10 +70,12 @@ void insertarRegistroArbol(ArbolBinario<RegistroEntradaSalida>& registrosArbol, 
 			actual = actual->getSiguiente();
 		} while (actual != registros.getCabeza());
 	}		
-}
+}*/
 
 int main() {
-	ListaCircularDoble<RegistroEntradaSalida> registros;
+	ControladorMenu ctrlMenu;
+	ctrlMenu.correrMenu();
+	/*ListaCircularDoble<RegistroEntradaSalida> registros;
 	ListaCircularDoble<Empleado> empleados;
 	ArbolBinario<RegistroEntradaSalida> registrosArbol;
 	

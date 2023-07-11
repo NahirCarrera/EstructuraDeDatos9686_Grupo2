@@ -11,7 +11,7 @@
 #ifndef ARBOLBINARIO_H
 #define ARBOLBINARIO_H
 #include "OperacionArboles.h"
-#include "../Controlador/NodoArbol.cpp"
+#include "../Modelo/NodoArbol.h"
 #include <string>
 
 template <typename T>

@@ -1,6 +1,6 @@
 #ifndef EMPLEADO_H
 #define EMPLEADO_H
-
+#pragma once
 #include "Persona.h"
 
 class Empleado : public Persona

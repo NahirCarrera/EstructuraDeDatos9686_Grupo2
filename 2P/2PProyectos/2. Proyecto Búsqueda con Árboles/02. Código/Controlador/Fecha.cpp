@@ -13,7 +13,7 @@
 #include "../Modelo/Fecha.h"
 #include <ctime>
 #include <locale>
-#include<iostream>
+#include <iostream>
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       Fecha::Fecha()
@@ -232,3 +232,16 @@ std::ostream& operator <<(std::ostream& os, const Fecha& fechaActual){
 	std::to_string(fechaActual.hora)+":"+std::to_string(fechaActual.minuto)+":"+std::to_string(fechaActual.segundo);
 	return os;
 }
+
+////////////////////////////////////////////////////////////////////////
+// Name:       Fecha::obtenerFechaFormateada()
+// Purpose:    Crea una cadena con la fecha formateada AAMMDDHHMMSS
+// Return:     std::string
+////////////////////////////////////////////////////////////////////////
+
+std::string Fecha::obtenerFechaFormateada(){
+	return (std::to_string(anio) + std::to_string(mes) + std::to_string(dia) + std::to_string(hora) + std::to_string(minuto) + std::to_string(segundo));
+}
+
+
+

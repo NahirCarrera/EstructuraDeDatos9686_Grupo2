@@ -9,6 +9,7 @@
  *******************************************************************************/
  
 #include "../Modelo/ArbolBinario.h"
+#include "../Controlador/NodoArbol.cpp"
 #include <iostream>
 #include <functional>
 

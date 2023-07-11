@@ -12,7 +12,6 @@
  
 #ifndef OPERACIONLISTAS_H
 #define OPERACIONLISTAS_H
-#include "../Controlador/NodoDoble.cpp"
 
 template <typename T>
 class OperacionListas{

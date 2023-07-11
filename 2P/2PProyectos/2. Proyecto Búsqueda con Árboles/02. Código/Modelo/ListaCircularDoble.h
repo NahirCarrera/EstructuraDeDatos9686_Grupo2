@@ -12,10 +12,8 @@
  
 #ifndef LISTACIRCULARDOBLE_H
 #define LISTACIRCULARDOBLE_H
-
-#pragma once
+#include "../Modelo/NodoDoble.h"
 #include "../Modelo/OperacionListas.h"
-
 template <typename T>
 class ListaCircularDoble:public OperacionListas<T>{
 	public:
