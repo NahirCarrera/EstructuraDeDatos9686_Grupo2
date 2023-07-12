@@ -3,7 +3,7 @@
  * Estructura de Datos 9686
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 07/07/23 21:42
- * Fecha de modificacion: 07/07/23 21:42
+ * Fecha de modificacion: 11/07/23 22:39
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y búsqueda con árboles binarios + Extras
@@ -153,10 +153,6 @@ float Dato::ingresarFloat() {
 		} else if (tecla == '.' && !punto) { // si el usuario ingresa un punto y no se ha ingresado ya uno, o si ya se ingresó uno pero se eliminó
 			  entrada[i++] = tecla;
 			  punto = true; // marca que se ha ingresado un punto
-			  std::cout << tecla;
-		} else if (tecla == '-' && i == 0) { // si el usuario ingresa un signo menos al principio
-			  entrada[i++] = tecla;
-			  signoMenosPos = i - 1; // marca la posición del signo menos
 			  std::cout << tecla;
 		}
 	}

@@ -3,16 +3,22 @@
  * Estructura de Datos 9686
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 07/07/23 21:42
- * Fecha de modificacion: 07/07/23 21:42
+ * Fecha de modificacion: 11/07/23 22:39
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y búsqueda con árboles binarios + Extras
  *
  *******************************************************************************/
  
+#include "../Controlador/ArbolBinario.cpp"
+#include "../Modelo/Empleado.h"
+#include "../Modelo/RegistroEntradaSalida.h"
+#include "../Modelo/Fecha.h"
+#include "../Modelo/Singleton.h"
 #include "ControladorMenu.h"
-#include "../Herramientas/Menu.h"
-#include "../Herramientas/Dato.h"
+#include "GestorArchivo.h"
+#include "Menu.h"
+#include "Dato.h"
 #include "Backup.h"
 #include <string>
 #include <cstdlib> // para usar system("cls") y system("pause")
@@ -25,7 +31,37 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::registrarEmpleado() {
-	std::cout<<"Usted ingreso un empleado\n";
+	std::string cedula, nombre, apellido;
+	float sueldo;
+    Fecha fecha;
+    
+    ListaCircularDoble<Empleado>& empleados = Singleton::getInstance()->getEmpleados();
+    
+	std::cout<< "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+	std::cout << "                      REGISTRO DE EMPLEADO" << std::endl;
+	// Obtener datos para una persona
+    
+    std::cout << "(O)===)> Ingrese la cedula: ";
+    cedula = Dato::ingresarCedulaEcuador();
+    
+    if (!empleados.buscar(Empleado(cedula, "", "", fecha, 0))) {
+    	std::cout << "(O)===)> Ingrese un nombre: ";
+	    nombre = Dato::ingresarNombreSimple();
+	    std::cout << "(O)===)> Ingrese un apellido: ";
+	    apellido = Dato::ingresarNombreSimple();;
+		std::cout << "(O)===)> Ingrese la fecha de nacimiento:\n";
+		fecha = Dato::ingresarFechaCumple();
+		std::cout << "(O)===)> Ingrese el sueldo asignado por mes (USD):";
+		sueldo = Dato::ingresarFloat();
+		std::cout<< "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+	    // Crear una persona con los datos ingresados
+	    Empleado persona(cedula, nombre, apellido, fecha, sueldo);
+	    
+	    empleados.insertar(persona);
+	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
+	} else {
+		std::cout << " Cedula ya registrada..." << std::endl;
+	}
 	system("pause");
 }
 
@@ -36,7 +72,52 @@ void ControladorMenu::registrarEmpleado() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::registrarEntradaSalida() {
-	std::cout<<"Usted registro una entrada o salida\n";
+	std::string cedula;
+	Fecha fecha(0,0,0,0,0,0);
+	Fecha fechaActual;
+	NodoDoble<RegistroEntradaSalida>* nodoRegistro;
+	NodoDoble<Empleado>* nodoEmpleado;
+	
+	ListaCircularDoble<Empleado>& empleados = Singleton::getInstance()->getEmpleados();
+	ListaCircularDoble<RegistroEntradaSalida>& registros = Singleton::getInstance()->getRegistros();
+	
+	std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+	std::cout << "                 REGISTRO DE ENTRADA Y SALIDA" << std::endl;	
+	std::cout << "(O)===)> Ingrese la cedula: ";
+    cedula = Dato::ingresarCedulaEcuador();
+    std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;		
+	nodoEmpleado = empleados.extraerNodo(Empleado(cedula, "", "", fecha, 0));
+	
+	// Primero buscamos si hay la cedula registrada
+	if (nodoEmpleado != nullptr) {
+		RegistroEntradaSalida registro(nodoEmpleado->getDato(), fecha, fecha);
+		
+		nodoRegistro = registros.extraerNodo(registro);
+		
+		// Si no existe un registro de esa cedula creamos uno
+		if(nodoRegistro == nullptr) {
+			RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
+			registros.insertar(registroNuevo);
+		} else {
+			// Si existe un registro con el contador en 1 es porque ya registro la salida
+			// y se debe crear uno nuevo para esa cedula
+			if (nodoRegistro->getDato().getContadorRegistro() == 1) {
+				RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
+				registros.insertar(registroNuevo);
+			} else {
+				// Si no es 1 es porque es 0, en este caso falta registrar la nueva salida
+				RegistroEntradaSalida registroNuevo = nodoRegistro->getDato();
+				registroNuevo.setFechaSalida(fechaActual);
+				registroNuevo.addContadorRegistro();
+				
+				nodoRegistro->setDato(registroNuevo);
+			}
+		}
+		
+		GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+	} else {
+		std::cout << " ¡¡ Cedula no registrada..." << std::endl;
+	}
 	system("pause");
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +127,7 @@ void ControladorMenu::registrarEntradaSalida() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::mostrarRegistro() {
-	std::cout<<"Desplegar registro completo :D\n";
+	Singleton::getInstance()->getRegistros().mostrar();
 	system("pause");
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,9 +137,10 @@ void ControladorMenu::mostrarRegistro() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::mostrarEmpleados() {
-	std::cout<<"Desplegar lista de empleados :D\n";
+	Singleton::getInstance()->getEmpleados().mostrar();
 	system("pause");
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Name:       ControladorMenu::mostrarRegistroIndividual()
 // Purpose:    Generar el reporte de registros de un empleado específico
@@ -66,7 +148,42 @@ void ControladorMenu::mostrarEmpleados() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::mostrarRegistroIndividual() {
-	std::cout<<"Desplegar registro individual :D\n";
+	std::string cedula;
+    Fecha fecha;
+
+	ListaCircularDoble<Empleado>& empleados = Singleton::getInstance()->getEmpleados();
+	ListaCircularDoble<RegistroEntradaSalida>& registros = Singleton::getInstance()->getRegistros();
+	
+	//Insertamos los elementos de la lista en el arbol binario
+	ArbolBinario<RegistroEntradaSalida> registrosArbol;
+	NodoDoble<RegistroEntradaSalida>* actual;	
+	actual = registros.getCabeza();
+	
+	if (actual != nullptr) {
+		do {
+			registrosArbol.insertarNodo(actual->getDato());
+			actual = actual->getSiguiente();
+		} while (actual != registros.getCabeza());
+	}
+	
+	// Pedimos al usuario que ingrese la cedula que desea buscar
+	std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+	std::cout << "                      REGISTRO INDIVIDUAL" << std::endl;
+    std::cout << "(O)===)> Ingrese la cedula: ";
+    cedula = Dato::ingresarCedulaEcuador();
+    std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+    system("cls");
+    Empleado empleado(cedula, "", "", fecha, 0);
+    
+    NodoArbol<RegistroEntradaSalida>* registro = registrosArbol.buscarNodo(RegistroEntradaSalida(empleado, fecha, fecha));
+	
+	if (registro != nullptr) {	
+    	std::cout << registro->getDato().getEmpleado() << std::endl << std::endl;
+		registrosArbol.mostrarRepetidos(RegistroEntradaSalida(empleado, fecha, fecha));
+	} else {
+		std::cout << " ¡¡ Cedula no registrada..." << std::endl;
+	}	
+	
 	system("pause");
 }
 
@@ -170,7 +287,14 @@ void ControladorMenu::subMenuExtras() {
 // Return:     void
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ControladorMenu::correrMenu() {	
+void ControladorMenu::correrMenu() {
+	Singleton* singleton = Singleton::getInstance();
+	
+	ListaCircularDoble<Empleado>& empleados = singleton->getEmpleados();
+	ListaCircularDoble<RegistroEntradaSalida>& registros = singleton->getRegistros();
+	
+	GestorArchivo::cargarCSVEnListaEmpleado(empleados, "Empleados.csv");
+	GestorArchivo::cargarCSVEnListaRegistro(registros, empleados, "Registros.csv");
 	
 	Menu menu(          "(O)===)> <><><><><><><><>< Menu Principal ><><><><><><><><> <)==(O)");
 	menu.insertarOpcion("             (x)===)> Registro de Personal <)==(x)", [&]() { subMenuRegistroDePersonal(); });

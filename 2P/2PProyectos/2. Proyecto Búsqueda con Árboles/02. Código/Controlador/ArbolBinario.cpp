@@ -2,14 +2,13 @@
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 27/06/23 17:32
- * Fecha de modificacion: 27/06/23 21:07
+ * Fecha de modificacion: 11/07/23 22:39
  * Enunciado:
  * Proyecto transformacion de expresion infija a notacion polaca y polaca inversa
  *
  *******************************************************************************/
  
 #include "../Modelo/ArbolBinario.h"
-#include "../Controlador/NodoArbol.cpp"
 #include <iostream>
 #include <functional>
 
@@ -106,16 +105,16 @@ void ArbolBinario<T>::insertarNodo(T valor) {
 // Purpose: Busca un nodo con el valor dado en el árbol
 // Parameters:
 // - valor: Valor a buscar en el árbol
-// Return: bool indicando si se encontró el nodo o no
+// Return: retorna el nodo o nullptr si no lo encontro
 //////////////////////////////////////////////////////////////////////4
 
 template<typename T>
-bool ArbolBinario<T>::buscarNodo(T valor) {
-	std::function<bool(NodoArbol<T>*, T)> buscarNodoRecursivo = [&](NodoArbol<T>* nodo, T valor) {
+NodoArbol<T>* ArbolBinario<T>::buscarNodo(T valor) {
+	std::function<NodoArbol<T>*(NodoArbol<T>*, T)> buscarNodoRecursivo = [&](NodoArbol<T>* nodo, T valor) {
 	    if (nodo == nullptr) {
-	        return false;
+	        return nodo;
 	    } else if (valor == nodo->getDato()) {
-	        return true;
+	        return nodo;
 	    } else if (valor < nodo->getDato()) {
 	        return buscarNodoRecursivo(nodo->getIzquierdo(), valor);
 	    } else {
