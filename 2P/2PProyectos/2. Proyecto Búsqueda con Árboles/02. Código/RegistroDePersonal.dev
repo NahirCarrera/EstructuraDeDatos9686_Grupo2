@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;12;0;0;0
-UnitCount=31
+UnitCount=33
 
 [VersionInfo]
 Major=1
@@ -354,6 +354,26 @@ BuildCmd=
 FileName=Herramientas\Opcion.h
 CompileCpp=1
 Folder=Herramientas
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit32]
+FileName=Modelo\Singleton.h
+CompileCpp=1
+Folder=Modelo
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit33]
+FileName=Controlador\Singleton.cpp
+CompileCpp=1
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
