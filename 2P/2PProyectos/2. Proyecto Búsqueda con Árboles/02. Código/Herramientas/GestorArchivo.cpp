@@ -53,7 +53,7 @@ void GestorArchivo::guardarListaEmpleadoComoCSV(ListaCircularDoble<Empleado>& li
         	archivo << "CEDULA" << ";"
                     << "NOMBRE" << ";"
                     << "APELLIDO" << ";"
-					<< "FECHA NACIMIENTO" << ";"
+					<< "FECHANACIMIENTO" << ";"
 					<< "SUELDO" << std::endl;
             do {
                 archivo << actual->getDato().getCedula() << ";"
@@ -122,9 +122,9 @@ void GestorArchivo::guardarListaRegistroComoCSV(ListaCircularDoble<RegistroEntra
         NodoDoble<RegistroEntradaSalida>* actual = lista.getCabeza();
         if (actual != nullptr) {
         	archivo << "CEDULA" << ";"
-                        << "FECHA / HORA ENTRADA" << ";"
-                        << "FECHA / HORA SALIDA" << ";"
-                        << "CONTADOR REGISTRO" << std::endl;
+                        << "FECHA/HORAENTRADA" << ";"
+                        << "FECHA/HORASALIDA" << ";"
+                        << "CONTADORREGISTRO" << std::endl;
             do {
                 archivo << actual->getDato().getEmpleado().getCedula() << ";"
                         << actual->getDato().getFechaEntrada() << ";"

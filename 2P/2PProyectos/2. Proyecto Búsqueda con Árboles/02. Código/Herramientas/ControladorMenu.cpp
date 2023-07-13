@@ -205,7 +205,8 @@ void ControladorMenu::crearCopiaDeSeguridad(){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::generarPdf(){	
-	std::cout<<"Crear el Pdf :D\n";
+	Backup::generarPDF("Empleados.csv");	
+	Backup::generarPDF("Registros.csv");
 	system("pause");
 }
 

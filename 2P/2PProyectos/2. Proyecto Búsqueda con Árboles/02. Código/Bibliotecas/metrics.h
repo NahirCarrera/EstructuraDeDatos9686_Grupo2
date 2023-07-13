@@ -8,20 +8,21 @@
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y búsqueda con árboles binarios + Extras
  *
- *******************************************************************************/ 
- 
-#ifndef BACKUP_H
-#define BACKUP_H
-#include "../Modelo/Fecha.h"
-#include <string>
-class Backup{
-	public:
-		static void crearBackup();
-		static void generarPDF(std::string);
-	private:
-		static bool directorioExiste(const std::string&);
-		static void crearCopia(std::string, std::string);
-};
+ *******************************************************************************/
+#ifndef _METRICS_H_
+#  define _METRICS_H_
+
+#  include "pdf.h"
+
+   class Metrics
+   {
+      public:
+
+         static int *get(PDF::Font theFont);
+
+      private:
+
+         Metrics();
+   };
+
 #endif
-
-

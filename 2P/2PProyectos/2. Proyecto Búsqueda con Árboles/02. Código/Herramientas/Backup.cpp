@@ -11,11 +11,13 @@
  *******************************************************************************/ 
 
 #include "../Modelo/Fecha.h"
+#include "../Bibliotecas/pdf.h"
 #include "Backup.h"
 #include <iomanip>
 #include <fstream>
 #include <sys/stat.h> // Para mkdir en sistemas Unix-like
-
+#include <iostream>
+#include <sstream> 
 ////////////////////////////////////////////////////////////////////////
 // Name:       directorioExiste(const std::string&)
 // Purpose:    Verifica si un directorio existe
@@ -87,4 +89,102 @@ void Backup::crearBackup(){
     }
 	
 }
+	
+void Backup::generarPDF(std::string nombreArchivoCsv){
+	std::fstream reporte;
+	std::ostringstream out;
+	PDF archivoPdf;
+	std::string titulo;
+	std::string palabraActual;
+	std::string nombreArchivoPdf;
+	std::string nombreArchivo;
+	string mensajeDeError;
+	int maxLineasPorPagina = 40;  // Número máximo de líneas por página
+	int lineas = 0;  // Contador de líneas en la página actual
+	int contador = 1;
+	nombreArchivo = (nombreArchivoCsv == "Empleados.csv") ? "ReporteEmpleados" : "ReporteRegistros";
+	out << nombreArchivo<<".pdf";
+	nombreArchivoPdf = out.str();
+
+	std::cout << "-----------------------------------------" << "\n";
+	std::cout << "Creando archivo: [" << nombreArchivoPdf << "]"<< "\n";
+	std::cout << "-----------------------------------------" << "\n";
+
+	archivoPdf.setFont(PDF::COURIER_BOLD, 14);
+	
+	titulo = (nombreArchivoCsv == "Empleados.csv") ? "Reporte de Empleados" : "Reporte de Registros";
+	
+	archivoPdf.showTextXY(titulo,110,762);
+	archivoPdf.setFont(PDF::COURIER, 12);
+	reporte.open(nombreArchivoCsv, std::ios::in);
+	
+	while (reporte >> palabraActual) {
+		if(palabraActual!= "CEDULA;NOMBRE;APELLIDO;FECHANACIMIENTO;SUELDO" && palabraActual!= "CEDULA;FECHA/HORAENTRADA;FECHA/HORASALIDA;CONTADORREGISTRO"){
+			contador = 1;
+			std::stringstream ss(palabraActual);
+		    std::string elemento;
+		    std::string campo;
+			lineas++;
+			
+			if(nombreArchivoCsv == "Empleados.csv"){
+				archivoPdf.showTextXY("----------------- EMPLEADOS -----------------", 50, 747 - 14 * lineas);
+			}else{
+				archivoPdf.showTextXY("----------------- REGISTROS -----------------", 50, 747 - 14 * lineas);
+			}
+		    while (std::getline(ss, elemento, ';')) {
+		    	lineas++;
+		    	switch(contador){
+		    		case 1:
+		    			archivoPdf.showTextXY("CEDULA: " + elemento, 50, 747 - 14 * lineas);
+		    			break;
+		    		case 2:
+		    			campo = (nombreArchivoCsv == "Empleados.csv") ? "NOMBRE: " : "ENTRADA: ";
+		    			archivoPdf.showTextXY(campo + elemento, 50, 747 - 14 * lineas);
+		    			break;
+					case 3:
+					    campo = (nombreArchivoCsv == "Empleados.csv") ? "APELLIDO: " : "SALIDA: ";
+		    			archivoPdf.showTextXY(campo + elemento, 50, 747 - 14 * lineas);
+		    			break;
+					case 4:
+						if(nombreArchivoCsv == "Empleados.csv"){
+							archivoPdf.showTextXY("FECHA DE NACIMIENTO: "+ elemento, 50, 747 - 14 * lineas);
+						}
+				    	break;
+				    case 5:
+				        archivoPdf.showTextXY("SUELDO $: "+ elemento, 50, 747 - 14 * lineas);
+				    	break;	
+				}
+				contador++;
+		    }
+		    lineas++;
+		    archivoPdf.showTextXY("--------------------------------------------", 50, 747 - 14 * lineas);
+		    
+		    // Si la página actual se ha llenado, agregar una nueva página y reiniciar el contador de líneas
+		    if (lineas >= maxLineasPorPagina) {
+				archivoPdf.newPage();
+		        lineas = 0;
+		        archivoPdf.setFont(PDF::COURIER, 12);
+		    }
+		}
+	}
+	std::cout<<"Numero de paginas de " << nombreArchivoPdf << " : " << archivoPdf.getCurrentPage() + 1 <<std::endl;
+	reporte.close();
+	
+	mensajeDeError = "Lo sentimos ha ocurrido un error...";
+	if(!archivoPdf.writeToFile(nombreArchivoPdf, mensajeDeError))
+	{
+		std::cout << mensajeDeError << std::endl;
+	}
+	else
+	{
+		std::cout << "(Se ha creado el PDF)" << std::endl;
+	}
+}
+	
+	
+	
+	
+	
+	
+	
 	
