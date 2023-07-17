@@ -39,9 +39,7 @@ CalculadoraPolaca::CalculadoraPolaca(std::string expresionInfijo) {
 	expresion = arbol.obtenerRecorridoPreorden();
 	expresion = eliminarEspaciosConsecutivos(expresion);
 	this->expresionPrefijo = expresion;
-	
-	arbol.mostrarArbol();
-	
+		
 }
 
 ////////////////////////////////////////////////////////////////////////

@@ -42,12 +42,12 @@ void Menu::desplegarMenu() {
     NodoDoble<Opcion>* nodo = opciones.getCabeza();
     do {
         if (nodo == opcionSeleccionada) {
-            std::cout << "> ";
+            std::cout << "UwU ==)> ";
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // Cambiar el color de fondo a blanco intenso
-            std::cout << nodo->getDato() << std::endl;
+            std::cout  <<nodo->getDato() << std::endl;
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED); // Restaurar el color original del texto
         } else {
-            std::cout << "  " << nodo->getDato() << std::endl;
+            std::cout << "         "<< nodo->getDato() << std::endl;
         }
         nodo = nodo->getSiguiente();
     } while (nodo != opciones.getCabeza());

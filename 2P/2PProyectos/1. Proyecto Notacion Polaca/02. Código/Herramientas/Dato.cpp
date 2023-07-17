@@ -2,7 +2,7 @@
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 26/06/23 22:21
- * Fecha de modificacion: 26/06/23 22:21
+ * Fecha de modificacion: 16/07/23 20:56
  * Enunciado:
  * Proyecto transformacion de expresion infija a notacion polaca y polaca inversa
  *
@@ -168,7 +168,7 @@ float Dato::ingresarFloat() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::string Dato::ingresarExpresion() {		
-    char *entrada = new char[300];    //Arreglo dinámico para la entrada
+    char *entrada = new char[10000]; //Arreglo dinámico para la entrada
     char tecla;                      //Caracter de entrada
     int i = 0;                       //Contador de caracteres
     int parentesisApertura = 0;      //Contador de paréntesis de apertura
@@ -176,6 +176,7 @@ std::string Dato::ingresarExpresion() {
 	bool eliminarEspeciales = false; //Verificador de eliminación de sin(, cos(, tan(, raiz( y pi
 	int caracteresEliminar= 0;       //Cantidad de caracteres de expresiones especiales para eliminar
 	char elementoAnterior = '\0';    //Caracter anterior al actual
+	bool huboPunto = false;          //Indicador de aparición de punto '.' anterior
 	bool hayPunto = false;           //Indicador de aparición de punto '.'
     while (true) {
         tecla = getch(); // lee la tecla ingresada por el usuario sin mostrarla en la consola
@@ -216,9 +217,7 @@ std::string Dato::ingresarExpresion() {
 		    	std::cout << "\b \b";
 		        i--;
 		        entrada[i] = 0;// elimina el último caracter de la entrada
-		    	if(!hayPunto)
-		    		hayPunto = true;
-
+				hayPunto = huboPunto;	
 			}else {
 		        std::cout << "\b \b";
 		        i--;
@@ -312,6 +311,7 @@ std::string Dato::ingresarExpresion() {
 		} else if(esOperador(tecla) && elementoAnterior !='.' && !esOperador(elementoAnterior) && tecla != '-' && elementoAnterior!='(' && i>0){	
 			entrada[i++] = tecla;
 			std::cout << tecla;
+			huboPunto = hayPunto;
 			hayPunto = false; //Cuando se ingresa un operador se reinicia el indicador de punto a falso
 	//Si el usuario ingresa un signo negativo entonces solo no puede ser precedido por otro operador o un punto
 		} else if(tecla == '-' && !esOperador(elementoAnterior) && elementoAnterior !='.'){

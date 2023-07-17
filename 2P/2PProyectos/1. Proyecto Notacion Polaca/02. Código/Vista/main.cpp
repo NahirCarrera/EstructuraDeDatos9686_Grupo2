@@ -9,12 +9,8 @@
  *******************************************************************************/
  
 #include <iostream>
-#include <stdlib.h>
-#include <string>
-#include "../Herramientas/ControladorMenu.h"
-#include "../Controlador/ArbolBinario.cpp"
-#include "../Herramientas/Dato.h"
 #include <iomanip>
+#include "../Herramientas/ControladorMenu.h"
 
 int main() {
 	std::cout << std::setprecision(12);
