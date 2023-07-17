@@ -218,6 +218,7 @@ void ControladorMenu::generarPdf(){
 
 void ControladorMenu::crearSistemaDeAyuda(){	
 	std::cout<<"Abrir sistema de ayuda :D\n";
+	system("help.chm");
 	system("pause");
 }
 
