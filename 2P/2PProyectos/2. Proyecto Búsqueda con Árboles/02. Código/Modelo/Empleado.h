@@ -11,6 +11,7 @@ class Empleado : public Persona
 		~Empleado();
 		float getSueldo();
 		void setSueldo(float);
+		std::string mostrar();
 		
 		friend std::ostream& operator<<(std::ostream&, const Empleado&);	
 	   bool operator==(Empleado&);

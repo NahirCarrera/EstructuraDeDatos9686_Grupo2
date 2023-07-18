@@ -32,6 +32,18 @@ Menu::Menu(std::string titulo){
 }
 
 ////////////////////////////////////////////////////////////////////////////
+// Name:       Menu::setTitulo(std::string newTitulo)
+// Purpose:    Implementation of Menu::setTitulo(std::string newTitulo)
+// Parameters:
+// - newTitulo
+// Return:     
+////////////////////////////////////////////////////////////////////////////
+
+void Menu::setTitulo(std::string newTitulo) {
+	titulo = newTitulo;
+}
+
+////////////////////////////////////////////////////////////////////////////
 // Name:       Menu::desplegarMenu()
 // Purpose:    Mostrar el menú en la pantalla
 // Return:     void

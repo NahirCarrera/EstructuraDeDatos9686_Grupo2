@@ -66,6 +66,153 @@ void ControladorMenu::registrarEmpleado() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       ControladorMenu::eliminarEmpleado()
+// Purpose:    Elimina un empleado segun la cedula ingresada
+// Return:     void
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ControladorMenu::eliminarEmpleado() {
+	std::string cedula;
+    Fecha fecha;
+    bool hayRegistro = true;
+
+	ListaCircularDoble<Empleado>& empleados = Singleton::getInstance()->getEmpleados();
+	ListaCircularDoble<RegistroEntradaSalida>& registros = Singleton::getInstance()->getRegistros();
+	
+	// Pedimos al usuario que ingrese la cedula que desea buscar
+	std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+	std::cout << "                      ELIMINAR EMPLEADO" << std::endl;
+    std::cout << "(O)===)> Ingrese la cedula: ";
+    cedula = Dato::ingresarCedulaEcuador();
+    std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+    system("cls");
+    Empleado empleado(cedula, "", "", fecha, 0);
+    RegistroEntradaSalida registro(empleado, fecha, fecha);
+    
+    if(empleados.buscar(empleado)) {
+    	empleados.eliminar(empleado);
+    	
+    	while(hayRegistro) {
+    		hayRegistro = registros.eliminar(registro);
+		}
+    	
+    	GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
+    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+    	
+    	std::cout << " Empleado y Registros eliminados" << std::endl;
+    	
+	} else {
+		std::cout << " ¡¡ Cedula no registrada..." << std::endl;
+	}
+    
+    
+	system("pause");
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       ControladorMenu::modificarNombreApellido()
+// Purpose:    Modifica el nombre y apellido de un empelado
+// Parameters:
+// - cedula
+// Return:     void
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ControladorMenu::modificarNombreApellido(std::string cedula) {
+	std::string nombre, apellido;
+	Empleado empleado;
+	RegistroEntradaSalida registro;
+    
+    ListaCircularDoble<Empleado>& empleados = Singleton::getInstance()->getEmpleados();
+    ListaCircularDoble<RegistroEntradaSalida>& registros = Singleton::getInstance()->getRegistros();
+
+	NodoDoble<Empleado>* nodoEmpleado = empleados.extraerNodo(Empleado(cedula, "", "", Fecha(), 0));
+    
+    if (nodoEmpleado != nullptr) {
+    	empleado = nodoEmpleado->getDato();
+    	std::cout<< "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+		std::cout << "             MODIFICAR NOMBRE/APELLIDO DE EMPLEADO" << std::endl;
+    	std::cout << "(O)===)> Ingrese el nuevo nombre: ";
+	    nombre = Dato::ingresarNombreSimple();
+	    std::cout << "(O)===)> Ingrese el nuevo apellido: ";
+	    apellido = Dato::ingresarNombreSimple();
+	    
+	    empleado.setNombre(nombre);
+	    empleado.setApellido(apellido);
+	    nodoEmpleado->setDato(empleado);
+	    
+	    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
+	    NodoDoble<RegistroEntradaSalida>* aux = registros.getCabeza();
+		do{
+			if (aux->getDato() == registro){
+				registro = aux->getDato();
+				registro.setEmpleado(empleado);
+				aux->setDato(registro);
+			}
+			aux = aux->getSiguiente();
+		} while (aux != registros.getCabeza());
+	    
+	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
+    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+	    std::cout << "Nombre y Apellido modificado exitosamente..." << std::endl;
+	} else {
+		std::cout << "Error: Algo salio mal con la busqueda..." << std::endl;	
+	}
+    
+	
+	system("pause");
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       ControladorMenu::modificarSueldo()
+// Purpose:    Modifica el sueldo de un empleado
+// Parameters:
+// - cedula
+// Return:     void
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ControladorMenu::modificarSueldo(std::string cedula) {
+	float sueldo;
+	Empleado empleado;
+	RegistroEntradaSalida registro;
+    
+    ListaCircularDoble<Empleado>& empleados = Singleton::getInstance()->getEmpleados();
+    ListaCircularDoble<RegistroEntradaSalida>& registros = Singleton::getInstance()->getRegistros();
+
+	NodoDoble<Empleado>* nodoEmpleado = empleados.extraerNodo(Empleado(cedula, "", "", Fecha(), 0));
+    
+    if (nodoEmpleado != nullptr) {
+    	empleado = nodoEmpleado->getDato();
+    	std::cout<< "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+		std::cout << "             MODIFICAR SUELDO DE EMPLEADO" << std::endl;
+    	std::cout << "(O)===)> Ingrese el sueldo asignado por mes (USD):";
+		sueldo = Dato::ingresarFloat();
+	    
+	    empleado.setSueldo(sueldo);
+	    nodoEmpleado->setDato(empleado);
+	    
+	    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
+	    NodoDoble<RegistroEntradaSalida>* aux = registros.getCabeza();
+		do{
+			if (aux->getDato() == registro){
+				registro = aux->getDato();
+				registro.setEmpleado(empleado);
+				aux->setDato(registro);
+			}
+			aux = aux->getSiguiente();
+		} while (aux != registros.getCabeza());
+	    
+	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
+    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+	    std::cout << "Sueldo modificado exitosamente..." << std::endl;
+	} else {
+		std::cout << "Error: Algo salio mal con la busqueda..." << std::endl;	
+	}
+    
+	
+	system("pause");
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Name:       ControladorMenu::registrarEntradaSalida()
 // Purpose:    Registrar la entrada o salida de un empleado del sistema
 // Return:     void
@@ -245,6 +392,48 @@ void ControladorMenu::salir() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Name:       ControladorMenu::subMenuRegistroDePersonal()
+// Purpose:    Desplegar las opciones del submenú para modificar un empleado
+// Return:     void
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ControladorMenu::modificarEmpleado() {
+	std::string cedula;
+    Fecha fecha;
+
+	ListaCircularDoble<Empleado>& empleados = Singleton::getInstance()->getEmpleados();
+	
+	// Pedimos al usuario que ingrese la cedula que desea buscar
+	std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+	std::cout << "                      MODIFICAR EMPLEADO" << std::endl;
+    std::cout << "(O)===)> Ingrese la cedula: ";
+    cedula = Dato::ingresarCedulaEcuador();
+    std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
+    system("cls");
+    
+    NodoDoble<Empleado>* empleado = empleados.extraerNodo(Empleado(cedula, "", "", fecha, 0));
+    
+    
+    if(empleado != nullptr) {    	
+    		Menu menu(empleado->getDato().mostrar() +"\n(O)===)> <><><><><><><><>< MENU MODIFICAR EMPLEADO ><><><><><><><><> <)==(O)"); 
+			menu.insertarOpcion("                (x)===)> Modificar Nombre/Apellido      <)==(x)", [&]() { modificarNombreApellido(cedula); });
+			menu.insertarOpcion("                (x)===)> Modificar Sueldo               <)==(x)", [&]() { modificarSueldo(cedula); });
+			menu.insertarOpcion("                (x)===)> Regresar                       <)==(x)", [&]() { salir(); }); // Para salir del bucle siempre se debe usar esta funcion de salir()
+			while (menuEjecutando) {
+				menu.setTitulo(empleado->getDato().mostrar() +"\n(O)===)> <><><><><><><><>< MENU MODIFICAR EMPLEADO ><><><><><><><><> <)==(O)");
+				menu.correr();
+			}
+			menuEjecutando = true; // Siempre que se quiera correr un menu en bucle
+    	
+	} else {
+		std::cout << " !! Cedula no registrada..." << std::endl;
+		system("pause");
+	}
+    
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       ControladorMenu::subMenuRegistroDePersonal()
 // Purpose:    Desplegar las opciones del submenú para el control de personal
 // Return:     void
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -252,10 +441,12 @@ void ControladorMenu::salir() {
 void ControladorMenu::subMenuRegistroDePersonal() {
 	Menu menu( "(O)===)> <><><><><><><><>< Sistema de Control de Personal ><><><><><><><><> <)==(O)"); 
 	menu.insertarOpcion("                (x)===)> Registrar Empleado             <)==(x)", [&]() { registrarEmpleado(); });
+	menu.insertarOpcion("                (x)===)> Modificar Empleado             <)==(x)", [&]() { modificarEmpleado(); });
+	menu.insertarOpcion("                (x)===)> Eliminar Empleado              <)==(x)", [&]() { eliminarEmpleado(); });	
 	menu.insertarOpcion("                (x)===)> Registrar Entrada/Salida       <)==(x)", [&]() { registrarEntradaSalida(); });
 	menu.insertarOpcion("                (x)===)> Mostrar Registro               <)==(x)", [&]() { mostrarRegistro(); });
 	menu.insertarOpcion("                (x)===)> Mostrar Empleados              <)==(x)", [&]() { mostrarEmpleados(); });
-	menu.insertarOpcion("                (x)===)> Mostrar registro individual    <)==(x)", [&]() { mostrarRegistroIndividual(); });
+	menu.insertarOpcion("                (x)===)> Mostrar Registro Individual    <)==(x)", [&]() { mostrarRegistroIndividual(); });
 	menu.insertarOpcion("                (x)===)> Regresar al Menu Principal     <)==(x)", [&]() { salir(); }); // Para salir del bucle siempre se debe usar esta funcion de salir()
 	while (menuEjecutando) {
 		menu.correr();

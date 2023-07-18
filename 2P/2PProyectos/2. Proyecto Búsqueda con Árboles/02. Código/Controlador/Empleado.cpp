@@ -59,6 +59,28 @@ void Empleado::setSueldo(float sueldo) {
     this->sueldo = sueldo;
 }
 
+std::string Empleado::mostrar() {
+	std::string strEmpleado;
+	strEmpleado += "     ______________________________________________________\n";
+	strEmpleado += "    /                                                     /\n"; 
+	strEmpleado += "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)\n";
+	strEmpleado += "     /''''''''''''''''''''''''''''''''''''''''''''''''''''''/\n";;
+	strEmpleado += "          __________ \n";
+	strEmpleado += "         |          | NOMBRE: " + getNombre()+"\n";
+	strEmpleado += "         |          | APELLIDO: " + getApellido()+"\n";
+	strEmpleado += "         |          | CEDULA: " + getCedula()+"\n";
+	strEmpleado += "         |          | FECHA DE NACIMIENTO: " + std::to_string(getFechaNacimiento().getDia()) + "/" + std::to_string(getFechaNacimiento().getMes()) + "/" + std::to_string(getFechaNacimiento().getAnio()) + "\n";
+	strEmpleado += "         |          | SUELDO: $" + std::to_string(sueldo) + "\n";
+	strEmpleado += "         |__________| \n";
+	strEmpleado += " \n";
+	strEmpleado += "      /''''''''''''''''''''''''''''''''''''''''''''''''''''''/\n";
+	strEmpleado += "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)\n";
+	strEmpleado += "     /______________________________________________________/\n";
+  	
+	return strEmpleado;
+	
+}
+
 ////////////////////////////////////////////////////////////////////////
 // Name:       Empleado::operator <<(std::ostream& os, const Empleado& empleado)
 // Purpose:    Implementation of Persona::operator <<()

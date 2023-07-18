@@ -130,7 +130,7 @@ void ListaCircularDoble<T>::insertar(T dato){
 ////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-void ListaCircularDoble<T>::eliminar(T dato){
+bool ListaCircularDoble<T>::eliminar(T dato){
 	if (!estaVacia()){
 		if (this->cabeza->getDato() == dato){
 			NodoDoble<T>* aux = this->cabeza;
@@ -138,6 +138,7 @@ void ListaCircularDoble<T>::eliminar(T dato){
 			this->cabeza->setAnterior(this->cola);
 			this->cola->setSiguiente(this->cabeza);
 			delete aux;
+			return true;
 		}else{
 			NodoDoble<T>* aux = this->cabeza;
 			while (aux->getSiguiente() != this->cabeza){
@@ -146,12 +147,14 @@ void ListaCircularDoble<T>::eliminar(T dato){
 					aux->setSiguiente(aux2->getSiguiente());
 					aux2->getSiguiente()->setAnterior(aux);
 					delete aux2;
-					break;
+					return true;					
 				}
 				aux = aux->getSiguiente();
 			}
 		}
 	}
+	
+	return false;
 }
 
 ////////////////////////////////////////////////////////////////////////

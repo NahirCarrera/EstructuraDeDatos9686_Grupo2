@@ -22,10 +22,13 @@ class ControladorMenu{
 	private:
 		//Funciones de control de personal
 		void registrarEmpleado();
+		void eliminarEmpleado();
 		void registrarEntradaSalida();
 		void mostrarRegistro();
 		void mostrarEmpleados();
 		void mostrarRegistroIndividual();
+		void modificarNombreApellido(std::string cedula);
+		void modificarSueldo(std::string cedula);
 		//Funciones extras
 		void crearCopiaDeSeguridad();
 		void generarPdf();
@@ -34,6 +37,7 @@ class ControladorMenu{
 		//Submenus
 		void subMenuRegistroDePersonal();
 		void subMenuExtras();
+		void modificarEmpleado();
 		//Salir
 		void salir();
 		

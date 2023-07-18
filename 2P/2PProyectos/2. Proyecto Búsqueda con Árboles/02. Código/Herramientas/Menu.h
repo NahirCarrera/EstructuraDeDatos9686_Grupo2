@@ -26,6 +26,7 @@ class Menu{
 		Menu(std::string);
 		
 		//Operaciones
+		void setTitulo(std::string newTitulo);
 		void desplegarMenu();
 		void moverArriba();
 		void moverAbajo();

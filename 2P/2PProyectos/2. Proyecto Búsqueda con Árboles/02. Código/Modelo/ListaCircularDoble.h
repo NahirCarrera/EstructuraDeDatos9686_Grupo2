@@ -28,7 +28,7 @@ class ListaCircularDoble:public OperacionListas<T>{
 		//Operaciones
 		bool estaVacia()override;
 		void insertar(T)override ;
-		void eliminar(T)override;
+		bool eliminar(T)override;
 		bool buscar(T)override;
 		void mostrar()override;
 		void mostrarRepetidos(T) override;
