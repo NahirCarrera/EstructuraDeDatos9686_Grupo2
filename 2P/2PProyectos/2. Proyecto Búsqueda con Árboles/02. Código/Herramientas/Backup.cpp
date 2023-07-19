@@ -7,7 +7,6 @@
  * Enunciado:
  * Registro de entrada y salida de personas con listas circulares doblemente
  * enlazadas y búsqueda con árboles binarios + Extras
- *
  *******************************************************************************/ 
 
 #include "../Modelo/Fecha.h"
@@ -135,9 +134,9 @@ void Backup::generarPDF(std::string nombreArchivoCsv){
 			lineas++;
 			
 			if(nombreArchivoCsv == "Empleados.csv"){
-				archivoPdf.showTextXY("----------------- EMPLEADOS -----------------", 50, 747 - 14 * lineas);
+				archivoPdf.showTextXY("----------------- EMPLEADO -----------------", 50, 747 - 14 * lineas);
 			}else{
-				archivoPdf.showTextXY("----------------- REGISTROS -----------------", 50, 747 - 14 * lineas);
+				archivoPdf.showTextXY("----------------- REGISTRO -----------------", 50, 747 - 14 * lineas);
 			}
 		    while (std::getline(ss, elemento, ';')) {
 		    	lineas++;
@@ -151,7 +150,12 @@ void Backup::generarPDF(std::string nombreArchivoCsv){
 		    			break;
 					case 3:
 					    campo = (nombreArchivoCsv == "Empleados.csv") ? "APELLIDO: " : "SALIDA: ";
-		    			archivoPdf.showTextXY(campo + elemento, 50, 747 - 14 * lineas);
+					    if(elemento == "0/0/0-hora:0:0:0"){
+							archivoPdf.showTextXY(campo + "NO SE REGISTRO SALIDA", 50, 747 - 14 * lineas);
+						}else{
+							archivoPdf.showTextXY(campo + elemento, 50, 747 - 14 * lineas);
+						}
+		    			
 		    			break;
 					case 4:
 						if(nombreArchivoCsv == "Empleados.csv"){
