@@ -89,7 +89,15 @@ void Backup::crearBackup(){
     }
 	
 }
-	
+
+////////////////////////////////////////////////////////////////////////
+// Name:       generarPDF()
+// Purpose:    Crea un pdf por arhivo con la información del mismo.
+// Parameters:
+// - nombreArchivoCsv
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
 void Backup::generarPDF(std::string nombreArchivoCsv){
 	std::fstream reporte;
 	std::ostringstream out;

@@ -20,6 +20,7 @@
 #include "Menu.h"
 #include "Dato.h"
 #include "Backup.h"
+#include "Imagen.h"
 #include <string>
 #include <cstdlib> // para usar system("cls") y system("pause")
 
@@ -341,6 +342,7 @@ void ControladorMenu::mostrarRegistroIndividual() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::crearCopiaDeSeguridad(){	
+	std::cout << "(O)===)> <><><><><><><><>< BACKUP ><><><><><><><><> <)==(O)"<<std::endl;
 	Backup::crearBackup();
 	system("pause");
 }
@@ -352,6 +354,7 @@ void ControladorMenu::crearCopiaDeSeguridad(){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::generarPdf(){	
+	std::cout << "(O)===)> <><><><><><><><>< GUARDAR REGISTROS ><><><><><><><><> <)==(O)"<<std::endl;
 	Backup::generarPDF("Empleados.csv");	
 	Backup::generarPDF("Registros.csv");
 	system("pause");
@@ -364,7 +367,7 @@ void ControladorMenu::generarPdf(){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::crearSistemaDeAyuda(){	
-	std::cout<<"Abrir sistema de ayuda :D\n";
+	std::cout << "(O)===)> <><><><><><><><>< HELP ><><><><><><><><> <)==(O)"<<std::endl;
 	system("help.chm");
 	system("pause");
 }
@@ -376,8 +379,14 @@ void ControladorMenu::crearSistemaDeAyuda(){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::imprimirFoto(){	
-	std::cout<<"Foto de los guapos :D\n";
-	system("pause");
+	std::cout << "(O)===)> <><><><><><><><>< ABOUT US ><><><><><><><><> <)==(O)"<<std::endl;
+	std::cout << "         Por favor, maximice el tamanio de su consola" <<std::endl;
+	std::cout << "                   Att: Nahir & Stephen"<<std::endl;
+	std::cout << "                  ndcarrera2@espe.edu.ec"<<std::endl;
+	std::cout << "                   sddrouet@espe.edu.ec"<<std::endl;
+	system("pause"); 
+	Imagen imagen("ejemplo.bmp");
+	imagen.imprimirImagenEnConsola();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

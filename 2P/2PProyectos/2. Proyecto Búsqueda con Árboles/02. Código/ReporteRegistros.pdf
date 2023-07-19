@@ -158,8 +158,8 @@ endobj
 <<
    /Type /Pages
    /MediaBox [ 0 0 612 792 ]
-   /Count 1
-   /Kids [ 18 0 R ]
+   /Count 2
+   /Kids [ 18 0 R 19 0 R ]
 >>
 endobj
 
@@ -167,14 +167,23 @@ endobj
 <<
    /Type /Page
    /Parent 17 0 R
-   /Contents 19 0 R
+   /Contents 20 0 R
    /Resources 15 0 R
 >>
 endobj
 
 19 0 obj
 <<
-   /Length 1789
+   /Type /Page
+   /Parent 17 0 R
+   /Contents 21 0 R
+   /Resources 15 0 R
+>>
+endobj
+
+20 0 obj
+<<
+   /Length 2077
 >>
 stream
 BT
@@ -209,7 +218,7 @@ BT
 1 0 0 1 50 537 Tm
 (ENTRADA: 8/7/2023-hora:23:50:51) Tj
 1 0 0 1 50 523 Tm
-(SALIDA: 0/0/0-hora:0:0:0) Tj
+(SALIDA: 17/7/2023-hora:21:3:22) Tj
 1 0 0 1 50 495 Tm
 (--------------------------------------------) Tj
 1 0 0 1 50 481 Tm
@@ -242,12 +251,33 @@ BT
 (SALIDA: 12/7/2023-hora:23:26:43) Tj
 1 0 0 1 50 243 Tm
 (--------------------------------------------) Tj
+1 0 0 1 50 229 Tm
+(----------------- REGISTROS -----------------) Tj
+1 0 0 1 50 215 Tm
+(CEDULA: 1726952946) Tj
+1 0 0 1 50 201 Tm
+(ENTRADA: 17/7/2023-hora:21:4:53) Tj
+1 0 0 1 50 187 Tm
+(SALIDA: 0/0/0-hora:0:0:0) Tj
+1 0 0 1 50 159 Tm
+(--------------------------------------------) Tj
+ET
+endstream
+endobj
+
+21 0 obj
+<<
+   /Length 15
+>>
+stream
+BT
+/F1 12 Tf
 ET
 endstream
 endobj
 
 xref
-0 20
+0 22
 0000000000 65535 f 
 0000000010 00000 n 
 0000000123 00000 n 
@@ -266,13 +296,15 @@ xref
 0000001680 00000 n 
 0000001955 00000 n 
 0000002013 00000 n 
-0000002113 00000 n 
-0000002210 00000 n 
+0000002120 00000 n 
+0000002217 00000 n 
+0000002314 00000 n 
+0000004448 00000 n 
 trailer
 <<
-   /Size 20
+   /Size 22
    /Root 16 0 R
 >>
 startxref
-4056
+4518
 %%EOF

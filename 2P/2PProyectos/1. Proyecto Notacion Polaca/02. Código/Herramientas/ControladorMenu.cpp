@@ -112,9 +112,7 @@ void ControladorMenu::salir() {
 
 void ControladorMenu::subMenuPolaca(std::string infijo) {
 	CalculadoraPolaca calculadora(infijo);	
-	
-	std::string titulo = "\n(O)===)> <><><><><><><><><> MENU OPERACIONES <><><><><><><><><> <)==(O)\nExpresion infijo:\n" +  calculadora.getExpresionInfijo() + "\n\n";
-	
+	std::string titulo = "\n(O)===)> <><><><><><><><><> MENU OPERACIONES <><><><><><><><><> <)==(O)\n(O)===)> Expresion infijo: \n(O)===)> "+ calculadora.getExpresionInfijo()+"\n\n";
 	Menu menu(titulo);
 	menu.insertarOpcion("Mostrar notacion Polaca (prefija)                     ", [&]() { operarPrefijo(calculadora); });
 	menu.insertarOpcion("Mostrar notacion Polaca Inversa (postfija)            ", [&]() { operarPostfijo(calculadora); });
