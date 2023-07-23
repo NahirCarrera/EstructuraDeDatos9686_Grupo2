@@ -174,7 +174,7 @@ endobj
 
 19 0 obj
 <<
-   /Length 1878
+   /Length 1876
 >>
 stream
 BT
@@ -187,13 +187,13 @@ BT
 1 0 0 1 50 719 Tm
 (CEDULA: 1726952946) Tj
 1 0 0 1 50 705 Tm
-(NOMBRE: STEPHEN) Tj
+(NOMBRE: DAVID) Tj
 1 0 0 1 50 691 Tm
 (APELLIDO: DROUET) Tj
 1 0 0 1 50 677 Tm
 (FECHA DE NACIMIENTO: 17/4/2000-hora:0:0:0) Tj
 1 0 0 1 50 663 Tm
-(SUELDO $: 600.22) Tj
+(SUELDO $: 150.99) Tj
 1 0 0 1 50 649 Tm
 (--------------------------------------------) Tj
 1 0 0 1 50 635 Tm
@@ -284,5 +284,5 @@ trailer
    /Root 16 0 R
 >>
 startxref
-4145
+4143
 %%EOF

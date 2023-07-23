@@ -216,24 +216,4 @@ void ArbolBinario<T>::mostrarRepetidos(T valor) {
 	    }
 	};
     buscarNodoRecursivo(raiz, valor);
-	
-	/*
-	//Funcion lambda para imprimir el árbol recursivamente
-	std::function<void(NodoArbol<T>*, int)> mostrarRepetidosRecursivo = [&](NodoArbol<T>* nodo) {
-	    if (nodo == nullptr) {
-	        return;
-	    }
-	    
-	    mostrarRepetidosRecursivo(nodo->getDerecho(), nivel + 1);
-	    
-	    if (valor == nodo->getDato()) {
-	    	std::cout << nodo->getDato() << std::endl;	
-		}	    
-	    
-	    mostrarRepetidosRecursivo(nodo->getIzquierdo(), nivel + 1);
-	};
-	
-	std::cout<<"------------- Registros ---------------"<<std::endl;
-    mostrarRepetidosRecursivo(raiz, 0);
-    std::cout<<"---------------------------------------"<<std::endl;*/
 }

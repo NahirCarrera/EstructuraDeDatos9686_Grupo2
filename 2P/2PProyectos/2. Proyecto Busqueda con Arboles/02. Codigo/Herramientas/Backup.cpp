@@ -110,6 +110,25 @@ std::string Backup::obtenerDirectorioActual(){
 // Name:       restaurarBackups()
 // Purpose:    Ubica la carpeta seleccionada por menu y restaura la
 //             copia de seguridad 
+// Parameters:
+// - textoConfirmacion
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
+
+bool confirmarAccion(std::string textoConfirmacion) {
+	bool seRealiza = false;
+	Menu subMenuConfirmacion("(O)===)> " + textoConfirmacion);
+	subMenuConfirmacion.insertarOpcion("SI                  ", [&]() {seRealiza = true;});
+	subMenuConfirmacion.insertarOpcion("NO                  ", []() {});
+	subMenuConfirmacion.correr();
+	
+	return seRealiza;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       restaurarBackups()
+// Purpose:    Ubica la carpeta seleccionada por menu y restaura la
+//             copia de seguridad 
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
@@ -143,11 +162,8 @@ void Backup::restaurarBackups(const std::string& rutaCarpetaBackups) {
     std::string carpetaSeleccionada = subMenuBackup.getOpcionSeleccionada().getTexto();
     std::string rutaCarpetaSeleccionada = rutaCompletaBackups + "\\" + carpetaSeleccionada;
 
-	Menu subMenuConfirmacion("(O)===)> Esta seguro que desea restaurar los datos del sistema? Esta accion podria ocasionar perdida de informacion.");
-	subMenuConfirmacion.insertarOpcion("SI                                                                                                         ", noHaceNada);
-	subMenuConfirmacion.insertarOpcion("NO                                                                                                         ", noHaceNada);
-	subMenuConfirmacion.correr();
-	if(subMenuConfirmacion.getOpcionSeleccionada().getTexto() == "SI                                                                                                         "){
+
+	if(confirmarAccion("Esta seguro que desea restaurar los datos del sistema? Esta accion podria ocasionar perdida de informacion.")){
 		DWORD atributosCarpeta = GetFileAttributesA(rutaCarpetaSeleccionada.c_str());
 	    if (atributosCarpeta == INVALID_FILE_ATTRIBUTES || !(atributosCarpeta & FILE_ATTRIBUTE_DIRECTORY)) {
 	        std::cout << "La carpeta seleccionada no existe o no es una carpeta válida." << std::endl;

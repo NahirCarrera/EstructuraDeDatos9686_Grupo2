@@ -60,11 +60,30 @@ void ControladorMenu::registrarEmpleado() {
 	    
 	    empleados.insertar(persona);
 	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
-	    std::cout << "Empleado registrado con  exito." << std::endl;
+	    std::cout << "(O)===)> Empleado registrado con exito." << std::endl;
 	} else {
-		std::cout << " Cedula ya registrada..." << std::endl;
+		std::cout << "(O)===)> Cedula ya registrada..." << std::endl;
 	}
 	system("pause");
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       restaurarBackups()
+// Purpose:    Ubica la carpeta seleccionada por menu y restaura la
+//             copia de seguridad 
+// Parameters:
+// - textoConfirmacion
+// Return:     bool
+////////////////////////////////////////////////////////////////////////
+
+bool confirmarAccion1(std::string textoConfirmacion) {
+	bool seRealiza = false;
+	Menu subMenuConfirmacion("(O)===)> " + textoConfirmacion);
+	subMenuConfirmacion.insertarOpcion("SI                  ", [&]() {seRealiza = true;});
+	subMenuConfirmacion.insertarOpcion("NO                  ", []() {});
+	subMenuConfirmacion.correr();
+	
+	return seRealiza;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,21 +109,26 @@ void ControladorMenu::eliminarEmpleado() {
     system("cls");
     Empleado empleado(cedula, "", "", fecha, 0);
     RegistroEntradaSalida registro(empleado, fecha, fecha);
+    empleado = empleados.extraerDato(empleado);
     
     if(empleados.buscar(empleado)) {
-    	empleados.eliminar(empleado);
+    	if (confirmarAccion1("Esta seguro que desea eliminar el empleado:\n\n" + empleado.mostrar())) {
+    		empleados.eliminar(empleado);
     	
-    	while(hayRegistro) {
-    		hayRegistro = registros.eliminar(registro);
+	    	while(hayRegistro) {
+	    		hayRegistro = registros.eliminar(registro);
+			}
+	    	
+	    	GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
+	    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+	    	
+	    	std::cout << "(O)===)> Empleado y Registros eliminados" << std::endl;	
+		} else {
+			std::cout << "(O)===)> Cancelado: No se elimino el empleado..." << std::endl;
 		}
-    	
-    	GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
-    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
-    	
-    	std::cout << " Empleado y Registros eliminados" << std::endl;
-    	
+
 	} else {
-		std::cout << " ¡¡ Cedula no registrada..." << std::endl;
+		std::cout << "(O)===)> Cedula no registrada..." << std::endl;
 	}
     
     
@@ -138,26 +162,31 @@ void ControladorMenu::modificarNombreApellido(std::string cedula) {
 	    std::cout << "(O)===)> Ingrese el nuevo apellido: ";
 	    apellido = Dato::ingresarNombreSimple();
 	    
-	    empleado.setNombre(nombre);
-	    empleado.setApellido(apellido);
-	    nodoEmpleado->setDato(empleado);
+	    if (confirmarAccion1("Esta seguro que desea modificar el nombre y apellido del empleado?\n\n" + empleado.mostrar())) {
+		    empleado.setNombre(nombre);
+		    empleado.setApellido(apellido);
+		    nodoEmpleado->setDato(empleado);
+		    
+		    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
+		    NodoDoble<RegistroEntradaSalida>* aux = registros.getCabeza();
+			do{
+				if (aux->getDato() == registro){
+					registro = aux->getDato();
+					registro.setEmpleado(empleado);
+					aux->setDato(registro);
+				}
+				aux = aux->getSiguiente();
+			} while (aux != registros.getCabeza());
+		    
+		    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
+	    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+		    std::cout << "(O)===)> Nombre y Apellido modificado exitosamente..." << std::endl;
 	    
-	    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
-	    NodoDoble<RegistroEntradaSalida>* aux = registros.getCabeza();
-		do{
-			if (aux->getDato() == registro){
-				registro = aux->getDato();
-				registro.setEmpleado(empleado);
-				aux->setDato(registro);
-			}
-			aux = aux->getSiguiente();
-		} while (aux != registros.getCabeza());
-	    
-	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
-    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
-	    std::cout << "Nombre y Apellido modificado exitosamente..." << std::endl;
+	    } else {
+			std::cout << "(O)===)> Cancelado: No se modifico el empleado..." << std::endl;
+		}
 	} else {
-		std::cout << "Error: Algo salio mal con la busqueda..." << std::endl;	
+		std::cout << "(O)===)> Error: Algo salio mal con la busqueda..." << std::endl;	
 	}
     
 	
@@ -189,6 +218,8 @@ void ControladorMenu::modificarSueldo(std::string cedula) {
     	std::cout << "(O)===)> Ingrese el sueldo asignado por mes (USD):";
 		sueldo = Dato::ingresarFloat();
 	    
+	    if (confirmarAccion1("Esta seguro que desea modificar el sueldo del empleado?\n\n" + empleado.mostrar())) {
+	    
 	    empleado.setSueldo(sueldo);
 	    nodoEmpleado->setDato(empleado);
 	    
@@ -205,9 +236,12 @@ void ControladorMenu::modificarSueldo(std::string cedula) {
 	    
 	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
     	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
-	    std::cout << "Sueldo modificado exitosamente..." << std::endl;
+	    std::cout << "(O)===)> Sueldo modificado exitosamente..." << std::endl;
+	    } else {
+			std::cout << "(O)===)> Cancelado: No se modifico el empleado..." << std::endl;
+		}
 	} else {
-		std::cout << "Error: Algo salio mal con la busqueda..." << std::endl;	
+		std::cout << "(O)===)> Error: Algo salio mal con la busqueda..." << std::endl;	
 	}
     
 	
@@ -245,6 +279,7 @@ void ControladorMenu::registrarEntradaSalida() {
 		
 		// Si no existe un registro de esa cedula creamos uno
 		if(nodoRegistro == nullptr) {
+			std::cout << "(O)===)> Entrada registrada fecha/hora: " << fechaActual <<std::endl;
 			RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
 			registros.insertar(registroNuevo);
 		} else {
@@ -252,10 +287,11 @@ void ControladorMenu::registrarEntradaSalida() {
 			// y se debe crear uno nuevo para esa cedula
 			if (nodoRegistro->getDato().getContadorRegistro() == 1) {
 				if(Fecha::obtenerFechaSimple(fechaActual) == Fecha::obtenerFechaSimple(nodoRegistro->getDato().getFechaSalida())){
-					std::cout << "Este empleado ya realizo su registro completo para esta fecha."<<std::endl;
+					std::cout << "Este empleado ya realizo su registro completo por hoy."<<std::endl;
 				} else {
 					RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
 					registros.insertar(registroNuevo);
+					std::cout << "(O)===)> Entrada registrada fecha/hora: " << fechaActual <<std::endl;
 				}
 				
 			} else {
@@ -265,12 +301,13 @@ void ControladorMenu::registrarEntradaSalida() {
 				registroNuevo.addContadorRegistro();
 				
 				nodoRegistro->setDato(registroNuevo);
+				std::cout << "(O)===)> Salida registrada fecha/hora: " << fechaActual <<std::endl;
 			}
 		}
 		
 		GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
 	} else {
-		std::cout << " ¡¡ Cedula no registrada..." << std::endl;
+		std::cout << "(O)===)> Cedula no registrada..." << std::endl;
 	}
 	system("pause");
 }
@@ -335,7 +372,7 @@ void ControladorMenu::mostrarRegistroIndividual() {
     	std::cout << registro->getDato().getEmpleado() << std::endl << std::endl;
 		registrosArbol.mostrarRepetidos(RegistroEntradaSalida(empleado, fecha, fecha));
 	} else {
-		std::cout << " ¡¡ Cedula no registrada..." << std::endl;
+		std::cout << "(O)===)> Cedula no registrada..." << std::endl;
 	}	
 	
 	system("pause");
@@ -462,7 +499,7 @@ void ControladorMenu::modificarEmpleado() {
 			menuEjecutando = true; // Siempre que se quiera correr un menu en bucle
     	
 	} else {
-		std::cout << " !! Cedula no registrada..." << std::endl;
+		std::cout << "(O)===)> Cedula no registrada..." << std::endl;
 		system("pause");
 	}
     
@@ -537,6 +574,6 @@ void ControladorMenu::correrMenu() {
 		menu.correr();
 	}
 	std::cout << "\n(O)===)> <><><><><><><><>< Saliendo, muchas gracias por usar el programa ><><><><><><><><> <)==(O)" << std::endl;
-	std::cout << "(O)===)> Att: Nahir & Stephen"<<std::endl;
+	std::cout << "(O)===)> Att: Nahir & Stephen" << std::endl;
 	system("pause");
 }
