@@ -166,20 +166,24 @@ void ControladorMenu::modificarNombreApellido(std::string cedula) {
 		    empleado.setNombre(nombre);
 		    empleado.setApellido(apellido);
 		    nodoEmpleado->setDato(empleado);
-		    
 		    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
 		    NodoDoble<RegistroEntradaSalida>* aux = registros.getCabeza();
-			do{
-				if (aux->getDato() == registro){
-					registro = aux->getDato();
-					registro.setEmpleado(empleado);
-					aux->setDato(registro);
-				}
-				aux = aux->getSiguiente();
-			} while (aux != registros.getCabeza());
 		    
+		    if (aux != nullptr) {
+		    	do{
+					if (aux->getDato() == registro){
+						registro = aux->getDato();
+						registro.setEmpleado(empleado);
+						aux->setDato(registro);
+					}
+					aux = aux->getSiguiente();
+				} while (aux != registros.getCabeza());
+				
+				GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+			}
+			
 		    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
-	    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+	    	
 		    std::cout << "(O)===)> Nombre y Apellido modificado exitosamente..." << std::endl;
 	    
 	    } else {
@@ -225,18 +229,23 @@ void ControladorMenu::modificarSueldo(std::string cedula) {
 	    
 	    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
 	    NodoDoble<RegistroEntradaSalida>* aux = registros.getCabeza();
-		do{
-			if (aux->getDato() == registro){
-				registro = aux->getDato();
-				registro.setEmpleado(empleado);
-				aux->setDato(registro);
-			}
-			aux = aux->getSiguiente();
-		} while (aux != registros.getCabeza());
 	    
+	    if (aux != nullptr) {
+			do{
+				if (aux->getDato() == registro){
+					registro = aux->getDato();
+					registro.setEmpleado(empleado);
+					aux->setDato(registro);
+				}
+				aux = aux->getSiguiente();
+			} while (aux != registros.getCabeza());
+	    				
+			GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+		}
+		
 	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
-    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
 	    std::cout << "(O)===)> Sueldo modificado exitosamente..." << std::endl;
+	    
 	    } else {
 			std::cout << "(O)===)> Cancelado: No se modifico el empleado..." << std::endl;
 		}
@@ -279,9 +288,14 @@ void ControladorMenu::registrarEntradaSalida() {
 		
 		// Si no existe un registro de esa cedula creamos uno
 		if(nodoRegistro == nullptr) {
-			std::cout << "(O)===)> Entrada registrada fecha/hora: " << fechaActual <<std::endl;
-			RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
-			registros.insertar(registroNuevo);
+			if (confirmarAccion1("Esta seguro que desea registrar la entrada con la fecha/hora: " + fechaActual.mostrar())) {
+				std::cout << "(O)===)> Entrada registrada fecha/hora: " << fechaActual <<std::endl;
+				RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
+				registros.insertar(registroNuevo);
+			} else {
+				std::cout << "(O)===)> Entrada no registrada..." <<std::endl;
+			}
+			
 		} else {
 			// Si existe un registro con el contador en 1 es porque ya registro la salida
 			// y se debe crear uno nuevo para esa cedula
@@ -289,19 +303,27 @@ void ControladorMenu::registrarEntradaSalida() {
 				if(Fecha::obtenerFechaSimple(fechaActual) == Fecha::obtenerFechaSimple(nodoRegistro->getDato().getFechaSalida())){
 					std::cout << "Este empleado ya realizo su registro completo por hoy."<<std::endl;
 				} else {
-					RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
-					registros.insertar(registroNuevo);
-					std::cout << "(O)===)> Entrada registrada fecha/hora: " << fechaActual <<std::endl;
+					if (confirmarAccion1("Esta seguro que desea registrar la entrada con la fecha/hora: " + fechaActual.mostrar())) {
+						std::cout << "(O)===)> Entrada registrada fecha/hora: " << fechaActual <<std::endl;
+						RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
+						registros.insertar(registroNuevo);
+					} else {
+						std::cout << "(O)===)> Entrada no registrada..." <<std::endl;
+					}
 				}
 				
 			} else {
 				// Si no es 1 es porque es 0, en este caso falta registrar la nueva salida
-				RegistroEntradaSalida registroNuevo = nodoRegistro->getDato();
-				registroNuevo.setFechaSalida(fechaActual);
-				registroNuevo.addContadorRegistro();
-				
-				nodoRegistro->setDato(registroNuevo);
-				std::cout << "(O)===)> Salida registrada fecha/hora: " << fechaActual <<std::endl;
+				if (confirmarAccion1("Esta seguro que desea registrar la salida con la fecha/hora: " + fechaActual.mostrar())) {
+					RegistroEntradaSalida registroNuevo = nodoRegistro->getDato();
+					registroNuevo.setFechaSalida(fechaActual);
+					registroNuevo.addContadorRegistro();
+					
+					nodoRegistro->setDato(registroNuevo);
+					std::cout << "(O)===)> Salida registrada fecha/hora: " << fechaActual <<std::endl;
+				} else {
+					std::cout << "(O)===)> Salida no registrada..." <<std::endl;
+				}
 			}
 		}
 		

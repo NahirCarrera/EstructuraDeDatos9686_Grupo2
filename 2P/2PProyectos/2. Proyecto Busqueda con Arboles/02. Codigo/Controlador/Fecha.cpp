@@ -282,3 +282,17 @@ Fecha Fecha::obtenerFechaSimple(Fecha fecha){
 	return fechaSimple;
 }
 
+
+////////////////////////////////////////////////////////////////////////
+// Name:       Fecha::obtenerFechaSimple()
+// Purpose:    Crea una cadena con la fecha y hora actual
+// Return:     Fecha
+////////////////////////////////////////////////////////////////////////
+
+std::string Fecha::mostrar() {
+	std::string strFecha;
+	strFecha = std::to_string(dia) + "/"+std::to_string(mes)+"/"+std::to_string(anio)+"-hora:"+
+	std::to_string(hora)+":"+std::to_string(minuto)+":"+std::to_string(segundo);
+	return strFecha;
+}
+

@@ -40,6 +40,7 @@ class Fecha{
 	   //Funciones
 	   std::string obtenerFechaFormateada();
 	   static Fecha obtenerFechaSimple(Fecha);
+	   std::string mostrar();
 	private:
 	   int mes;
 	   int dia;

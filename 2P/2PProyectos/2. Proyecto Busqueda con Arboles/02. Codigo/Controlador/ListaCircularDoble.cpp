@@ -131,30 +131,39 @@ void ListaCircularDoble<T>::insertar(T dato){
 
 template <typename T>
 bool ListaCircularDoble<T>::eliminar(T dato){
-	if (!estaVacia()){
-		if (this->cabeza->getDato() == dato){
-			NodoDoble<T>* aux = this->cabeza;
-			this->cabeza = this->cabeza->getSiguiente();
-			this->cabeza->setAnterior(this->cola);
-			this->cola->setSiguiente(this->cabeza);
-			delete aux;
-			return true;
-		}else{
-			NodoDoble<T>* aux = this->cabeza;
-			while (aux->getSiguiente() != this->cabeza){
-				if (aux->getSiguiente()->getDato() == dato){
-					NodoDoble<T>* aux2 = aux->getSiguiente();
-					aux->setSiguiente(aux2->getSiguiente());
-					aux2->getSiguiente()->setAnterior(aux);
-					delete aux2;
-					return true;					
-				}
-				aux = aux->getSiguiente();
-			}
-		}
+	if (!estaVacia()) {
+	    if (this->cabeza->getDato() == dato) {
+	        NodoDoble<T>* aux = this->cabeza;
+	        if (this->cabeza == this->cola) {
+	            // Caso especial: solo hay un elemento en la lista
+	            this->cabeza = this->cola = nullptr;
+	        } else {
+	            this->cabeza = this->cabeza->getSiguiente();
+	            this->cabeza->setAnterior(this->cola);
+	            this->cola->setSiguiente(this->cabeza);
+	        }
+	        delete aux;
+	        return true;
+	    } else {
+	        NodoDoble<T>* aux = this->cabeza;
+	        while (aux->getSiguiente() != this->cabeza) {
+	            if (aux->getSiguiente()->getDato() == dato) {
+	                NodoDoble<T>* aux2 = aux->getSiguiente();
+	                aux->setSiguiente(aux2->getSiguiente());
+	                aux2->getSiguiente()->setAnterior(aux);
+	                if (aux2 == this->cola) {
+	                    this->cola = aux;
+	                }
+	                delete aux2;
+	                return true;
+	            }
+	            aux = aux->getSiguiente();
+	        }
+	    }
 	}
 	
 	return false;
+		
 }
 
 ////////////////////////////////////////////////////////////////////////

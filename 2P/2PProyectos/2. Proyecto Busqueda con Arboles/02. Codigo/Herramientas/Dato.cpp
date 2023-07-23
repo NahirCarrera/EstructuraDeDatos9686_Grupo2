@@ -66,7 +66,7 @@ int Dato::ingresarDimension(char filas, char columnas) {
 	while (true) {
 		tecla = getch(); // lee la tecla ingresada por el usuario sin mostrarla en la consola
 
-		if (tecla == '\r') { // si el usuario presiona Enter
+		if (tecla == '\r' && entrada.length() > 0) { // si el usuario presiona Enter
 			if (i > 0) {
 				dim = std::stoi(entrada); // convierte la entrada a un número int
 				if (dim >= 2) {
@@ -104,14 +104,14 @@ int Dato::ingresarEntero() {
 	while (true) {
 		tecla = getch(); // lee la tecla ingresada por el usuario sin mostrarla en la consola
 
-		if (tecla == '\r') { // si el usuario presiona Enter
+		if (tecla == '\r' && entrada.length() > 0) { // si el usuario presiona Enter
 			std::cout << std::endl;
 			break;
 		} else if (tecla == '\b' && i > 0) { // si el usuario presiona Backspace y hay caracteres en la entrada
 			i--;
 			std::cout << "\b \b"; // borra el último caracter de la consola
 			entrada.pop_back(); // elimina el último caracter de la entrada
-		} else if (isdigit(tecla) && i < 12) { // si el usuario ingresa un dígito
+		} else if (isdigit(tecla) && i < 5) { // si el usuario ingresa un dígito
 			entrada.push_back(tecla); // agrega el caracter a la entrada
 			std::cout << tecla; // muestra el caracter ingresado en la consola
 			i++;
@@ -137,9 +137,11 @@ float Dato::ingresarFloat() {
 	while (true) {
 		tecla = getch(); // lee la tecla ingresada por el usuario sin mostrarla en la consola
 
-		if (tecla == '\r') { // si el usuario presiona Enter
-			std::cout << std::endl;
-			break;
+		if (tecla == '\r' && entrada.length() > 0) { // si el usuario presiona Enter
+			if (entrada[0] != '.') {
+				std::cout << std::endl;
+				break;				
+			}			
 		} else if (tecla == '\b' && i > 0) { // si el usuario presiona Backspace y hay caracteres en la entrada
 			i--;
 			std::cout << "\b \b"; // borra el último caracter de la consola
@@ -165,7 +167,7 @@ float Dato::ingresarFloat() {
 			std::cout << tecla;
 			i++;
 		}
-	}
+	}		
 
 	return std::stof(entrada); // convierte la entrada a un número float y lo retorna
 }
