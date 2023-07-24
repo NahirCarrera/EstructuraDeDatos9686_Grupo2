@@ -390,13 +390,17 @@ void ControladorMenu::mostrarRegistroIndividual() {
     
     NodoArbol<RegistroEntradaSalida>* registro = registrosArbol.buscarNodo(RegistroEntradaSalida(empleado, fecha, fecha));
 	
-	if (registro != nullptr) {	
-    	std::cout << registro->getDato().getEmpleado() << std::endl << std::endl;
-		registrosArbol.mostrarRepetidos(RegistroEntradaSalida(empleado, fecha, fecha));
+	if (empleados.buscar(empleado)) {
+		if (registro != nullptr) {
+			std::cout << registro->getDato().getEmpleado() << std::endl << std::endl;	
+			registrosArbol.mostrarRepetidos(RegistroEntradaSalida(empleado, fecha, fecha));
+		} else {
+			std::cout << "(O)===)> No se encontraron registros para este empleado..." << std::endl;
+		}
 	} else {
 		std::cout << "(O)===)> Cedula no registrada..." << std::endl;
-	}	
-	
+	}
+
 	system("pause");
 }
 
@@ -477,12 +481,12 @@ void ControladorMenu::salir() {
 	
 	ListaCircularDoble<Empleado>& empleados = singleton->getEmpleados();
 	ListaCircularDoble<RegistroEntradaSalida>& registros = singleton->getRegistros();
-	ListaCircularDoble<Empleado> empleados1;
-	ListaCircularDoble<RegistroEntradaSalida> registros1;
-	GestorArchivo::cargarCSVEnListaEmpleado(empleados1, "Empleados.csv");
-	GestorArchivo::cargarCSVEnListaRegistro(registros1, empleados, "Registros.csv");
-	empleados = empleados1;
-	registros = registros1;
+	ListaCircularDoble<Empleado> empleadosCopia;
+	ListaCircularDoble<RegistroEntradaSalida> registrosCopia;
+	GestorArchivo::cargarCSVEnListaEmpleado(empleadosCopia, "Empleados.csv");
+	GestorArchivo::cargarCSVEnListaRegistro(registrosCopia, empleadosCopia, "Registros.csv");
+	empleados = empleadosCopia;
+	registros = registrosCopia;
 	
 	menuEjecutando = false;
 }
