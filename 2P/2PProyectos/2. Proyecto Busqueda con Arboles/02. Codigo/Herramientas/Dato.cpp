@@ -161,11 +161,6 @@ float Dato::ingresarFloat() {
 			punto = true; // marca que se ha ingresado un punto
 			std::cout << tecla;
 			i++;
-		} else if (tecla == '-' && i == 0) { // si el usuario ingresa un signo menos al principio
-			entrada.push_back(tecla); // agrega el caracter a la entrada
-			signoMenosPos = i; // marca la posición del signo menos
-			std::cout << tecla;
-			i++;
 		}
 	}		
 
@@ -567,18 +562,18 @@ bool Dato::validarFecha(Fecha fecha){
         return false;
     }
 
-	if (anio > anioA) {
-		std::cout << "Fecha no valida, vuelva a intentar" << std::endl;
+	if (anio > anioA || anio < 1950) {
+		std::cout << "Fecha no valida: Anio invalido debe ser mayor a 1949, vuelva a intentar" << std::endl;
 		return false;
 	}
 	
 	if (anio == anioA && mes > mesA) {
-		std::cout << "Fecha no valida, vuelva a intentar" << std::endl;
+		std::cout << "Fecha no valida: Mes invalido, vuelva a intentar" << std::endl;
 		return false;
 	}
 	
 	if (anio == anioA && mes == mesA && dia > diaA) {
-		std::cout << "Fecha no valida, vuelva a intentar" << std::endl;
+		std::cout << "Fecha no valida: Dia invalido, vuelva a intentar" << std::endl;
 		return false;
 	}
 
