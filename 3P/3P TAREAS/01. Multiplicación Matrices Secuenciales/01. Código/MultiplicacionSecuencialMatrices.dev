@@ -1,6 +1,6 @@
 [Project]
-filename=RegistroDePersonal.dev
-name=RegistroDePersonal
+filename=MultiplicacionSecuencialMatrices.dev
+name=MultiplicacionSecuencialMatrices
 Type=1
 Ver=2
 ObjFiles=
@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;12;0;0;0
-UnitCount=16
+UnitCount=21
 
 [VersionInfo]
 Major=1
@@ -121,7 +121,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=Controlador\NodoArbol.cpp
+FileName=Controlador\ListaSimple.cpp
 CompileCpp=1
 Folder=Controlador
 Compile=1
@@ -131,9 +131,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit21]
-FileName=Modelo\ArbolBinario.h
+FileName=Controlador\Matriz.cpp
 CompileCpp=1
-Folder=Modelo
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
@@ -454,6 +454,36 @@ BuildCmd=
 FileName=Controlador\Singleton.cpp
 CompileCpp=1
 Folder=Controlador
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit17]
+FileName=Modelo\Matriz.h
+CompileCpp=1
+Folder=Modelo
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit18]
+FileName=Modelo\ListaSimple.h
+CompileCpp=1
+Folder=Modelo
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit19]
+FileName=Modelo\NodoSimple.h
+CompileCpp=1
+Folder=Modelo
 Compile=1
 Link=1
 Priority=1000

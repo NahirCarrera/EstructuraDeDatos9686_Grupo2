@@ -11,19 +11,22 @@
  *******************************************************************************/
 #ifndef CONTROLADORMENU_H
 #define CONTROLADORMENU_H
-#include "../Modelo/ListaCircularDoble.h"
+#include "../Controlador/ListaSimple.cpp"
+#include "../Modelo/Matriz.h"
 #include <string>
-
 
 class ControladorMenu{
 	public:
 		ControladorMenu(){};
 		void correrMenu();
 	private:
+		int cantidadMatrices;
+		ListaSimple<Matriz> matrices;
 		//Funciones de control de personal
-		void insertarMatriz();
+		void ingresarMatrices();
 		void multiplicarMatrices();
 		void limpiarMatrices();
+		void generarMatricesAleatorias();
 		
 		//Salir
 		void salir();

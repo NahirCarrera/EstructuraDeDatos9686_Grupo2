@@ -34,7 +34,7 @@ class ListaCircularDoble:public OperacionListas<T>{
 		void mostrarRepetidos(T) override;
 		T extraerDato(T)override;
 		NodoDoble<T>* extraerNodo(T)override;
-		void ordenarPorIntercambio(int)override;
+		//void ordenarPorIntercambio(int)override;
 	private:
 		NodoDoble<T>* cabeza;
 		NodoDoble<T>* cola;

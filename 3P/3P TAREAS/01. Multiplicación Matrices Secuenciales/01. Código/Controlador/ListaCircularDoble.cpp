@@ -280,7 +280,7 @@ NodoDoble<T>* ListaCircularDoble<T>::extraerNodo(T dato){
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-template <typename T>
+/*template <typename T>
 void  ListaCircularDoble<T>::ordenarPorIntercambio(int criterio){
 	if (!estaVacia()){ //Si la lista no está vacía 
 		NodoDoble<T>* nodoActual = this->cabeza; // Nodo que va a recorrer la lista
@@ -310,13 +310,13 @@ void  ListaCircularDoble<T>::ordenarPorIntercambio(int criterio){
 				nodoComparado = nodoComparado->getSiguiente(); /*Avanza el nodo a comparar, debe comparar hasta el nodo
 				                                               n - 1 de la lista por eso el ciclo se repite mientras 
 				                                               el nodo a comparar sea diferente de la cola*/
-			} while (nodoComparado != this->cola);
+			/*} while (nodoComparado != this->cola);
 			
 			nodoActual = nodoActual->getSiguiente(); /*Como es una lista circular entonces en algún
 			                                         momento el nodo actual apuntará a la cabeza entonces ahí
 			                                         termina el ciclo*/
-			} while (nodoActual != this->cabeza);
+			/*} while (nodoActual != this->cabeza);
 	}
 	
-}
+}*/
 

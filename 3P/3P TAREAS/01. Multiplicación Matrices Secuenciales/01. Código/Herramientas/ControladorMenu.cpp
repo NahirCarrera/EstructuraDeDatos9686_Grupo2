@@ -9,17 +9,42 @@
  * enlazadas y búsqueda con árboles binarios + Extras
  *
  *******************************************************************************/
- 
-#include "../Modelo/Singleton.h"
 #include "ControladorMenu.h"
 #include "Menu.h"
 #include "Dato.h"
+#include "../Modelo/Singleton.h"
 #include <string>
 #include <cstdlib> // para usar system("cls") y system("pause")
-
-void ControladorMenu::insertarMatriz() {
-	std::cout << "Insertar Matriz" <<std::endl;
+#include <random>
+void ControladorMenu::ingresarMatrices() {
+	std::cout << "(O)===)> Ingrese la cantidad de matrices para multiplicar secuencialmente: ";
+	cantidadMatrices = Dato::ingresarEntero();
+	std::cout << "(O)===)> NOTA: Las matrices seran generadas con dimensiones y numeros aleatorios" <<std::endl;
+	this->generarMatricesAleatorias();
 	system("pause");
+}
+
+void ControladorMenu::generarMatricesAleatorias(){
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::string secuencia = "";
+    int minDimension = 1;
+    int maxDimension = 8;
+    int filas = std::rand() % (maxDimension) + minDimension; // Generar número aleatorio entre 1 y 8 para las filas
+    int columnas = std::rand() % (maxDimension) + minDimension; // Generar número aleatorio entre 1 y 8 para las columnas
+    
+	for (int i = 0; i < cantidadMatrices; i++) {
+        Matriz matriz(filas, columnas);
+        matriz.generarAleatorios();
+        matrices.insertarAlFinal(matriz);
+        std::cout << "Matriz: " << i + 1 <<" de (" << filas <<" x "<<columnas << ")" << std::endl;
+        std::cout << matriz << std::endl;
+        secuencia += "(" + std::to_string(filas) + " x " + std::to_string(columnas) + ")";
+        // Actualizar dimensiones para la siguiente matriz
+        filas = columnas;
+        columnas = std::rand() % maxDimension + minDimension; // Generar nuevo número aleatorio para las columnas
+    }
+    std::cout<<"Matrices a multiplicar: " << secuencia << std::endl;
 }
 
 void ControladorMenu::multiplicarMatrices() {
@@ -53,7 +78,7 @@ void ControladorMenu::correrMenu() {
 	Singleton* singleton = Singleton::getInstance();
 	
 	Menu menu("(O)===)> <><><><><><><><>< Menu Principal ><><><><><><><><> <)==(O)");
-	menu.insertarOpcion("       ( )===== Insertar Matriz          ====( )      ", [&]() { insertarMatriz(); });
+	menu.insertarOpcion("       ( )===== Ingresar Matrices        ====( )      ", [&]() { ingresarMatrices(); });
 	menu.insertarOpcion("       ( )===== Multiplicar Matrices     ====( )      ", [&]() { multiplicarMatrices(); });
 	menu.insertarOpcion("       ( )===== Limpiar Matrices         ====( )      ", [&]() { limpiarMatrices(); });
 	menu.insertarOpcion("       ( )===== Salir                    ====( )      ", [&]() { salir(); }); // Para salir del bucle siempre se debe usar esta funcion de salir()

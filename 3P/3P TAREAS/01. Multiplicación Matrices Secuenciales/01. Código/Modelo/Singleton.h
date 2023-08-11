@@ -14,8 +14,6 @@
 #define SINGLETON_H
 
 #include "../Controlador/ListaCircularDoble.cpp"
-#include "Empleado.h"
-#include "RegistroEntradaSalida.h"
 
 class Singleton {
 
