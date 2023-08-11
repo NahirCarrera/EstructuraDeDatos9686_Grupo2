@@ -70,16 +70,6 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
-FileName=Controlador\ListaCircularDoble.cpp
-CompileCpp=1
-Folder=Controlador
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit8]
 FileName=Modelo\ListaCircularDoble.h
 CompileCpp=1
@@ -414,6 +404,16 @@ BuildCmd=
 FileName=Vista\main.cpp
 CompileCpp=1
 Folder=Vista
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit7]
+FileName=Controlador\ListaCircularDoble.cpp
+CompileCpp=1
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
