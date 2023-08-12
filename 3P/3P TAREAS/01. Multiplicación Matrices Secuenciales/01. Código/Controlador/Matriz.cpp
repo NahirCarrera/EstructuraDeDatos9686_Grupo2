@@ -15,10 +15,10 @@ Matriz::Matriz(int filas, int columnas) : filas_(filas), columnas_(columnas) {
 }
 
 Matriz::~Matriz() {
-    for (int i = 0; i < filas_; ++i) {
+    /*for (int i = 0; i < filas_; ++i) {
         delete matriz_[i];
     }
-    delete[] matriz_;
+    delete[] matriz_;*/
 }
 int Matriz::obtenerFilas(){
 	return filas_;
@@ -87,6 +87,51 @@ Matriz Matriz::multiplicar(const Matriz &otraMatriz) const {
     
     return resultado;
 }
+
+Matriz Matriz::operator*(const Matriz& otraMatriz) const {
+	if (columnas_ != otraMatriz.filas_) {
+        // Manejar el caso de dimensiones incompatibles
+        throw std::invalid_argument("Las dimensiones de las matrices no son compatibles para la multiplicación");
+    }
+
+    Matriz resultado(filas_, otraMatriz.columnas_);
+    
+    for (int i = 0; i < filas_; ++i) {
+        for (int j = 0; j < otraMatriz.columnas_; ++j) {
+            int valor = 0;
+            for (int k = 0; k < columnas_; ++k) {
+                valor += (*this)[i][k] * otraMatriz[k][j];
+            }
+            resultado[i][j] = valor;
+        }
+    }
+    
+    return resultado;
+}
+
+std::string Matriz::formatearMatriz() {
+	std::string formato;
+	formato += "{";
+    for (int i = 0; i < filas_; ++i) {
+    	formato += "{";
+        for (int j = 0; j < columnas_; ++j) {
+        	if (j < columnas_ - 1) {
+        		formato += std::to_string((*this)[i][j]);
+				formato += ",";        	
+			} else {
+				formato += std::to_string((*this)[i][j]);
+			}
+        }
+        if (i < filas_ - 1) {
+        	formato += "},";	
+		} else {
+			formato += "}}";
+		}
+        
+    }    
+    return formato;
+}
+
 /*struct AsociacionMatrices {
     int i, j, k; // Indices de las matrices involucradas
 };

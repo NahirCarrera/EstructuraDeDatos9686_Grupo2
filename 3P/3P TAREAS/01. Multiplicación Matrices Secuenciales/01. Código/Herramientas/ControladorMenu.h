@@ -11,7 +11,7 @@
  *******************************************************************************/
 #ifndef CONTROLADORMENU_H
 #define CONTROLADORMENU_H
-#include "../Controlador/ListaSimple.cpp"
+#include "../Modelo/CalculadoraPolaca.h"
 #include "../Modelo/Matriz.h"
 #include <string>
 

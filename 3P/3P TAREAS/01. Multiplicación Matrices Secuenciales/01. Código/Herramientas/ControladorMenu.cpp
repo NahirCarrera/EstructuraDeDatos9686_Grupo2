@@ -16,6 +16,9 @@
 #include <string>
 #include <cstdlib> // para usar system("cls") y system("pause")
 #include <random>
+#include <chrono>
+
+
 void ControladorMenu::ingresarMatrices() {
 	std::cout << "(O)===)> Ingrese la cantidad de matrices para multiplicar secuencialmente: ";
 	cantidadMatrices = Dato::ingresarEntero();
@@ -28,13 +31,15 @@ void ControladorMenu::generarMatricesAleatorias(){
     std::random_device rd;
     std::mt19937 gen(rd());
     std::string secuencia = "";
-    int minDimension = 1;
+    int minDimension = 2;
     int maxDimension = 8;
     int filas = std::rand() % (maxDimension) + minDimension; // Generar número aleatorio entre 1 y 8 para las filas
     int columnas = std::rand() % (maxDimension) + minDimension; // Generar número aleatorio entre 1 y 8 para las columnas
-    
+    Matriz matriz;
+
+	matrices = ListaSimple<Matriz>();
 	for (int i = 0; i < cantidadMatrices; i++) {
-        Matriz matriz(filas, columnas);
+        matriz = Matriz(filas, columnas);
         matriz.generarAleatorios();
         matrices.insertarAlFinal(matriz);
         std::cout << "Matriz: " << i + 1 <<" de (" << filas <<" x "<<columnas << ")" << std::endl;
@@ -49,6 +54,41 @@ void ControladorMenu::generarMatricesAleatorias(){
 
 void ControladorMenu::multiplicarMatrices() {
 	std::cout << "Multiplicar Matrices" <<std::endl;
+	Matriz resultado;
+	
+	std::string expresion = "((M0*M1)*(M2*(M3*M4)))";
+	std::cout << expresion <<std::endl;
+	auto start = std::chrono::high_resolution_clock::now();
+	CalculadoraPolaca calc(expresion);
+	std::cout << "El resultado polaca es:\n" << calc.evaluarExpresionPostfija(matrices) << std::endl;
+	auto end = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> duration = end - start;
+	double tiempoTranscurrido = duration.count() * 1000.0; // Convertir a milisegundos
+    std::cout << "Tiempo transcurrido: " << tiempoTranscurrido << " ms" << std::endl;
+    
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
+	
+	for(int i = 0; i < matrices.obtenerTamanio(); i++) {
+		std::cout << matrices[i].formatearMatriz() << "*";
+	}
+	std::cout << std::endl;
+	start = std::chrono::high_resolution_clock::now();
+	for(int i = 0; i < matrices.obtenerTamanio(); i++) {
+		if (i == 0) {
+			resultado = matrices[i];
+		} else {
+			resultado = resultado * matrices[i];
+		}
+	}
+	std::cout << "El resultado es:\n" << resultado << std::endl;
+	end = std::chrono::high_resolution_clock::now();
+	duration = end - start;
+	tiempoTranscurrido = duration.count() * 1000.0; // Convertir a milisegundos
+    std::cout << "Tiempo transcurrido: " << tiempoTranscurrido << " ms" << std::endl;
+    
 	system("pause");
 }
 

@@ -3,6 +3,8 @@
 
 #include "ListaSimple.h"
 #include <iostream>  // Para la salida estándar
+#include <string>
+
 class Matriz {
 public:
     Matriz(int filas, int columnas);
@@ -14,6 +16,8 @@ public:
     ListaSimple<int>& operator[](int fila) const;
     friend std::ostream& operator<<(std::ostream& os, const Matriz& matriz);
    	bool operator==(const Matriz& otra) const;
+   	Matriz operator*(const Matriz& otra) const;
+   	std::string formatearMatriz();
    	
    	void encontrarAsociacionOptima(ListaSimple<int> matrices, ListaSimple<int> dimensiones, int numMatrices) const;
    	Matriz multiplicar(const Matriz &otraMatriz) const;
