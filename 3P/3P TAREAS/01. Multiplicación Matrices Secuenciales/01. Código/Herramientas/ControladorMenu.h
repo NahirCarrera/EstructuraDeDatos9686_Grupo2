@@ -22,6 +22,7 @@ class ControladorMenu{
 	private:
 		int cantidadMatrices;
 		ListaSimple<Matriz> matrices;
+		std::string expresion;
 		//Funciones de control de personal
 		void ingresarMatrices();
 		void multiplicarMatrices();

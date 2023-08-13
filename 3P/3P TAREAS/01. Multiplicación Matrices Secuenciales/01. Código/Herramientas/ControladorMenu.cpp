@@ -13,6 +13,7 @@
 #include "Menu.h"
 #include "Dato.h"
 #include "../Modelo/Singleton.h"
+#include "../Modelo/MatrizControlador.h"
 #include <string>
 #include <cstdlib> // para usar system("cls") y system("pause")
 #include <random>
@@ -23,40 +24,19 @@ void ControladorMenu::ingresarMatrices() {
 	std::cout << "(O)===)> Ingrese la cantidad de matrices para multiplicar secuencialmente: ";
 	cantidadMatrices = Dato::ingresarEntero();
 	std::cout << "(O)===)> NOTA: Las matrices seran generadas con dimensiones y numeros aleatorios" <<std::endl;
-	this->generarMatricesAleatorias();
+	MatrizControlador controlador(cantidadMatrices);
+	controlador.mostrarAsociacionOptima();
+	matrices = controlador.getMatrices();
+	expresion = controlador.getAsociacionOptima();
 	system("pause");
 }
 
-void ControladorMenu::generarMatricesAleatorias(){
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::string secuencia = "";
-    int minDimension = 2;
-    int maxDimension = 8;
-    int filas = std::rand() % (maxDimension) + minDimension; // Generar número aleatorio entre 1 y 8 para las filas
-    int columnas = std::rand() % (maxDimension) + minDimension; // Generar número aleatorio entre 1 y 8 para las columnas
-    Matriz matriz;
 
-	matrices = ListaSimple<Matriz>();
-	for (int i = 0; i < cantidadMatrices; i++) {
-        matriz = Matriz(filas, columnas);
-        matriz.generarAleatorios();
-        matrices.insertarAlFinal(matriz);
-        std::cout << "Matriz: " << i + 1 <<" de (" << filas <<" x "<<columnas << ")" << std::endl;
-        std::cout << matriz << std::endl;
-        secuencia += "(" + std::to_string(filas) + " x " + std::to_string(columnas) + ")";
-        // Actualizar dimensiones para la siguiente matriz
-        filas = columnas;
-        columnas = std::rand() % maxDimension + minDimension; // Generar nuevo número aleatorio para las columnas
-    }
-    std::cout<<"Matrices a multiplicar: " << secuencia << std::endl;
-}
 
 void ControladorMenu::multiplicarMatrices() {
 	std::cout << "Multiplicar Matrices" <<std::endl;
 	Matriz resultado;
 	
-	std::string expresion = "((M0*M1)*(M2*(M3*M4)))";
 	std::cout << expresion <<std::endl;
 	auto start = std::chrono::high_resolution_clock::now();
 	CalculadoraPolaca calc(expresion);

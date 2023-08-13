@@ -18,15 +18,13 @@ public:
    	bool operator==(const Matriz& otra) const;
    	Matriz operator*(const Matriz& otra) const;
    	std::string formatearMatriz();
-   	
-   	void encontrarAsociacionOptima(ListaSimple<int> matrices, ListaSimple<int> dimensiones, int numMatrices) const;
    	Matriz multiplicar(const Matriz &otraMatriz) const;
-
 private:
     int filas_;
     int columnas_;
     ListaSimple<int>** matriz_;
     int* dimensiones_;
+    
 };
 
 #endif

@@ -51,21 +51,6 @@ void ListaSimple<T>::insertarAlFinal(const T& valor) {
 // Return:     NodoSimple<T>*
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template <typename T>
-NodoSimple<T>* ListaSimple<T>::obtenerNodoPorPosicion(int posicion) {
-    if (posicion < 0)
-        return nullptr;
-
-    NodoSimple<T>* temp = cabeza;
-    int contador = 0;
-
-    while (temp != nullptr && contador < posicion) {
-        temp = temp->getSiguiente();
-        contador++;
-    }
-
-    return temp;
-}
 
 template <typename T>
 bool ListaSimple<T>::estaVacia() {
@@ -104,11 +89,46 @@ int ListaSimple<T>::obtenerTamanio() const {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
+int ListaSimple<T>::obtenerElementoEnPosicion(int posicion) {
+    NodoSimple<T>* nodo = obtenerNodoPorPosicion(posicion);
+    if (nodo != nullptr) {
+        return nodo->getDato();
+    } else {
+        throw std::out_of_range("Posicion invalida");
+    }
+}
+
+template <typename T>
 T& ListaSimple<T>::operator[](int posicion) {
     NodoSimple<T>* nodo = obtenerNodoPorPosicion(posicion);
     if (nodo != nullptr) {
         return nodo->getDato();
     } else {
         throw std::out_of_range("Posicion invalida");
+    }
+}
+
+template <typename T>
+NodoSimple<T>* ListaSimple<T>::obtenerNodoPorPosicion(int posicion) {
+    if (posicion < 0)
+        return nullptr;
+
+    NodoSimple<T>* temp = cabeza;
+    int contador = 0;
+
+    while (temp != nullptr && contador < posicion) {
+        temp = temp->getSiguiente();
+        contador++;
+    }
+
+    return temp;
+}
+
+template <typename T>
+void ListaSimple<T>::vaciar() {
+    while (cabeza != nullptr) {
+        NodoSimple<T>* temp = cabeza;
+        cabeza = cabeza->getSiguiente();
+        delete temp;
     }
 }
