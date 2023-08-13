@@ -8,12 +8,25 @@
  * Realizar el juego del tetris con palabras en consola
  *
  *******************************************************************************/
+ 
+#ifndef JUEGO_H
+#define JUEGO_H
 
-#include "../Modelo/Juego.h"
+#include "TetrisGame.h"
 
-
-int main()
+class Juego
 {
-	Juego juego;
-    juego.ejecutar();
-}
+	public:
+		Juego();
+		void ejecutar();
+		
+	private:
+		TetrisGame tetris;
+		int filas;
+		int columnas;
+		void ocultarCursor();
+		void pantallaInicio();
+		
+};
+
+#endif
