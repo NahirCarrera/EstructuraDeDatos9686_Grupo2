@@ -12,7 +12,7 @@
 class MatrizControlador {
 	public:
 		MatrizControlador(int);
-		void mostrarAsociacionOptima();
+		void mostrarAsociacionOptima(int minDimension, int maxDimension);
 		// Getters
 	    int getCantidadMatrices() const;
 	    int getCosto() const;
@@ -32,7 +32,7 @@ class MatrizControlador {
 		ListaSimple<ListaSimple<int>> PosicionesOptimas;
 		std::string asociacionOptima;
 		//Funciones
-		void generarMatricesAleatorias();
+		void generarMatricesAleatorias(int minDimension, int maxDimension);
 		void CrearMatricesCostosYPosiciones();
 	    int CalcularCostoMultiplicacion(int, int, int);
 	    void CalcularOrdenOptimoMultiplicacion();

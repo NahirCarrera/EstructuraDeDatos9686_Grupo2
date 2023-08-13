@@ -30,7 +30,6 @@ CalculadoraPolaca::CalculadoraPolaca(std::string expresionInfijo) {
 	NodoArbol<std::string>* raiz = crearArbol(expresion);
 	ArbolBinario<std::string> arbol;
 	arbol.setRaiz(raiz);
-	arbol.mostrarArbol();
 	
 	expresion = arbol.obtenerRecorridoPostorden();
 	expresion = eliminarEspaciosConsecutivos(expresion);
@@ -247,11 +246,15 @@ NodoArbol<std::string>* CalculadoraPolaca::crearArbol(std::string expresion)
 }
 
 
-////////////////////////////////////////////////////////////////////////
-// Name:       CalculadoraPolaca::evaluarExpresionPostfija()
-// Purpose:    Implementation of CalculadoraPolaca::evaluarExpresionPostfija()
-// Return:     double
-////////////////////////////////////////////////////////////////////////
+//Funciones con n parametros
+Matriz multiply() {
+    return Matriz();
+}
+
+template<typename T, typename... Args>
+Matriz multiply(T first, Args... rest) {
+    return first * multiply(rest...);
+}
 
 Matriz CalculadoraPolaca::evaluarExpresionPostfija(ListaSimple<Matriz> matrices)
 {
@@ -260,16 +263,16 @@ Matriz CalculadoraPolaca::evaluarExpresionPostfija(ListaSimple<Matriz> matrices)
     char c;
     for (int i = 0; i < expresion.length(); i++)
     {
-        c = expresion[i];
+        c = expresion.at(i);
         if ( c == 'M')
         {
         	i++;
-        	c = expresion[i];
+        	c = expresion.at(i);
             std::string numeroStr;
             while (isdigit(c) )
             {
                 numeroStr += c;
-                c = expresion[++i];
+                c = expresion.at(++i);
             }
             int numero = std::stoi(numeroStr);
             pila.push(matrices[numero]);
@@ -286,7 +289,7 @@ Matriz CalculadoraPolaca::evaluarExpresionPostfija(ListaSimple<Matriz> matrices)
             Matriz matriz2 = pila.top();
             pila.pop();
 
-            Matriz resultado = matriz2 * matriz1;
+            Matriz resultado = multiply(matriz2, matriz1);
 
             pila.push(resultado);
                             
