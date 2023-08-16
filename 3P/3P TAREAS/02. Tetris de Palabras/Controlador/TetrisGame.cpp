@@ -99,7 +99,7 @@ bool TetrisGame::hayEspacioVacio(int fila, int columna, bool &gameOver){
     	return true; // No hay palabras en la siguiente posicion
     } else if (pieza.getRotacion() == 2 || pieza.getRotacion() == 4) {
     	if (fila - 2 + longitud < filas) { // Verificar si está dentro de los límites del tablero
-            if (tablero[fila - 2 + longitud][columna] == ' ') {
+            if (tablero[fila - 2 + longitud][columna + 2] == ' ') {
                 return true; // Hay un espacio vacío en la posición siguiente
             } else {
                 return false; // No hay espacio vacío en la posición siguiente
@@ -229,99 +229,21 @@ void TetrisGame::colocarPalabra(int fila, int columna){
 void TetrisGame::borrarPalabra(int fila, int columna) {
     std::string palabra = pieza.getPalabra();
     if (pieza.getRotacion() == 1 || pieza.getRotacion() == 3) { // Palabra de forma horizontal
-        if(acabaDeRotar){
-	        for (int i = fila - 2; i < fila + palabra.length() - 2; ++i) {
-	            for (int j = columna; j < columna + palabra.length(); ++j) {
-	                tablero[i][j] = (i == 0) ? '@' : ' '; // Reemplazar por arrobas en la primera fila de cada letra
-	            }
-	        }	
-		}else{
-			for (int j = columna; j < columna + palabra.length(); ++j) {
-	            tablero[fila][j] = (fila == 0) ? '@' : ' '; // Reemplazar por arrobas en la primera fila
-	        }
-		}
-		
-    } else if (pieza.getRotacion() == 2 || pieza.getRotacion() == 4) { // Palabra de forma vertical
-    	if(acabaDeRotar){
-			if(columna + 2 == columnas){ //la columna es el borde derecho del tablero
-	    		for(int j = columna; j < 3; j++){
-	    			tablero[fila][j] = ' ';
-				}
-			}else if (columna + 3 == columnas){ //La columna a la derecha es el borde del tablero
-				for(int j = columna; j < 3; j++){
-					tablero[fila][j] = ' ';
-				}
-				tablero[fila][columna + 3] = ' ';
-			
-			}else if(columna + 1 == 1){ //la columna a la izquierda es el borde del tablero
-				tablero[fila][columna + 1] = ' ';
-				for(int j = columna + 3; j < 3; j++){
-	    			tablero[fila][j] = ' ';
-				}
-			}else if (columna + 2 == 1){ //La columna es el borde izquierdo del tablero
-				for(int j = columna + 3; j < 3; j++){
-					tablero[fila][j] = ' ';
-				}
-			}else {
-				for (int i = fila - 2; i < fila + palabra.length() - 2; ++i) { //
-		            for (int j = columna; j < columna + palabra.length(); ++j) {
-		                tablero[i][j] = (i == 0) ? '@' : ' '; // Reemplazar por arrobas en la primera fila de cada letra
-		            }
-		        }
-			}
-	    } else {
-	        for (int i = fila - 2; i < fila + palabra.length() - 2; ++i) {
-	            for (int j = columna; j < columna + palabra.length(); ++j) {
-	                tablero[i][j] = (i == 0) ? '@' : ' '; // Reemplazar por arrobas en la primera fila de cada letra
-	            }
-	        }
-	    }
-	}
-
-}
-
-
-/*void TetrisGame::borrarPalabra(int fila, int columna) {
-    std::string palabra = pieza.getPalabra();
-    if (pieza.getRotacion() == 1 || pieza.getRotacion() == 3) { // Palabra de forma horizontal
         for (int j = columna; j < columna + palabra.length(); ++j) {
             tablero[fila][j] = (fila == 0) ? '@' : ' '; // Reemplazar por arrobas en la primera fila
         }
     } else if (pieza.getRotacion() == 2 || pieza.getRotacion() == 4) { // Palabra de forma vertical
-    	for (int i = fila - 2; i < fila + palabra.length() - 2; ++i) { //
-            for (int j = columna; j < columna + palabra.length(); ++j) {
-                tablero[i][j] = (i == 0) ? '@' : ' '; // Reemplazar por arrobas en la primera fila de cada letra
-            }
+    	for (int j = fila - 2; j < fila + 3; ++j) {
+            tablero[j][columna + 2] = (j == 0) ? '@' : ' '; // Reemplazar por arrobas en la primera fila
         }
-		if(columna + 2 == columnas){ //la columna es el borde derecho del tablero
-    		for(int j = columna; j < 3; j++){
-    			tablero[fila][j] = ' ';
-			}
-			tablero[fila][columna + 3] = '@';
-		}else if (columna + 3 == columnas){ //La columna a la derecha es el borde del tablero
-			for(int j = columna; j < 3; j++){
-				tablero[fila][j] = ' ';
-			}
-			tablero[fila][columna + 3] = ' ';
-			tablero[fila][columna + 4] = '@';
 		
-		}else if(columna + 1 == 1){ //la columna a la izquierda es el borde del tablero	
-			tablero[fila][columna + 1] = ' ';
-			for(int j = columna + 3; j < 3; j++){
-    			tablero[fila][j] = ' ';
-			}
-		}else if (columna + 2 == 1){ //La columna es el borde izquierdo del tablero
-			for(int j = columna + 3; j < 3; j++){
-				tablero[fila][j] = ' ';
-			}
-		}else {
-			
-		}
     }
-}*/
+}
+
 void TetrisGame::rotarPalabra(int fila, int columna){
 	std::string palabra = pieza.getPalabra();
 	//borrarPalabra(fila - 1, columna);
+	
 	if (pieza.getRotacion() == 4){    
 		pieza.setRotacion(1);
 	}else{
