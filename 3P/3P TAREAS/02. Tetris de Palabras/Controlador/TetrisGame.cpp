@@ -139,43 +139,90 @@ void TetrisGame::coincidenPalabras(int fila, int columna) {
     bool coincideAbajo = true;
     bool coincideAladoIzquierda = true;
     bool coincideAladoDerecha = true;
-
-	for (int j = columna; j < columna + palabra.length(); ++j) {
-        if (tablero[fila][j] != tablero[fila + 1][j]) {
-            coincideAbajo = false;
-            break;
-        }
-    }
+    
+	if (pieza.getRotacion() == 1 || pieza.getRotacion() == 3) {
+		for (int j = columna; j < columna + palabra.length(); ++j) {
+	        if (tablero[fila][j] != tablero[fila + 1][j]) {
+	            coincideAbajo = false;
+	            break;
+	        }
+	    }
+		
+		for (int j = columna; j < columna + palabra.length(); ++j) { 
+	        if (tablero[fila][j] != tablero[fila][j - palabra.length()]) {
+	            coincideAladoIzquierda = false;
+	            break;
+	        }
+	    }
 	
-	for (int j = columna; j < columna + palabra.length(); ++j) {
-        if (tablero[fila][j] != tablero[fila][j - palabra.length()]) {
-            coincideAladoIzquierda = false;
-            break;
-        }
-    }
-
-    for (int j = columna; j < columna + palabra.length(); ++j) {
-        if (tablero[fila][j] != tablero[fila][j + palabra.length()]) {
-            coincideAladoDerecha = false;
-            break;
-        }
-    }
-
-    if (coincideAbajo) {
-        borrarPalabra(fila, columna);
-        borrarPalabra(fila + 1, columna);
-        aumentarPuntaje(pieza.getPalabra().length());
-    } else if (coincideAladoIzquierda) {
-        borrarPalabra(fila, columna);
-        borrarPalabra(fila, columna - pieza.getPalabra().length());
-        aumentarPuntaje(pieza.getPalabra().length());
-        verificarParaRecorrerTablero(fila);
-    } else if (coincideAladoDerecha) {
-        borrarPalabra(fila, columna);
-        borrarPalabra(fila, columna +pieza.getPalabra().length());
-        aumentarPuntaje(pieza.getPalabra().length());
-        verificarParaRecorrerTablero(fila);
-    }
+	    for (int j = columna; j < columna + palabra.length(); ++j) {
+	        if (tablero[fila][j] != tablero[fila][j + palabra.length()]) {
+	            coincideAladoDerecha = false;
+	            break;
+	        }
+	    }
+	    
+	    if (coincideAbajo) {
+	        borrarPalabra(fila, columna);
+	        borrarPalabra(fila + 1, columna);
+	        aumentarPuntaje(pieza.getPalabra().length());
+	    } else if (coincideAladoIzquierda) {
+	        borrarPalabra(fila, columna);
+	        borrarPalabra(fila, columna - pieza.getPalabra().length());
+	        aumentarPuntaje(pieza.getPalabra().length());
+	        verificarParaRecorrerTablero(fila);
+	    } else if (coincideAladoDerecha) {
+	        borrarPalabra(fila, columna);
+	        borrarPalabra(fila, columna +pieza.getPalabra().length());
+	        aumentarPuntaje(pieza.getPalabra().length());
+	        verificarParaRecorrerTablero(fila);
+	    }
+	    
+	} else {
+		if (fila + 2 + palabra.length() < filas) {
+			for (int j = fila - 2; j < fila - 2 + palabra.length(); ++j) {
+		        if (tablero[j][columna + 2] != tablero[j + palabra.length()][columna + 2]) {
+		            coincideAbajo = false;
+		            break;
+		        }
+			}
+			
+			if (coincideAbajo) {
+		        borrarPalabra(fila, columna);
+		        borrarPalabra(fila + palabra.length(), columna);
+		        aumentarPuntaje(pieza.getPalabra().length());
+		    }
+		    
+		}
+			
+		for (int j = fila - 2; j < fila - 2 + palabra.length(); ++j) { 
+	        if (tablero[j][columna + 2] != tablero[j][columna + 1]) {
+	            coincideAladoIzquierda = false;
+	            break;
+	        }
+		}
+		
+		for (int j = fila - 2; j < fila - 2 + palabra.length(); ++j) { 
+	        if (tablero[j][columna + 2] != tablero[j][columna + 3]) {
+	            coincideAladoDerecha = false;
+	            break;
+	        }
+		}
+		
+		if (coincideAladoIzquierda) {
+	        borrarPalabra(fila, columna);
+	        borrarPalabra(fila, columna - 1);
+	        aumentarPuntaje(pieza.getPalabra().length());
+	        verificarParaRecorrerTablero(fila);
+	    } else if (coincideAladoDerecha) {
+	        borrarPalabra(fila, columna);
+	        borrarPalabra(fila, columna + 1);
+	        aumentarPuntaje(pieza.getPalabra().length());
+	        verificarParaRecorrerTablero(fila);
+	    }
+	    	
+	}
+	
 }
 
 
@@ -196,22 +243,28 @@ bool TetrisGame::hayEspacioHorizontal(int fila, int columna, bool derecha) {
 	}else if (pieza.getRotacion() == 2 || pieza.getRotacion() == 4){
 		fila = fila - 2;
 		columna = columna + 2;
-		if(derecha){
-			if(tablero[fila][columna + 1] == ' '){
-				return true;
-			}
-		}else{
-			if(tablero[fila][columna - 1] == ' '){
-				return true;
-			}
+		if(derecha) {
+			for (int j = fila; j < fila + longitud; ++j) {            	
+            	if(tablero[j][columna + 1] != ' '){
+					return false;
+				}
+        	}        	        	
+			
+		}else {
+			for (int j = fila; j < fila + longitud; ++j) {            	
+            	if(tablero[j][columna - 1] != ' '){
+					return false;
+				}
+        	}
+        	        	
 		}
-		return false;
+		return true;
 	}
 }
 
 void TetrisGame::colocarPalabra(int fila, int columna){
     std::string palabra = pieza.getPalabra();
-    if(pieza.getRotacion() == 3 || pieza.getRotacion() == 4){
+    if(pieza.getRotacion() == 3 || pieza.getRotacion() == 4) {
     	std::reverse(palabra.begin(), palabra.end());
 	}
 
@@ -243,13 +296,39 @@ void TetrisGame::borrarPalabra(int fila, int columna) {
 void TetrisGame::rotarPalabra(int fila, int columna){
 	std::string palabra = pieza.getPalabra();
 	//borrarPalabra(fila - 1, columna);
+	bool sePuedeRotar = true;
 	
-	if (pieza.getRotacion() == 4){    
-		pieza.setRotacion(1);
-	}else{
-		pieza.setRotacion(pieza.getRotacion() + 1);
+	if (fila > 2 && fila < filas - 2 && columna > 0 && columna < columnas - 2) {
+		for (int i = fila - 2; i < fila + 3; ++i) {
+	        for (int j = columna; j < columna + palabra.length(); ++j) {
+	            if (tablero[i][j] != ' ') {
+	            	if (pieza.getRotacion() == 1 || pieza.getRotacion() == 3) { // Palabra de forma horizontal
+						if (j == columna + 2) {
+							sePuedeRotar = false;
+						}
+				    } else if (pieza.getRotacion() == 2 || pieza.getRotacion() == 4) { // Palabra de forma vertical
+						if (i == fila) {
+							sePuedeRotar = false;
+						}
+						
+				    }
+				}
+	        }   	
+				
+	    }
+	} else {
+		sePuedeRotar = false;
 	}
 	
+	if (sePuedeRotar) {
+		
+		if (pieza.getRotacion() == 4){    
+			pieza.setRotacion(1);
+		}else{
+			pieza.setRotacion(pieza.getRotacion() + 1);
+		}
+	}
+
 }
 
 void TetrisGame::imprimirTablero()

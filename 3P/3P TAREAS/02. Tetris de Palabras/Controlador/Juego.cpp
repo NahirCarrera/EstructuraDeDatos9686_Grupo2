@@ -28,7 +28,7 @@ void Juego::ocultarCursor() {
 
 Juego::Juego() {
 	ocultarCursor();
-	this->filas = 20 + 2;
+	this->filas = 34 + 2;
     this->columnas = 10 + 2;
 	this->tetris = TetrisGame(filas, columnas);;
 	tetris.obtenerPiezas();
@@ -93,6 +93,7 @@ void Juego::ejecutar() {
 	
 	pantallaInicio();
     auto tiempoUltimaActualizacion = std::chrono::high_resolution_clock::now();
+    
     while (true){
     	Pieza& piezaActual = tetris.getPieza(); // Crear una nueva instancia de Pieza en cada iteración
 	    int posicionAleatoria = rand() % (columnas - piezaActual.getPalabra().length() - 1) + 1;
@@ -104,9 +105,9 @@ void Juego::ejecutar() {
             auto tiempoActual = std::chrono::high_resolution_clock::now();
             auto duracionDesdeUltimaActualizacion = std::chrono::duration_cast<std::chrono::milliseconds>(tiempoActual - tiempoUltimaActualizacion).count();
 
-            if (duracionDesdeUltimaActualizacion >= intervaloActualizacion){
-            	
-                /*tetris.borrarPalabra(i - 1, posicionAleatoria);
+			
+			if (duracionDesdeUltimaActualizacion >= intervaloActualizacion){
+                tetris.borrarPalabra(i - 1, posicionAleatoria);
                 if (tetris.hayEspacioVacio(i, posicionAleatoria, gameOver)){
                 	tetris.acabaDeRotar = false;
                     tetris.colocarPalabra(i, posicionAleatoria);
@@ -118,11 +119,11 @@ void Juego::ejecutar() {
                     tetris.coincidenPalabras(i, posicionAleatoria);
                     piezaActual.reiniciarRotacion();
                     hayColision = true;
-                }*/
+                }
                 tetris.imprimirTablero();
 
                 tiempoUltimaActualizacion = std::chrono::high_resolution_clock::now();
-                //i++;
+                i++;
             }
 
             if (_kbhit() && !hayColision)
@@ -163,7 +164,6 @@ void Juego::ejecutar() {
                         tetris.colocarPalabra(i, posicionAleatoria);
                         tetris.coincidenPalabras(i, posicionAleatoria);
                         hayColision = true;
-                        
                     }
                     tetris.imprimirTablero();
                     tiempoUltimaActualizacion = std::chrono::high_resolution_clock::now();
@@ -174,7 +174,13 @@ void Juego::ejecutar() {
                 	tetris.borrarPalabra(i - 1, posicionAleatoria);
                 	tetris.rotarPalabra(i - 1, posicionAleatoria);
                 	tetris.colocarPalabra(i - 1, posicionAleatoria);
-                	//tetris.acabaDeRotar = true;
+                	
+					if (!tetris.hayEspacioVacio(i - 1, posicionAleatoria, gameOver))
+                    {
+                    	tetris.coincidenPalabras(i - 1, posicionAleatoria);
+                        hayColision = true;
+                    }
+                    
 				}
 				tetris.imprimirTablero();
             }
