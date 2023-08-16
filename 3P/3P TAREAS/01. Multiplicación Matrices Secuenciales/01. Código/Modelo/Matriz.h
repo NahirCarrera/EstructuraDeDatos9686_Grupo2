@@ -13,7 +13,7 @@ public:
     int obtenerFilas();
     int obtenerColumnas();
  	void generarAleatorios();
-    ListaSimple<int>& operator[](int fila) const;
+    ListaSimple<double>& operator[](int fila) const;
     friend std::ostream& operator<<(std::ostream& os, const Matriz& matriz);
    	bool operator==(const Matriz& otra) const;
    	Matriz operator*(const Matriz& otra) const;
@@ -22,7 +22,7 @@ public:
 private:
     int filas_;
     int columnas_;
-    ListaSimple<int>** matriz_;
+    ListaSimple<double>** matriz_;
     int* dimensiones_;
     
 };

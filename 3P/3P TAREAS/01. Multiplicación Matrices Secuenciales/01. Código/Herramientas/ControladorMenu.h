@@ -26,8 +26,9 @@ class ControladorMenu{
 		//Funciones de control de personal
 		void ingresarMatrices();
 		void multiplicarMatrices();
-		void limpiarMatrices();
+		void verOptimizacion();
 		void generarMatricesAleatorias();
+		void mostrarMatrices();
 		
 		//Salir
 		void salir();

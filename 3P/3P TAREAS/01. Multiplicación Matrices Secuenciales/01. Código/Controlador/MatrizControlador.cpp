@@ -39,14 +39,12 @@ const ListaSimple<ListaSimple<int>>& MatrizControlador::getPosicionesOptimas() c
 std::string MatrizControlador::getAsociacionOptima() const {
     return asociacionOptima;
 }
-void MatrizControlador::generarMatricesAleatorias(){
+void MatrizControlador::generarMatricesAleatorias(int minDimension, int maxDimension){
     std::random_device rd;
     std::mt19937 gen(rd());
     std::string secuencia = "";
-    int minDimension = 2;
-    int maxDimension = 8;
-    int filas = std::rand() % (maxDimension) + minDimension; // Generar número aleatorio entre 1 y 8 para las filas
-    int columnas = std::rand() % (maxDimension) + minDimension; // Generar número aleatorio entre 1 y 8 para las columnas
+    int filas = minDimension + std::rand() % (maxDimension - minDimension + 1); // Generar número aleatorio entre 1 y 8 para las filas
+    int columnas = minDimension + std::rand() % (maxDimension - minDimension + 1); // Generar número aleatorio entre 1 y 8 para las columnas
     Matriz matriz;
     dimensiones.vaciar();
 	dimensiones.insertarAlFinal(filas);
@@ -56,17 +54,15 @@ void MatrizControlador::generarMatricesAleatorias(){
         matriz = Matriz(filas, columnas);
         matriz.generarAleatorios();
         matrices.insertarAlFinal(matriz);
-        std::cout << "Matriz: " << i <<" de (" << filas <<" x "<<columnas << ")" << std::endl;
-        std::cout << matriz << std::endl;
         secuencia += "(" + std::to_string(filas) + " x " + std::to_string(columnas) + ")";
         // Actualizar dimensiones para la siguiente matriz
         filas = columnas;
-        columnas = std::rand() % maxDimension + minDimension; // Generar nuevo número aleatorio para las columnas
+        columnas = minDimension + std::rand() % (maxDimension - minDimension + 1); // Generar nuevo número aleatorio para las columnas
 		if(i < cantidadMatrices - 1){
 			dimensiones.insertarAlFinal(columnas);
 		}
     }
-    std::cout<<"Matrices a multiplicar: " << secuencia << std::endl;
+    std::cout<<"Matrices a multiplicar: " << secuencia << std::endl << std::endl;
 }
 
 void MatrizControlador::CrearMatricesCostosYPosiciones() {
@@ -143,8 +139,8 @@ void MatrizControlador::ImprimirMatricesCostosYPosiciones() {
     std::cout << "Numero total de operaciones realizadas en la solucion optima: " << operaciones << std::endl;
 }
 
-void MatrizControlador::mostrarAsociacionOptima(){
-	generarMatricesAleatorias();
+void MatrizControlador::mostrarAsociacionOptima(int minDimension, int maxDimension){
+	generarMatricesAleatorias(minDimension, maxDimension);
 	CrearMatricesCostosYPosiciones();
     CalcularOrdenOptimoMultiplicacion();
     guardarAsociacionOptima(0, cantidadMatrices - 1, PosicionesOptimas);

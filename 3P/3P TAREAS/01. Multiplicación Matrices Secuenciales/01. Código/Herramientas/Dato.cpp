@@ -110,7 +110,9 @@ int Dato::ingresarEntero() {
 			i--;
 			std::cout << "\b \b"; // borra el último caracter de la consola
 			entrada.pop_back(); // elimina el último caracter de la entrada
-		} else if (isdigit(tecla) && i < 2 && tecla != '1') { // si el usuario ingresa un dígito
+		} else if (isdigit(tecla) && i == 0 && tecla == '0') { // si el usuario ingresa un dígito
+
+		} else if (isdigit(tecla) && i < 2) { // si el usuario ingresa un dígito
 			entrada.push_back(tecla); // agrega el caracter a la entrada
 			std::cout << tecla; // muestra el caracter ingresado en la consola
 			i++;
