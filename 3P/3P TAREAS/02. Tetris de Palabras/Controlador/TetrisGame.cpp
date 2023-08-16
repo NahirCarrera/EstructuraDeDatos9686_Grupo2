@@ -15,6 +15,7 @@
 #include "../Modelo/Singleton.h"
 #include <fstream>
 #include <algorithm>
+#include <Windows.h>
 
 TetrisGame::TetrisGame(): filas(0), columnas(0){
 
@@ -52,6 +53,11 @@ int TetrisGame::getPuntaje(){
 	return puntaje;
 }
 
+void TetrisGame::mostrarPiezaSiguiente(Pieza pieza){
+	limpiar(40,10);
+    std::cout << pieza;
+}
+
 Pieza& TetrisGame::getPieza() {
     Singleton* singleton = Singleton::getInstance();
     ListaSimple<Pieza>& piezas = singleton->getPiezas();
@@ -62,13 +68,12 @@ Pieza& TetrisGame::getPieza() {
     Pieza& piezaSeleccionada = piezas[indiceAleatorio];
     piezaSeleccionada.setRotacion(rotacionAleatoria); 
     piezaSeleccionada.setColumna(posicionAleatoria);
-    pieza = piezaSeleccionada; // Obtener referencia al objeto
-    std::cout << "Pieza " << pieza << std::endl;
-    return pieza;
+    //pieza = piezaSeleccionada; // Obtener referencia al objeto
+    return piezaSeleccionada;
 }
 
 void TetrisGame::setPieza(Pieza piezaActual){
-	pieza = Pieza(piezaActual.getPalabra());
+	pieza = piezaActual;
 }
 void TetrisGame::aumentarPuntaje(int aumento) {
 	puntaje += aumento;
@@ -163,15 +168,18 @@ void TetrisGame::coincidenPalabras(int fila, int columna) {
 	    }
 	    
 	    if (coincideAbajo) {
+	    	Beep(1500, 150);
 	        borrarPalabra(fila, columna);
 	        borrarPalabra(fila + 1, columna);
 	        aumentarPuntaje(pieza.getPalabra().length());
 	    } else if (coincideAladoIzquierda) {
+	    	Beep(1500, 150);
 	        borrarPalabra(fila, columna);
 	        borrarPalabra(fila, columna - pieza.getPalabra().length());
 	        aumentarPuntaje(pieza.getPalabra().length());
 	        verificarParaRecorrerTablero(fila);
 	    } else if (coincideAladoDerecha) {
+	    	Beep(1500, 150);
 	        borrarPalabra(fila, columna);
 	        borrarPalabra(fila, columna +pieza.getPalabra().length());
 	        aumentarPuntaje(pieza.getPalabra().length());
@@ -188,6 +196,7 @@ void TetrisGame::coincidenPalabras(int fila, int columna) {
 			}
 			
 			if (coincideAbajo) {
+				Beep(1500, 150);
 		        borrarPalabra(fila, columna);
 		        borrarPalabra(fila + palabra.length(), columna);
 		        aumentarPuntaje(pieza.getPalabra().length());
@@ -210,11 +219,14 @@ void TetrisGame::coincidenPalabras(int fila, int columna) {
 		}
 		
 		if (coincideAladoIzquierda) {
+			Beep(1500, 150);
 	        borrarPalabra(fila, columna);
 	        borrarPalabra(fila, columna - 1);
 	        aumentarPuntaje(pieza.getPalabra().length());
 	        verificarParaRecorrerTablero(fila);
-	    } else if (coincideAladoDerecha) {
+	    }
+		if (coincideAladoDerecha) {
+	    	Beep(1500, 150);
 	        borrarPalabra(fila, columna);
 	        borrarPalabra(fila, columna + 1);
 	        aumentarPuntaje(pieza.getPalabra().length());
@@ -321,7 +333,7 @@ void TetrisGame::rotarPalabra(int fila, int columna){
 	}
 	
 	if (sePuedeRotar) {
-		
+		Beep(800, 50);
 		if (pieza.getRotacion() == 4){    
 			pieza.setRotacion(1);
 		}else{
@@ -333,8 +345,7 @@ void TetrisGame::rotarPalabra(int fila, int columna){
 
 void TetrisGame::imprimirTablero()
 {
-	limpiar();
-	std::cout << "> SCORE: "<<puntaje<< std::endl;
+	limpiar(0,0);
     for (int i = 0; i < filas; ++i)
     {
     	
@@ -347,13 +358,14 @@ void TetrisGame::imprimirTablero()
     
 }
 
-void TetrisGame::limpiar()
+void TetrisGame::limpiar(int x, int y)
 {
     COORD coord;
-    coord.X = 0;
-    coord.Y = 0;
+    coord.X = x;
+    coord.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
+
 
 void TetrisGame::obtenerPiezas(){
     std::ifstream archivo("Palabras.txt"); // Abre el archivo de texto

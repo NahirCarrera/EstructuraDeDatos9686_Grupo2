@@ -35,6 +35,7 @@ public:
 	Pieza& getPieza();
 	void setPieza(Pieza);
 	bool acabaDeRotar;
+	void mostrarPiezaSiguiente(Pieza pieza);
 	void rotarPalabra(int fila, int columna);
 	ListaSimple<std::string> getPiezas();
 	bool hayEspacioVacio(int fila, int columna, bool &gameOver);
@@ -45,7 +46,7 @@ public:
 	void verificarParaRecorrerTablero(int);
 	void borrarPalabra(int fila, int columna);
 	void imprimirTablero();
-	void limpiar();
+	void limpiar(int, int);
 	void obtenerPiezas();
 };
 

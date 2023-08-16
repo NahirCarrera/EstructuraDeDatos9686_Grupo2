@@ -9,9 +9,9 @@
  *
  *******************************************************************************/
 
-#include "../Modelo/Juego.h"
+#include "../Herramientas/ControladorMenu.h"
 
 int main(){
-	Juego juego;
-    juego.ejecutar();
+	ControladorMenu ctrl;
+	ctrl.correrMenu();
 }

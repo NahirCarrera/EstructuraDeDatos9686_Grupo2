@@ -18,7 +18,7 @@ class Juego
 {
 	public:
 		Juego();
-		void ejecutar();
+		void ejecutar(int, int);
 		
 	private:
 		TetrisGame tetris;
@@ -26,6 +26,7 @@ class Juego
 		int columnas;
 		void ocultarCursor();
 		void pantallaInicio();
+		void pantallaScore(int, int, Pieza);
 		
 };
 

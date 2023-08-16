@@ -1,5 +1,5 @@
 #include "../Modelo/Pieza.h"
-
+#include <algorithm>
 Pieza::Pieza(){
 	
 }
@@ -42,7 +42,17 @@ void Pieza::reiniciarRotacion(){
 }
 
 std::ostream& operator<<(std::ostream& os, const Pieza& pieza) {
-    os << pieza.getPalabra() << "\t";
-    os << "rotacion: " << pieza.getRotacion() << "\t";
+	std::string palabra = pieza.getPalabra();
+    if(pieza.getRotacion() == 3 || pieza.getRotacion() == 4) {
+    	std::reverse(palabra.begin(), palabra.end());
+	}
+	os << palabra;
     return os;
 }
+
+
+
+
+
+
+
