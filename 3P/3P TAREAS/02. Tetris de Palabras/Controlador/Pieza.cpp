@@ -1,8 +1,35 @@
+/*******************************************************************************
+ * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
+ * Estructura de Datos 9686
+ * Nombres: Carrera Nahir, Drouet Stephen
+ * Fecha de creacion: 12/08/23 19:40
+ * Fecha de modificacion: 12/08/23 19:40
+ * Enunciado:
+ * Realizar el juego del tetris con palabras en consola (Solo caida horizontal)
+ * EXTRA: Realizar la rotación de las piezas
+ *******************************************************************************/
+ 
 #include "../Modelo/Pieza.h"
 #include <algorithm>
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::Pieza()
+// Purpose:    Constructor por defecto de la clase Pieza.
+// Parameters: Ninguno
+// Return:     Ninguno
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Pieza::Pieza(){
-	
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::Pieza(std::string palabra_)
+// Purpose:    Constructor de la clase Pieza que recibe una palabra para inicializar la pieza.
+// Parameters:
+// - palabra_: Palabra que representa la pieza.
+// Return:     Ninguno
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Pieza::Pieza(std::string palabra_){
 	palabra = palabra_;
 	rotacion = 0;
@@ -10,36 +37,105 @@ Pieza::Pieza(std::string palabra_){
 	columna = 1;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::getPalabra() const
+// Purpose:    Obtener la palabra que representa la pieza.
+// Parameters: Ninguno
+// Return:     std::string - La palabra que representa la pieza.
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 std::string Pieza::getPalabra() const{
 	return palabra;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::getRotacion() const
+// Purpose:    Obtener la rotación actual de la pieza.
+// Parameters: Ninguno
+// Return:     int - El valor de la rotación actual de la pieza.
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int Pieza::getRotacion()const{
 	return rotacion;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::getFila() const
+// Purpose:    Obtener la fila actual de la pieza en el tablero.
+// Parameters: Ninguno
+// Return:     int - El valor de la fila actual de la pieza.
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int Pieza::getFila()const{
 	return fila;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::getColumna() const
+// Purpose:    Obtener la columna actual de la pieza en el tablero.
+// Parameters: Ninguno
+// Return:     int - El valor de la columna actual de la pieza.
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int Pieza::getColumna() const{
 	return columna;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::setRotacion(int newRotacion)
+// Purpose:    Establecer la rotación de la pieza a un nuevo valor.
+// Parameters:
+// - newRotacion: Nuevo valor de rotación a asignar.
+// Return:     void
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Pieza::setRotacion(int newRotacion){
 	rotacion = newRotacion;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::setFila(int newFila)
+// Purpose:    Establecer la fila de la pieza a un nuevo valor.
+// Parameters:
+// - newFila: Nuevo valor de fila a asignar.
+// Return:     void
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Pieza::setFila(int newFila){
 	fila = newFila;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::setColumna(int newColumna)
+// Purpose:    Establecer la columna de la pieza a un nuevo valor.
+// Parameters:
+// - newColumna: Nuevo valor de columna a asignar.
+// Return:     void
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Pieza::setColumna(int newColumna){
 	columna = newColumna;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       Pieza::reiniciarRotacion()
+// Purpose:    Reiniciar la rotación de la pieza al valor inicial.
+// Parameters: Ninguno
+// Return:     void
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Pieza::reiniciarRotacion(){
 	rotacion = 1;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       operator<<(std::ostream& os, const Pieza& pieza)
+// Purpose:    Sobrecarga del operador de inserción para imprimir una pieza en un flujo de salida.
+// Parameters:
+// - os: Referencia al flujo de salida donde se imprimirá la pieza.
+// - pieza: Referencia constante a la pieza que se imprimirá.
+// Return:     std::ostream& - Referencia al flujo de salida modificado.
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::ostream& operator<<(std::ostream& os, const Pieza& pieza) {
 	std::string palabra = pieza.getPalabra();

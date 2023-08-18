@@ -1,12 +1,12 @@
 /*******************************************************************************
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
- * ESTRUCTURA DE DATOS 9686
- * Nombre: Carrera Nahir
- * Fecha de creacion: 03/08/23 17:33
- * Fecha de modificacion: 04/08/23 02:26
+ * Estructura de Datos 9686
+ * Nombres: Carrera Nahir, Drouet Stephen
+ * Fecha de creacion: 12/08/23 19:40
+ * Fecha de modificacion: 12/08/23 19:40
  * Enunciado:
- * Creación del tablero de ajedrez de tamaño n generado desde archivo txt y 
- * ubicación de una reina aleatoriamente en una casilla
+ * Realizar el juego del tetris con palabras en consola (Solo caida horizontal)
+ * EXTRA: Realizar la rotación de las piezas
  *******************************************************************************/
  
 #ifndef NODOSIMPLE_H
@@ -20,7 +20,6 @@ class NodoSimple {
 		//Getters y Setters
 	    T getDato() const { return dato; }
 	    T& getDato() {return dato;}
-        //const T& getDato() const {return dato;}
 	    NodoSimple* getSiguiente() const { return siguiente; }
 	    void setDato(const T& nuevoDato) { dato = nuevoDato; }
 	    void setSiguiente(NodoSimple* nuevoSiguiente) { siguiente = nuevoSiguiente; }

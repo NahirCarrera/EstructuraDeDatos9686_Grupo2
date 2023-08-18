@@ -1,13 +1,14 @@
 /*******************************************************************************
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
- * ESTRUCTURA DE DATOS 9686
- * Nombre: Carrera Nahir
- * Fecha de creacion: 03/08/23 17:33
- * Fecha de modificacion: 04/08/23 02:26
+ * Estructura de Datos 9686
+ * Nombres: Carrera Nahir, Drouet Stephen
+ * Fecha de creacion: 12/08/23 19:40
+ * Fecha de modificacion: 12/08/23 19:40
  * Enunciado:
- * Creación del tablero de ajedrez de tamaño n generado desde archivo txt y 
- * ubicación de una reina aleatoriamente en una casilla
+ * Realizar el juego del tetris con palabras en consola (Solo caida horizontal)
+ * EXTRA: Realizar la rotación de las piezas
  *******************************************************************************/
+ 
 #include "../Modelo/ListaSimple.h"
 #include "../Modelo/NodoSimple.h"
 #include <iostream>
@@ -55,11 +56,39 @@ void ListaSimple<T>::insertarAlFinal(const T& valor) {
 // Return:     NodoSimple<T>*
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+template <typename T>
+NodoSimple<T>* ListaSimple<T>::obtenerNodoPorPosicion(int posicion) {
+    if (posicion < 0)
+        return nullptr;
 
+    NodoSimple<T>* temp = cabeza;
+    int contador = 0;
+
+    while (temp != nullptr && contador < posicion) {
+        temp = temp->getSiguiente();
+        contador++;
+    }
+
+    return temp;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       ListaSimple<T>::estaVacia()
+// Purpose:    Verifica si la lista está vacía.
+// Parameters: Ninguno
+// Return:     bool - Verdadero si la lista está vacía, falso en caso contrario.
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
 bool ListaSimple<T>::estaVacia() {
     return this->cabeza == nullptr;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       ListaSimple<T>::mostrar()
+// Purpose:    Muestra en la consola los elementos almacenados en la lista.
+// Parameters: Ninguno
+// Return:     void
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 void ListaSimple<T>::mostrar(){
@@ -72,6 +101,13 @@ void ListaSimple<T>::mostrar(){
 		std::cout << std::endl;
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       ListaSimple<T>::obtenerTamanio() const
+// Purpose:    Calcula y devuelve el número de elementos almacenados en la lista.
+// Parameters: Ninguno
+// Return:     int - Número de elementos en la lista.
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 int ListaSimple<T>::obtenerTamanio() const {
@@ -93,16 +129,6 @@ int ListaSimple<T>::obtenerTamanio() const {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-int ListaSimple<T>::obtenerElementoEnPosicion(int posicion) {
-    NodoSimple<T>* nodo = obtenerNodoPorPosicion(posicion);
-    if (nodo != nullptr) {
-        return nodo->getDato();
-    } else {
-        throw std::out_of_range("Posicion invalida");
-    }
-}
-
-template <typename T>
 T& ListaSimple<T>::operator[](int posicion) {
     NodoSimple<T>* nodo = obtenerNodoPorPosicion(posicion);
     if (nodo != nullptr) {
@@ -112,21 +138,12 @@ T& ListaSimple<T>::operator[](int posicion) {
     }
 }
 
-template <typename T>
-NodoSimple<T>* ListaSimple<T>::obtenerNodoPorPosicion(int posicion) {
-    if (posicion < 0)
-        return nullptr;
-
-    NodoSimple<T>* temp = cabeza;
-    int contador = 0;
-
-    while (temp != nullptr && contador < posicion) {
-        temp = temp->getSiguiente();
-        contador++;
-    }
-
-    return temp;
-}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name:       ListaSimple<T>::vaciar()
+// Purpose:    Elimina todos los elementos de la lista y libera la memoria ocupada por ellos.
+// Parameters: Ninguno
+// Return:     void
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 void ListaSimple<T>::vaciar() {

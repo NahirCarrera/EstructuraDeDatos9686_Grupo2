@@ -5,8 +5,8 @@
  * Fecha de creacion: 12/08/23 19:40
  * Fecha de modificacion: 12/08/23 19:40
  * Enunciado:
- * Realizar el juego del tetris con palabras en consola
- *
+ * Realizar el juego del tetris con palabras en consola (Solo caida horizontal)
+ * EXTRA: Realizar la rotación de las piezas
  *******************************************************************************/
 
 #include "../Herramientas/ControladorMenu.h"
