@@ -551,7 +551,9 @@ void ControladorMenu::graficar1(){
     points.push_back(std::make_pair(8, 10));
 
     // Llama al método ejecutarDrawLines con el vector de puntos
-    plotter.ejecutarDrawLines(points);
+    plotter.iniciar();
+    plotter.drawLine(points, "BLACK", 0, 3);
+    plotter.terminar();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -565,14 +567,15 @@ void ControladorMenu::graficar2(){
 
     // Define los puntos que deseas dibujar
     std::vector<std::pair<float, float>> points;
-    points.push_back(std::make_pair(100, 100));
     
     for(int i = 0; i < 50; i++) {
     	points.push_back(std::make_pair(i, i * i));	
 	}
 
     // Llama al método ejecutarDrawLines con el vector de puntos
-    plotter.ejecutarDrawLines(points);
+    plotter.iniciar();
+    plotter.drawLine(points, "BLACK", 0, 3);
+	plotter.terminar();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -586,12 +589,19 @@ void ControladorMenu::graficar3(){
 
     // Define los puntos que deseas dibujar
     std::vector<std::pair<float, float>> points;
+    points.push_back(std::make_pair(0, 1.5));
     points.push_back(std::make_pair(1, 1));
-    points.push_back(std::make_pair(0.2, 0.2));
+    
+    std::vector<std::pair<float, float>> points2;
+    points2.push_back(std::make_pair(0, 0.5));
+    points2.push_back(std::make_pair(1.5, 0.5));
 
 
     // Llama al método ejecutarDrawLines con el vector de puntos
-    plotter.ejecutarDrawLines(points);
+    plotter.iniciar();
+    plotter.drawLine(points, "BLUE", 0, 3);
+    plotter.drawLine(points2, "RED", 1, 1);
+    plotter.terminar();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -601,16 +611,18 @@ void ControladorMenu::graficar3(){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::graficar4(){	
-	PlotLib plotter(600, 600, 100, 100);
+	PlotLib plotter(600, 600, 1000, 50);
 
     // Define los puntos que deseas dibujar
     std::vector<std::pair<float, float>> points;
-    points.push_back(std::make_pair(10, 10));
-    points.push_back(std::make_pair(20, 20));
-    points.push_back(std::make_pair(30, 10));
+    points.push_back(std::make_pair(100, 10));
+    points.push_back(std::make_pair(200, 20));
+    points.push_back(std::make_pair(300, 10));
 
     // Llama al método ejecutarDrawLines con el vector de puntos
-    plotter.ejecutarDrawLines(points);
+    plotter.iniciar();
+    plotter.drawLine(points, "BLACK", 1, 3);
+    plotter.terminar();
 }
 
 

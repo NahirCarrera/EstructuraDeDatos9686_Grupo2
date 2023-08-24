@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <iomanip>
+
 
 PlotLib::PlotLib(int w, int h, int cx, int cy) {
     width = w;
@@ -15,8 +17,11 @@ PlotLib::~PlotLib() {
 	
 }
 
-char* PlotLib::toChar(int numero) {
-    std::string cadena = std::to_string(numero);
+char* PlotLib::toChar(float numero) {
+	// Redondea el número a 2 decimales
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << numero;
+    std::string cadena = stream.str();
     char* punteroModificable = new char[cadena.length() + 1];
     strcpy(punteroModificable, cadena.c_str());
 
@@ -44,7 +49,7 @@ void PlotLib::drawCartesianPlane() {
 
     std::string numero;
     char* numChar;
-    int cont = 0;
+    float cont = 0;
     // Dibujar escalas en el eje X
     for (int x = 0; x < width - width / 12; x += width / 12) {
         line(centerX + x, centerY - 5, centerX + x, centerY + 5);
@@ -76,17 +81,33 @@ void PlotLib::drawPoint(float x, float y, int centerX, int centerY, int size) {
     }
 }
 
-void PlotLib::drawLine(std::vector<std::pair<float, float>> points, int centerX, int centerY) {
+void PlotLib::drawLine(std::vector<std::pair<float, float>> points, std::string color, int style, int size) {
+    int centerX = width / 12;
+    int centerY = height - height / 12;
+
     if (points.size() < 2) {
         // La línea debe tener al menos dos puntos para dibujarse.
         return;
     }
 
-    setcolor(BLUE); // Puedes cambiar el color de la línea según tus preferencias.
-    setlinestyle(0, 1, 3); // El último parámetro (3) establece el grosor de la línea.
+    if (color == "BLACK") {
+        setcolor(BLACK);
+    } else if (color == "BLUE") {
+        setcolor(BLUE);
+    } else if (color == "RED") {
+        setcolor(RED);
+    } else if (color == "GREEN") {
+        setcolor(GREEN);
+    } else if (color == "YELLOW") {
+        setcolor(YELLOW);
+    } else {
+        setcolor(BLACK); // Color por defecto si no coincide ninguno
+    }
+
+    setlinestyle(style, 1, size); // El último parámetro (3) establece el grosor de la línea.
 
     // Dibuja la línea conectando los puntos
-    for (size_t i = 1; i < points.size(); i++) {
+    for (int i = 1; i < points.size(); i++) {
         float x1 = points[i - 1].first;
         float y1 = points[i - 1].second;
         float x2 = points[i].first;
@@ -96,26 +117,21 @@ void PlotLib::drawLine(std::vector<std::pair<float, float>> points, int centerX,
         int adjustedY1 = round(centerY - y1 * (height / 12) / (cotaY / 10.0));
         int adjustedX2 = round(centerX + x2 * (width / 12) / (cotaX / 10.0));
         int adjustedY2 = round(centerY - y2 * (height / 12) / (cotaY / 10.0));
-
         line(adjustedX1, adjustedY1, adjustedX2, adjustedY2);
         drawPoint(x1, y1, centerX, centerY, 4);
         drawPoint(x2, y2, centerX, centerY, 4);
     }
 }
 
-void PlotLib::ejecutarDrawLines(std::vector<std::pair<float, float>> points) {
-    initwindow(width, height, "Plano Cartesiano", 100, 100);
 
+void PlotLib::iniciar(){
+	initwindow(width, height, "Plano Cartesiano", 100, 100);
     setbkcolor(WHITE);
     cleardevice();
-    int centerX = width / 12;
-    int centerY = height - height / 12;
-
     drawCartesianPlane();
+}
 
-    // Llama a drawLine con el vector de puntos proporcionado
-    drawLine(points, centerX, centerY);
-
+void PlotLib::terminar(){
     // Esperar a que el usuario presione una tecla
     getch();
     closegraph();

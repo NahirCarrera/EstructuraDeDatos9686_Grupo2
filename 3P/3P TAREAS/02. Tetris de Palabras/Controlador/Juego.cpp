@@ -346,6 +346,7 @@ void Juego::ejecutar(int nivel, int intervaloActualizacion) {
                         posicionAleatoria--;
                         tetris.colocarPalabra(i - 1, posicionAleatoria);
                     }
+                
                 }
                 else if (tecla == 77)
                 { // Tecla de flecha derecha (código ASCII 77)
@@ -355,6 +356,7 @@ void Juego::ejecutar(int nivel, int intervaloActualizacion) {
                         posicionAleatoria++;
                         tetris.colocarPalabra(i - 1, posicionAleatoria);
                     }
+                    
                 }
                 else if (tecla == 80)
                 { // Tecla de flecha abajo (código ASCII 80)

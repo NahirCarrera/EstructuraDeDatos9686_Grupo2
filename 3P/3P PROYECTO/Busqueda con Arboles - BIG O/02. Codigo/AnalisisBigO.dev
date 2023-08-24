@@ -1,5 +1,5 @@
 [Project]
-filename=Project1.dev
+filename=AnalisisBigO.dev
 name=AnalisisBigO
 Type=1
 Ver=2
@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=0;0;0;0;0;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;8;0;0;0
-UnitCount=46
+UnitCount=48
 
 [VersionInfo]
 Major=1
@@ -504,6 +504,26 @@ BuildCmd=
 FileName=Bibliotecas\pdf.h
 CompileCpp=1
 Folder=Bibliotecas
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit47]
+FileName=Modelo\BigO.h
+CompileCpp=1
+Folder=Modelo
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit48]
+FileName=Controlador\BigO.cpp
+CompileCpp=1
+Folder=Controlador
 Compile=1
 Link=1
 Priority=1000
