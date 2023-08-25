@@ -3,12 +3,11 @@
  * Estructura de Datos 9686
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 07/07/23 21:42
- * Fecha de modificacion: 11/07/23 22:39
+ * Fecha de modificacion: 25/08/23 02:04
  * Enunciado:
- * Registro de entrada y salida de personas con listas circulares doblemente
- * enlazadas y búsqueda con árboles binarios + Extras
+ * Analisis Big-O del proyecto de Registro de Personas
  *
- *******************************************************************************/
+ *******************************************************************************/ 
  
 #include "../Controlador/ArbolBinario.cpp"
 #include "../Modelo/Empleado.h"
@@ -26,7 +25,6 @@
 #include "Imagen.h"
 #include <string>
 #include <cstdlib> // para usar system("cls") y system("pause")
-#include <chrono>
 #include <windows.h>
 #include <thread>
 
@@ -68,20 +66,23 @@ void ControladorMenu::registrarEmpleado() {
 	    std::vector<std::pair<int, double>> resultados;
 	    int maximo = Singleton::getInstance()->getNumeroDatos();
 		double tiempoEjecucion;
-		int salto = BigO::obtenerSaltos(maximo);
+		
+		BigO bigO;
+		int salto = bigO.obtenerSaltos(maximo);
 		
 		for(int i = 0; i <= maximo; i+=salto) {
 			empleadosBigO = ListaCircularDoble<Empleado>();
-			tiempoEjecucion = BigO::medirTiempoEjecucion([&]() {
-				for(int j = 0; j < i; j++) {
+			for(int j = 0; j < i; j++) {
 					empleadosBigO.insertar(empleados.getPos(j));
-				}
+			}
+			
+			tiempoEjecucion = bigO.medirTiempoEjecucion([&]() {
 			    empleadosBigO.insertar(persona);
 			});
 			resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
 		}
 		
-	    BigO::guardarResultadosCSV(resultados, "resultados.csv");
+	    bigO.guardarResultadosCSV(resultados, "resultados.csv");
 	    graficar();
 	    
 	    
@@ -148,17 +149,19 @@ void ControladorMenu::eliminarEmpleado() {
 			std::vector<std::pair<int, double>> resultados;
 		    int maximo = Singleton::getInstance()->getNumeroDatos();
 			double tiempoEjecucion = 1;
-			int salto = BigO::obtenerSaltos(maximo);
+			BigO bigO;
+			int salto = bigO.obtenerSaltos(maximo);
 			
 			for(int i = 0; i <= maximo; i+=salto) {
 				empleadosBigO = ListaCircularDoble<Empleado>();
 				registrosBigO = ListaCircularDoble<RegistroEntradaSalida>();
 				
-				tiempoEjecucion = BigO::medirTiempoEjecucion([&]() {
-				    for(int j = 0; j < i; j++) {
-						empleadosBigO.insertar(empleados.getPos(j));
-						registrosBigO.insertar(registros.getPos(j)); 
-					}
+				for(int j = 0; j < i; j++) {
+					empleadosBigO.insertar(empleados.getPos(j));
+					registrosBigO.insertar(registros.getPos(j)); 
+				}
+				
+				tiempoEjecucion = bigO.medirTiempoEjecucion([&]() {
 					empleadosBigO.eliminar(empleado);
 	
 			    	while(hayRegistro) {
@@ -170,7 +173,7 @@ void ControladorMenu::eliminarEmpleado() {
 				resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
 			}
 			
-		    BigO::guardarResultadosCSV(resultados, "resultados.csv");
+		    bigO.guardarResultadosCSV(resultados, "resultados.csv");
 		    graficar();
     		
     		
@@ -231,7 +234,8 @@ void ControladorMenu::modificarNombreApellido(std::string cedula) {
 			std::vector<std::pair<int, double>> resultados;
 		    int maximo = Singleton::getInstance()->getNumeroDatos();
 			double tiempoEjecucion = 1;
-			int salto = BigO::obtenerSaltos(maximo);
+			BigO bigO;
+			int salto = bigO.obtenerSaltos(maximo);
 			
 			for(int i = 0; i <= maximo; i+=salto) {
 				registrosBigO = ListaCircularDoble<RegistroEntradaSalida>();
@@ -239,26 +243,36 @@ void ControladorMenu::modificarNombreApellido(std::string cedula) {
 					registrosBigO.insertar(registros.getPos(j)); 
 				}
 				
-				do {
-					tiempoEjecucion = BigO::medirTiempoEjecucion([&]() {
+				
+				tiempoEjecucion = bigO.medirTiempoEjecucion([&]() {
 				    	
-					});	
-				} while (tiempoEjecucion <= 0);
+					empleado.setNombre(nombre);
+				    empleado.setApellido(apellido);
+				    nodoEmpleado->setDato(empleado);
+				    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
+				    NodoDoble<RegistroEntradaSalida>* aux = registrosBigO.getCabeza();
+				    
+				    if (aux != nullptr) {
+				    	do{
+							if (aux->getDato() == registro){
+								registro = aux->getDato();
+								registro.setEmpleado(empleado);
+								aux->setDato(registro);
+							}
+							aux = aux->getSiguiente();
+						} while (aux != registrosBigO.getCabeza());
+						
+						
+					}
+				
+				});	
+				
 							
 				resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
 			}
 			
-		    BigO::guardarResultadosCSV(resultados, "resultados.csv");
+		    bigO.guardarResultadosCSV(resultados, "resultados.csv");
 		    graficar();
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 			
@@ -327,27 +341,70 @@ void ControladorMenu::modificarSueldo(std::string cedula) {
 	    
 	    if (confirmarAccion1("Esta seguro que desea modificar el sueldo del empleado?\n\n" + empleado.mostrar())) {
 	    
-	    empleado.setSueldo(sueldo);
-	    nodoEmpleado->setDato(empleado);
-	    
-	    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
-	    NodoDoble<RegistroEntradaSalida>* aux = registros.getCabeza();
-	    
-	    if (aux != nullptr) {
-			do{
-				if (aux->getDato() == registro){
-					registro = aux->getDato();
-					registro.setEmpleado(empleado);
-					aux->setDato(registro);
+	    	ListaCircularDoble<RegistroEntradaSalida> registrosBigO;
+			std::vector<std::pair<int, double>> resultados;
+		    int maximo = Singleton::getInstance()->getNumeroDatos();
+			double tiempoEjecucion = 1;
+			BigO bigO;
+			int salto = bigO.obtenerSaltos(maximo);
+			
+			for(int i = 0; i <= maximo; i+=salto) {
+				registrosBigO = ListaCircularDoble<RegistroEntradaSalida>();
+				for(int j = 0; j < i; j++) {
+					registrosBigO.insertar(registros.getPos(j)); 
 				}
-				aux = aux->getSiguiente();
-			} while (aux != registros.getCabeza());
-	    				
+				
+				
+				tiempoEjecucion = bigO.medirTiempoEjecucion([&]() {
+				    	
+					empleado.setSueldo(sueldo);
+		    		nodoEmpleado->setDato(empleado);
+				    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
+				    NodoDoble<RegistroEntradaSalida>* aux = registrosBigO.getCabeza();
+				    
+				    if (aux != nullptr) {
+				    	do{
+							if (aux->getDato() == registro){
+								registro = aux->getDato();
+								registro.setEmpleado(empleado);
+								aux->setDato(registro);
+							}
+							aux = aux->getSiguiente();
+						} while (aux != registrosBigO.getCabeza());
+						
+						
+					}
+				
+				});	
+				
+							
+				resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
+			}
+			
+		    bigO.guardarResultadosCSV(resultados, "resultados.csv");
+		    graficar();
+			
+				    
+	    
+		    empleado.setSueldo(sueldo);
+		    nodoEmpleado->setDato(empleado);
+		    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
+		    NodoDoble<RegistroEntradaSalida>* aux = registros.getCabeza();
+		    
+		    if (aux != nullptr) {
+				do{
+					if (aux->getDato() == registro){
+						registro = aux->getDato();
+						registro.setEmpleado(empleado);
+						aux->setDato(registro);
+					}
+					aux = aux->getSiguiente();
+				} while (aux != registros.getCabeza());
+			}
+			
 			GestorArchivo::guardarListaRegistroComoCSV(registros, "RegistrosAleatorio.csv");
-		}
-		
-	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "EmpleadosAleatorio.csv");
-	    std::cout << "(O)===)> Sueldo modificado exitosamente..." << std::endl;
+		    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "EmpleadosAleatorio.csv");
+		    std::cout << "(O)===)> Sueldo modificado exitosamente..." << std::endl;
 	    
 	    } else {
 			std::cout << "(O)===)> Cancelado: No se modifico el empleado..." << std::endl;
@@ -387,8 +444,52 @@ void ControladorMenu::registrarEntradaSalida() {
 	if (nodoEmpleado != nullptr) {
 		RegistroEntradaSalida registro(nodoEmpleado->getDato(), fecha, fecha);
 		
-		nodoRegistro = registros.extraerNodo(registro);
 		
+			ListaCircularDoble<RegistroEntradaSalida> registrosBigO;
+			std::vector<std::pair<int, double>> resultados;
+		    int maximo = Singleton::getInstance()->getNumeroDatos();
+			double tiempoEjecucion = 1;
+			BigO bigO;
+			int salto = bigO.obtenerSaltos(maximo);
+			
+			for(int i = 0; i <= maximo; i+=salto) {
+				registrosBigO = ListaCircularDoble<RegistroEntradaSalida>();
+				for(int j = 0; j < i; j++) {
+					registrosBigO.insertar(registros.getPos(j)); 
+				}
+				
+				
+				tiempoEjecucion = bigO.medirTiempoEjecucion([&]() {
+				    nodoRegistro = registrosBigO.extraerNodo(registro);	
+					if(nodoRegistro == nullptr) {
+						RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
+						registrosBigO.insertar(registroNuevo);
+					} else {
+						if (nodoRegistro->getDato().getContadorRegistro() == 1) {
+							if(Fecha::obtenerFechaSimple(fechaActual) == Fecha::obtenerFechaSimple(nodoRegistro->getDato().getFechaSalida())){	
+							} else {
+								RegistroEntradaSalida registroNuevo(nodoEmpleado->getDato(), fechaActual, fecha);
+								registrosBigO.insertar(registroNuevo);
+							}
+						} else {
+							RegistroEntradaSalida registroNuevo = nodoRegistro->getDato();
+							registroNuevo.setFechaSalida(fechaActual);
+							registroNuevo.addContadorRegistro();
+							nodoRegistro->setDato(registroNuevo);
+						}
+					}
+				});	
+				
+							
+				resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
+			}
+			
+		    bigO.guardarResultadosCSV(resultados, "resultados.csv");
+		    graficar();
+		    
+		    
+		    
+		nodoRegistro = registros.extraerNodo(registro);
 		// Si no existe un registro de esa cedula creamos uno
 		if(nodoRegistro == nullptr) {
 			if (confirmarAccion1("Esta seguro que desea registrar la entrada con la fecha/hora: " + fechaActual.mostrar())) {
@@ -443,7 +544,33 @@ void ControladorMenu::registrarEntradaSalida() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::mostrarRegistro() {
-	Singleton::getInstance()->getRegistros().mostrar();
+	ListaCircularDoble<RegistroEntradaSalida>& registros = Singleton::getInstance()->getRegistros();
+	
+	ListaCircularDoble<RegistroEntradaSalida> registrosBigO;
+	std::vector<std::pair<int, double>> resultados;
+    int maximo = Singleton::getInstance()->getNumeroDatos();
+	double tiempoEjecucion = 1;
+	BigO bigO;
+	int salto = bigO.obtenerSaltos(maximo);
+	
+	for(int i = 0; i <= maximo; i+=salto) {
+		registrosBigO = ListaCircularDoble<RegistroEntradaSalida>();
+		for(int j = 0; j < i; j++) {
+			registrosBigO.insertar(registros.getPos(j)); 
+		}
+		
+		tiempoEjecucion = bigO.medirTiempoEjecucion([&]() {
+			registrosBigO.mostrar();
+		});	
+		system("cls");
+					
+		resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
+	}
+	
+    bigO.guardarResultadosCSV(resultados, "resultados.csv");
+    graficar();
+	
+	registros.mostrar();
 	system("pause");
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -453,8 +580,34 @@ void ControladorMenu::mostrarRegistro() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::mostrarEmpleados() {
-	std::cout << "NUmero de datos: " << Singleton::getInstance()->getNumeroDatos() << std::endl;
-	Singleton::getInstance()->getEmpleados().mostrar();
+	
+    ListaCircularDoble<Empleado>& empleados = Singleton::getInstance()->getEmpleados();
+	
+	ListaCircularDoble<Empleado> empleadosBigO;
+	std::vector<std::pair<int, double>> resultados;
+    int maximo = Singleton::getInstance()->getNumeroDatos();
+	double tiempoEjecucion = 1;
+	BigO bigO;
+	int salto = bigO.obtenerSaltos(maximo);
+	
+	for(int i = 0; i <= maximo; i+=salto) {
+		empleadosBigO = ListaCircularDoble<Empleado>();
+		for(int j = 0; j < i; j++) {
+				empleadosBigO.insertar(empleados.getPos(j));
+		}
+		
+		tiempoEjecucion = bigO.medirTiempoEjecucion([&]() {
+			empleadosBigO.mostrar();
+		});	
+		system("cls");
+					
+		resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
+	}
+	
+    bigO.guardarResultadosCSV(resultados, "resultados.csv");
+    graficar();
+	
+	empleados.mostrar();
 	system("pause");
 }
 
@@ -500,7 +653,8 @@ void ControladorMenu::mostrarRegistroIndividual() {
 	std::vector<std::pair<int, double>> resultados;
     int maximo = Singleton::getInstance()->getNumeroDatos();
 	double tiempoEjecucion = 1;
-	int salto = BigO::obtenerSaltos(maximo);
+	BigO bigO;
+	int salto = bigO.obtenerSaltos(maximo);
 	
 	for(int i = 0; i <= maximo; i+=salto) {
 		empleadosBigO = ListaCircularDoble<Empleado>();
@@ -510,26 +664,16 @@ void ControladorMenu::mostrarRegistroIndividual() {
 			registrosArbolBigO.insertarNodo(registros.getPos(j));
 		}
 		
-		
-		auto start = std::chrono::high_resolution_clock::now();
-		NodoArbol<RegistroEntradaSalida>* registro = registrosArbolBigO.buscarNodo(RegistroEntradaSalida(empleado, fecha, fecha));
-		empleados.buscar(empleado);
-		auto stop = std::chrono::high_resolution_clock::now();
-		std::chrono::nanoseconds duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
-		
-	    tiempoEjecucion = duration.count();
-	    std::cout << "i: " << i << ", tamEm: " << empleadosBigO.getSize() << std::endl;
-		std::cout << tiempoEjecucion << std::endl;
-		//std::cout << duration.count() << std::endl;
+		tiempoEjecucion = bigO.medirTiempoEjecucion([&]() {
+			NodoArbol<RegistroEntradaSalida>* registro = registrosArbolBigO.buscarNodo(RegistroEntradaSalida(empleado, fecha, fecha));
+			empleados.buscar(empleado);		    	
+		});	
 		
 		resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
 	}
 	
-    BigO::guardarResultadosCSV(resultados, "resultados.csv");
-    graficar();
-    
-
-    
+    bigO.guardarResultadosCSV(resultados, "resultados.csv");
+    graficar();    
     
     NodoArbol<RegistroEntradaSalida>* registro = registrosArbol.buscarNodo(RegistroEntradaSalida(empleado, fecha, fecha));
 	
@@ -585,7 +729,8 @@ void ControladorMenu::generarPdf(){
 	std::vector<std::pair<int, double>> resultados;
     int maximo = Singleton::getInstance()->getNumeroDatos();
 	double tiempoEjecucion = 1;
-	int salto = BigO::obtenerSaltos(maximo);
+	BigO bigO;
+	int salto = bigO.obtenerSaltos(maximo);
 	
 	for(int i = 0; i <= maximo; i+=salto) {
 		empleadosBigO = ListaCircularDoble<Empleado>();
@@ -595,7 +740,7 @@ void ControladorMenu::generarPdf(){
 		
 		GestorArchivo::guardarListaEmpleadoComoCSV(empleadosBigO, "EmpleadosAleatorio.csv");
 		
-		tiempoEjecucion = BigO::medirTiempoEjecucion([&]() {
+		tiempoEjecucion = bigO.medirTiempoEjecucion([&]() {
 	    	Backup::generarPDF("EmpleadosAleatorio.csv");	
 		});	
 		
@@ -603,7 +748,7 @@ void ControladorMenu::generarPdf(){
 		resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
 	}
 	
-    BigO::guardarResultadosCSV(resultados, "resultados.csv");
+    bigO.guardarResultadosCSV(resultados, "resultados.csv");
     graficar();
 	
 	GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "EmpleadosAleatorio.csv");

@@ -3,12 +3,11 @@
  * Estructura de Datos 9686
  * Nombres: Carrera Nahir, Drouet Stephen
  * Fecha de creacion: 07/07/23 21:42
- * Fecha de modificacion: 07/07/23 21:42
+ * Fecha de modificacion: 25/08/23 02:04
  * Enunciado:
- * Registro de entrada y salida de personas con listas circulares doblemente
- * enlazadas y búsqueda con árboles binarios + Extras
+ * Analisis Big-O del proyecto de Registro de Personas
  *
- *******************************************************************************/
+ *******************************************************************************/ 
 
 /************************************************************
  * Headers

@@ -1,10 +1,11 @@
 /*******************************************************************************
  * UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
+ * Estructura de Datos 9686
  * Nombres: Carrera Nahir, Drouet Stephen
- * Fecha de creacion: 26/06/23 22:21
- * Fecha de modificacion: 11/07/23 22:39
+ * Fecha de creacion: 07/07/23 21:42
+ * Fecha de modificacion: 25/08/23 02:04
  * Enunciado:
- * Proyecto transformacion de expresion infija a notacion polaca y polaca inversa
+ * Analisis Big-O del proyecto de Registro de Personas
  *
  *******************************************************************************/ 
  
