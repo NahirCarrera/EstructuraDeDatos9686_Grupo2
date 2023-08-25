@@ -28,6 +28,7 @@
 #include <cstdlib> // para usar system("cls") y system("pause")
 #include <chrono>
 #include <windows.h>
+#include <thread>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Name:       ControladorMenu::registrarEmpleado()
@@ -707,7 +708,7 @@ void ControladorMenu::modificarEmpleado() {
 // Return:     void
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ControladorMenu::graficar(){
+void correrCScript(){
 	std::vector<std::pair<float, float>> points;
 	points = GestorArchivo::cargarPuntos("resultados.csv");
 	float maxX = 0, maxY = 0;
@@ -732,11 +733,42 @@ void ControladorMenu::graficar(){
 	
 	PlotLib plotter(600, 600, maxX, maxY);
 
-
+	
     // Llama al método ejecutarDrawLines con el vector de puntos
     plotter.iniciar();
     plotter.drawLine(points, "BLUE", 0, 3);
     plotter.terminar();
+}
+
+void correrRScript(){
+	const char* r_command = "Rscript -e \"source('big_O.R')\"";
+    int r_result = system(r_command);
+
+    if (r_result == 0) {
+        std::cout << "El script R se ejecuto exitosamente.\n";
+    } else {
+        std::cout << "Hubo un error al ejecutar el script R.\n";
+    }
+}
+
+void correrOctaveScript(){
+	const char* octave_command = "start /B octave-cli --no-gui --silent big_O.m";
+    int octave_result = system(octave_command);
+
+    if (octave_result == 0) {
+        std::cout << "El script de Octave se ejecuto exitosamente.\n";
+    } else {
+        std::cout << "Hubo un error al ejecutar el script de Octave.\n";
+    }
+}
+void ControladorMenu::graficar(){
+	std::thread r_thread(correrRScript);
+    std::thread octave_thread(correrOctaveScript);
+	std::thread c_thread(correrCScript);
+
+    r_thread.join();
+    octave_thread.join();
+    c_thread.join();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -808,6 +840,32 @@ void ControladorMenu::subMenuExtras() {
 	menuEjecutando = true; // Siempre que se quiera correr un menu en bucle
 }
 
+void marquesina(std::string text, SHORT yPos) {
+    HANDLE conhandler = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    int ancho;
+    GetConsoleScreenBufferInfo(conhandler, &csbi);
+    ancho = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    SetConsoleCursorPosition(conhandler, { 0, yPos });
+
+    while (true) {
+        std::string temp = text;
+        text.erase(0, 1);
+        text += temp[0];
+        CHAR_INFO* buff = (CHAR_INFO*)calloc(ancho, sizeof(CHAR_INFO));
+
+        for (int i = 0; i < text.length(); i++) {
+            buff[i].Char.AsciiChar = text.at(i);
+            buff[i].Attributes = 15;
+        }
+
+        SMALL_RECT pos = { 0, yPos, ancho, yPos + 1 };
+        WriteConsoleOutputA(conhandler, buff, { (SHORT)ancho, 1 }, { 0, 0 }, &pos);
+        free(buff);
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Name:       ControladorMenu::correrMenu()
 // Purpose:    Desplegar las opciones del menu principal
@@ -815,6 +873,20 @@ void ControladorMenu::subMenuExtras() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::correrMenu() {
+	std::string test = " E S T R U C T U R A  D E  D A T O S  H U F F M A N  I N G E N I E R I A  S O F T W A R E  E S P E   ";
+    
+    // Marquee en la parte superior
+    std::thread sup_thread(marquesina, test, 0);
+    sup_thread.detach();
+    
+    // Marquee en la parte inferior
+    HANDLE conhandler = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(conhandler, &csbi);
+    SHORT bottom = csbi.srWindow.Bottom;
+    std::thread inf_thread(marquesina, test, bottom);
+    inf_thread.detach();
+    
 	Singleton* singleton = Singleton::getInstance();
 	
 	ListaCircularDoble<Empleado>& empleados = singleton->getEmpleados();

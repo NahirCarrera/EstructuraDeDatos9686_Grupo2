@@ -60,6 +60,7 @@ void limpiar()
 
 void Menu::desplegarMenu() {
     limpiar(); // Limpiar la pantalla (Windows)
+    std::cout <<std::endl;
     std::cout << titulo << std::endl;
     NodoDoble<Opcion>* nodo = opciones.getCabeza();
     do {

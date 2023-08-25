@@ -4,7 +4,8 @@
 #include <string>
 #include <cmath>
 #include <iomanip>
-
+#include <chrono>
+#include <thread>
 
 PlotLib::PlotLib(int w, int h, float cx, float cy) {
     width = w;
@@ -138,6 +139,7 @@ void PlotLib::iniciar(){
 
 void PlotLib::terminar(){
     // Esperar a que el usuario presione una tecla
-    getch();
+    //getch();
+    std::this_thread::sleep_for(std::chrono::seconds(10));
     closegraph();
 }

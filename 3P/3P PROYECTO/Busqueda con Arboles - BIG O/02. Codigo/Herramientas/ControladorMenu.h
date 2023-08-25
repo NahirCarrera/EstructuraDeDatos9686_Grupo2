@@ -14,7 +14,6 @@
 #include "../Modelo/ListaCircularDoble.h"
 #include <string>
 
-
 class ControladorMenu{
 	public:
 		ControladorMenu(){};
@@ -44,7 +43,6 @@ class ControladorMenu{
 		void modificarEmpleado();
 		//Salir
 		void salir();
-		
 		bool menuEjecutando = false;
 };
 
