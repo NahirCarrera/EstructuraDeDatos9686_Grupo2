@@ -15,17 +15,19 @@
 #include "../Modelo/RegistroEntradaSalida.h"
 #include "../Modelo/Fecha.h"
 #include "../Modelo/Singleton.h"
+#include "../Modelo/PlotLib.h"
+#include "../Modelo/GeneradorDatos.h"
+#include "../Modelo/BigO.h"
 #include "ControladorMenu.h"
 #include "GestorArchivo.h"
 #include "Menu.h"
 #include "Dato.h"
 #include "Backup.h"
 #include "Imagen.h"
-#include "../Modelo/PlotLib.h"
 #include <string>
 #include <cstdlib> // para usar system("cls") y system("pause")
-
-
+#include <chrono>
+#include <windows.h>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Name:       ControladorMenu::registrarEmpleado()
@@ -60,8 +62,31 @@ void ControladorMenu::registrarEmpleado() {
 	    // Crear una persona con los datos ingresados
 	    Empleado persona(cedula, nombre, apellido, fecha, sueldo);
 	    
+	    
+	    ListaCircularDoble<Empleado> empleadosBigO;
+	    std::vector<std::pair<int, double>> resultados;
+	    int maximo = Singleton::getInstance()->getNumeroDatos();
+		double tiempoEjecucion;
+		int salto = BigO::obtenerSaltos(maximo);
+		
+		for(int i = 0; i <= maximo; i+=salto) {
+			empleadosBigO = ListaCircularDoble<Empleado>();
+			tiempoEjecucion = BigO::medirTiempoEjecucion([&]() {
+				for(int j = 0; j < i; j++) {
+					empleadosBigO.insertar(empleados.getPos(j));
+				}
+			    empleadosBigO.insertar(persona);
+			});
+			resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
+		}
+		
+	    BigO::guardarResultadosCSV(resultados, "resultados.csv");
+	    graficar();
+	    
+	    
 	    empleados.insertar(persona);
-	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
+	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "EmpleadosAleatorio.csv");
+	    Singleton::getInstance()->setNumeroDatos(empleados.getSize());
 	    std::cout << "(O)===)> Empleado registrado con exito." << std::endl;
 	} else {
 		std::cout << "(O)===)> Cedula ya registrada..." << std::endl;
@@ -79,6 +104,7 @@ void ControladorMenu::registrarEmpleado() {
 ////////////////////////////////////////////////////////////////////////
 
 bool confirmarAccion1(std::string textoConfirmacion) {
+	system("cls");
 	bool seRealiza = false;
 	Menu subMenuConfirmacion("(O)===)> " + textoConfirmacion);
 	subMenuConfirmacion.insertarOpcion("SI                  ", [&]() {seRealiza = true;});
@@ -115,16 +141,49 @@ void ControladorMenu::eliminarEmpleado() {
     
     if(empleados.buscar(empleado)) {
     	if (confirmarAccion1("Esta seguro que desea eliminar el empleado:\n\n" + empleado.mostrar())) {
-    		empleados.eliminar(empleado);
-    	
-	    	while(hayRegistro) {
-	    		hayRegistro = registros.eliminar(registro);
+    		
+			ListaCircularDoble<Empleado> empleadosBigO;
+			ListaCircularDoble<RegistroEntradaSalida> registrosBigO;
+			std::vector<std::pair<int, double>> resultados;
+		    int maximo = Singleton::getInstance()->getNumeroDatos();
+			double tiempoEjecucion = 1;
+			int salto = BigO::obtenerSaltos(maximo);
+			
+			for(int i = 0; i <= maximo; i+=salto) {
+				empleadosBigO = ListaCircularDoble<Empleado>();
+				registrosBigO = ListaCircularDoble<RegistroEntradaSalida>();
+				
+				tiempoEjecucion = BigO::medirTiempoEjecucion([&]() {
+				    for(int j = 0; j < i; j++) {
+						empleadosBigO.insertar(empleados.getPos(j));
+						registrosBigO.insertar(registros.getPos(j)); 
+					}
+					empleadosBigO.eliminar(empleado);
+	
+			    	while(hayRegistro) {
+			    		hayRegistro = registrosBigO.eliminar(registro);
+					}
+				});	
+				
+							
+				resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
 			}
-	    	
-	    	GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
-	    	GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
-	    	
-	    	std::cout << "(O)===)> Empleado y Registros eliminados" << std::endl;	
+			
+		    BigO::guardarResultadosCSV(resultados, "resultados.csv");
+		    graficar();
+    		
+    		
+			empleados.eliminar(empleado);
+    	
+		    while(hayRegistro) {
+		    	hayRegistro = registros.eliminar(registro);
+			}
+				
+			GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "EmpleadosAleatorio.csv");
+	    	GestorArchivo::guardarListaRegistroComoCSV(registros, "RegistrosAleatorio.csv");
+	    	Singleton::getInstance()->setNumeroDatos(empleados.getSize());
+	    	std::cout << "(O)===)> Empleado y Registros eliminados" << std::endl;
+	    		
 		} else {
 			std::cout << "(O)===)> Cancelado: No se elimino el empleado..." << std::endl;
 		}
@@ -165,7 +224,45 @@ void ControladorMenu::modificarNombreApellido(std::string cedula) {
 	    apellido = Dato::ingresarNombreSimple();
 	    
 	    if (confirmarAccion1("Esta seguro que desea modificar el nombre y apellido del empleado?\n\n" + empleado.mostrar())) {
-		    empleado.setNombre(nombre);
+		    
+			
+			ListaCircularDoble<RegistroEntradaSalida> registrosBigO;
+			std::vector<std::pair<int, double>> resultados;
+		    int maximo = Singleton::getInstance()->getNumeroDatos();
+			double tiempoEjecucion = 1;
+			int salto = BigO::obtenerSaltos(maximo);
+			
+			for(int i = 0; i <= maximo; i+=salto) {
+				registrosBigO = ListaCircularDoble<RegistroEntradaSalida>();
+				for(int j = 0; j < i; j++) {
+					registrosBigO.insertar(registros.getPos(j)); 
+				}
+				
+				do {
+					tiempoEjecucion = BigO::medirTiempoEjecucion([&]() {
+				    	
+					});	
+				} while (tiempoEjecucion <= 0);
+							
+				resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
+			}
+			
+		    BigO::guardarResultadosCSV(resultados, "resultados.csv");
+		    graficar();
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			empleado.setNombre(nombre);
 		    empleado.setApellido(apellido);
 		    nodoEmpleado->setDato(empleado);
 		    registro = RegistroEntradaSalida(empleado, Fecha(), Fecha());
@@ -181,10 +278,13 @@ void ControladorMenu::modificarNombreApellido(std::string cedula) {
 					aux = aux->getSiguiente();
 				} while (aux != registros.getCabeza());
 				
-				GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+				
 			}
 			
-		    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
+			
+			
+			GestorArchivo::guardarListaRegistroComoCSV(registros, "RegistrosAleatorio.csv");
+		    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "EmpleadosAleatorio.csv");
 	    	
 		    std::cout << "(O)===)> Nombre y Apellido modificado exitosamente..." << std::endl;
 	    
@@ -242,10 +342,10 @@ void ControladorMenu::modificarSueldo(std::string cedula) {
 				aux = aux->getSiguiente();
 			} while (aux != registros.getCabeza());
 	    				
-			GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+			GestorArchivo::guardarListaRegistroComoCSV(registros, "RegistrosAleatorio.csv");
 		}
 		
-	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "Empleados.csv");
+	    GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "EmpleadosAleatorio.csv");
 	    std::cout << "(O)===)> Sueldo modificado exitosamente..." << std::endl;
 	    
 	    } else {
@@ -329,7 +429,7 @@ void ControladorMenu::registrarEntradaSalida() {
 			}
 		}
 		
-		GestorArchivo::guardarListaRegistroComoCSV(registros, "Registros.csv");
+		GestorArchivo::guardarListaRegistroComoCSV(registros, "RegistrosAleatorio.csv");
 	} else {
 		std::cout << "(O)===)> Cedula no registrada..." << std::endl;
 	}
@@ -352,6 +452,7 @@ void ControladorMenu::mostrarRegistro() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ControladorMenu::mostrarEmpleados() {
+	std::cout << "NUmero de datos: " << Singleton::getInstance()->getNumeroDatos() << std::endl;
 	Singleton::getInstance()->getEmpleados().mostrar();
 	system("pause");
 }
@@ -389,6 +490,45 @@ void ControladorMenu::mostrarRegistroIndividual() {
     std::cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)"<<std::endl;
     system("cls");
     Empleado empleado(cedula, "", "", fecha, 0);
+    
+    
+    
+    
+    ArbolBinario<RegistroEntradaSalida> registrosArbolBigO;
+	ListaCircularDoble<Empleado> empleadosBigO;
+	std::vector<std::pair<int, double>> resultados;
+    int maximo = Singleton::getInstance()->getNumeroDatos();
+	double tiempoEjecucion = 1;
+	int salto = BigO::obtenerSaltos(maximo);
+	
+	for(int i = 0; i <= maximo; i+=salto) {
+		empleadosBigO = ListaCircularDoble<Empleado>();
+		registrosArbolBigO = ArbolBinario<RegistroEntradaSalida>();
+		for(int j = 0; j < i; j++) {
+			empleadosBigO.insertar(empleados.getPos(j));
+			registrosArbolBigO.insertarNodo(registros.getPos(j));
+		}
+		
+		
+		auto start = std::chrono::high_resolution_clock::now();
+		NodoArbol<RegistroEntradaSalida>* registro = registrosArbolBigO.buscarNodo(RegistroEntradaSalida(empleado, fecha, fecha));
+		empleados.buscar(empleado);
+		auto stop = std::chrono::high_resolution_clock::now();
+		std::chrono::nanoseconds duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
+		
+	    tiempoEjecucion = duration.count();
+	    std::cout << "i: " << i << ", tamEm: " << empleadosBigO.getSize() << std::endl;
+		std::cout << tiempoEjecucion << std::endl;
+		//std::cout << duration.count() << std::endl;
+		
+		resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
+	}
+	
+    BigO::guardarResultadosCSV(resultados, "resultados.csv");
+    graficar();
+    
+
+    
     
     NodoArbol<RegistroEntradaSalida>* registro = registrosArbol.buscarNodo(RegistroEntradaSalida(empleado, fecha, fecha));
 	
@@ -438,8 +578,36 @@ void ControladorMenu::restaurarDatos(){
 
 void ControladorMenu::generarPdf(){	
 	std::cout << "(O)===)> <><><><><><><><>< GUARDAR REGISTROS ><><><><><><><><> <)==(O)"<<std::endl;
-	Backup::generarPDF("Empleados.csv");	
-	Backup::generarPDF("Registros.csv");
+	ListaCircularDoble<Empleado>& empleados = Singleton::getInstance()->getEmpleados();
+	
+	ListaCircularDoble<Empleado> empleadosBigO;
+	std::vector<std::pair<int, double>> resultados;
+    int maximo = Singleton::getInstance()->getNumeroDatos();
+	double tiempoEjecucion = 1;
+	int salto = BigO::obtenerSaltos(maximo);
+	
+	for(int i = 0; i <= maximo; i+=salto) {
+		empleadosBigO = ListaCircularDoble<Empleado>();
+		for(int j = 0; j < i; j++) {
+			empleadosBigO.insertar(empleados.getPos(j));
+		}
+		
+		GestorArchivo::guardarListaEmpleadoComoCSV(empleadosBigO, "EmpleadosAleatorio.csv");
+		
+		tiempoEjecucion = BigO::medirTiempoEjecucion([&]() {
+	    	Backup::generarPDF("EmpleadosAleatorio.csv");	
+		});	
+		
+					
+		resultados.push_back(std::pair<int, double>(i, tiempoEjecucion));	
+	}
+	
+    BigO::guardarResultadosCSV(resultados, "resultados.csv");
+    graficar();
+	
+	GestorArchivo::guardarListaEmpleadoComoCSV(empleados, "EmpleadosAleatorio.csv");
+	Backup::generarPDF("EmpleadosAleatorio.csv");	
+	Backup::generarPDF("RegistrosAleatorio.csv");
 	system("pause");
 }
 
@@ -485,8 +653,8 @@ void ControladorMenu::salir() {
 	ListaCircularDoble<RegistroEntradaSalida>& registros = singleton->getRegistros();
 	ListaCircularDoble<Empleado> empleadosCopia;
 	ListaCircularDoble<RegistroEntradaSalida> registrosCopia;
-	GestorArchivo::cargarCSVEnListaEmpleado(empleadosCopia, "Empleados.csv");
-	GestorArchivo::cargarCSVEnListaRegistro(registrosCopia, empleadosCopia, "Registros.csv");
+	GestorArchivo::cargarCSVEnListaEmpleado(empleadosCopia, "EmpleadosAleatorio.csv");
+	GestorArchivo::cargarCSVEnListaRegistro(registrosCopia, empleadosCopia, "RegistrosAleatorio.csv");
 	empleados = empleadosCopia;
 	registros = registrosCopia;
 	
@@ -539,90 +707,61 @@ void ControladorMenu::modificarEmpleado() {
 // Return:     void
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ControladorMenu::graficar1(){	
-	PlotLib plotter(600, 600, 10, 10);
-
-    // Define los puntos que deseas dibujar
-    std::vector<std::pair<float, float>> points;
-    points.push_back(std::make_pair(0, 0));
-    points.push_back(std::make_pair(1, 5));
-    points.push_back(std::make_pair(2, 6));
-    points.push_back(std::make_pair(5, 2));
-    points.push_back(std::make_pair(8, 10));
-
-    // Llama al método ejecutarDrawLines con el vector de puntos
-    plotter.iniciar();
-    plotter.drawLine(points, "BLACK", 0, 3);
-    plotter.terminar();
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Name:       ControladorMenu::graficar2()
-// Purpose:    Muestra el grafico 1 de la bigO
-// Return:     void
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void ControladorMenu::graficar2(){	
-	PlotLib plotter(600, 600, 50, 2500);
-
-    // Define los puntos que deseas dibujar
-    std::vector<std::pair<float, float>> points;
-    
-    for(int i = 0; i < 50; i++) {
-    	points.push_back(std::make_pair(i, i * i));	
+void ControladorMenu::graficar(){
+	std::vector<std::pair<float, float>> points;
+	points = GestorArchivo::cargarPuntos("resultados.csv");
+	float maxX = 0, maxY = 0;
+	
+	for (int i = 0; i < points.size(); i++) {
+		if (maxX < points[i].first) {
+			maxX = points[i].first;
+		}
+		
+		if (maxY < points[i].second) {
+			maxY = points[i].second;
+		}
 	}
-
-    // Llama al método ejecutarDrawLines con el vector de puntos
-    plotter.iniciar();
-    plotter.drawLine(points, "BLACK", 0, 3);
-	plotter.terminar();
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Name:       ControladorMenu::graficar3()
-// Purpose:    Muestra el grafico 1 de la bigO
-// Return:     void
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void ControladorMenu::graficar3(){	
-	PlotLib plotter(600, 600, 2, 2);
-
-    // Define los puntos que deseas dibujar
-    std::vector<std::pair<float, float>> points;
-    points.push_back(std::make_pair(0, 1.5));
-    points.push_back(std::make_pair(1, 1));
-    
-    std::vector<std::pair<float, float>> points2;
-    points2.push_back(std::make_pair(0, 0.5));
-    points2.push_back(std::make_pair(1.5, 0.5));
+	
+	if (maxX < 1) {
+		maxX = 1;
+	}
+	
+	if (maxY < 1) {
+		maxY = 1;
+	}
+	
+	PlotLib plotter(600, 600, maxX, maxY);
 
 
     // Llama al método ejecutarDrawLines con el vector de puntos
     plotter.iniciar();
     plotter.drawLine(points, "BLUE", 0, 3);
-    plotter.drawLine(points2, "RED", 1, 1);
     plotter.terminar();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Name:       ControladorMenu::graficar4()
-// Purpose:    Muestra el grafico 1 de la bigO
+// Name:       ControladorMenu::generarDatos()
+// Purpose:    Genera datos Aleatorios
 // Return:     void
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ControladorMenu::graficar4(){	
-	PlotLib plotter(600, 600, 1000, 50);
-
-    // Define los puntos que deseas dibujar
-    std::vector<std::pair<float, float>> points;
-    points.push_back(std::make_pair(100, 10));
-    points.push_back(std::make_pair(200, 20));
-    points.push_back(std::make_pair(300, 10));
-
-    // Llama al método ejecutarDrawLines con el vector de puntos
-    plotter.iniciar();
-    plotter.drawLine(points, "BLACK", 1, 3);
-    plotter.terminar();
+void ControladorMenu::generarDatos() {
+	std::cout << "(O)===)> <><><><><><><><>< Generador de Datos ><><><><><><><><> <)==(O)" << std::endl;
+	int numeroDatos;
+	Singleton* singleton = Singleton::getInstance();
+	std::cout << "(O)===)> Ingrese el numero de Datos a generar: ";
+	numeroDatos = Dato::ingresarEntero();
+	singleton->setNumeroDatos(numeroDatos);
+	GeneradorDatos::ejecutar(numeroDatos);
+	
+	ListaCircularDoble<Empleado>& empleados = singleton->getEmpleados();
+	ListaCircularDoble<RegistroEntradaSalida>& registros = singleton->getRegistros();
+	ListaCircularDoble<Empleado> empleadosCopia;
+	ListaCircularDoble<RegistroEntradaSalida> registrosCopia;
+	GestorArchivo::cargarCSVEnListaEmpleado(empleadosCopia, "EmpleadosAleatorio.csv");
+	GestorArchivo::cargarCSVEnListaRegistro(registrosCopia, empleadosCopia, "RegistrosAleatorio.csv");
+	empleados = empleadosCopia;
+	registros = registrosCopia;
 }
 
 
@@ -670,26 +809,6 @@ void ControladorMenu::subMenuExtras() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Name:       ControladorMenu::subMenuBigO()
-// Purpose:    Desplegar las opciones del submenu para bigO
-// Return:     void
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void ControladorMenu::subMenuBigO() {
-	Menu menu("(O)===)> <><><><><><><><>< Extras ><><><><><><><><> <)==(O)");
-	menu.insertarOpcion("(x)===)> Graficar 1                <)==(x)", [&]() { graficar1(); });
-	menu.insertarOpcion("(x)===)> Graficar 2                <)==(x)", [&]() { graficar2(); });
-	menu.insertarOpcion("(x)===)> Graficar 3                <)==(x)", [&]() { graficar3(); });
-	menu.insertarOpcion("(x)===)> Graficar 4                <)==(x)", [&]() { graficar4(); });
-	menu.insertarOpcion("(x)===)> Regresar al menu inicial  <)==(x)", [&]() { salir(); }); // Para salir del bucle siempre se debe usar esta funcion de salir()
-	
-	while (menuEjecutando) {
-		menu.correr();
-	}
-	menuEjecutando = true; // Siempre que se quiera correr un menu en bucle
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Name:       ControladorMenu::correrMenu()
 // Purpose:    Desplegar las opciones del menu principal
 // Return:     void
@@ -701,13 +820,14 @@ void ControladorMenu::correrMenu() {
 	ListaCircularDoble<Empleado>& empleados = singleton->getEmpleados();
 	ListaCircularDoble<RegistroEntradaSalida>& registros = singleton->getRegistros();
 	
-	GestorArchivo::cargarCSVEnListaEmpleado(empleados, "Empleados.csv");
-	GestorArchivo::cargarCSVEnListaRegistro(registros, empleados, "Registros.csv");
+	GestorArchivo::cargarCSVEnListaEmpleado(empleados, "EmpleadosAleatorio.csv");
+	GestorArchivo::cargarCSVEnListaRegistro(registros, empleados, "RegistrosAleatorio.csv");
+	singleton->setNumeroDatos(empleados.getSize());
 	
 	Menu menu("(O)===)> <><><><><><><><>< Menu Principal ><><><><><><><><> <)==(O)");
 	menu.insertarOpcion("       ( )===== Registro de Personal ====( )      ", [&]() { subMenuRegistroDePersonal(); });
 	menu.insertarOpcion("       ( )===== Extras               ====( )      ", [&]() { subMenuExtras(); });
-	menu.insertarOpcion("       ( )===== Graficas Big-O       ====( )      ", [&]() { subMenuBigO(); });
+	menu.insertarOpcion("       ( )===== Generar Datos        ====( )      ", [&]() { generarDatos(); });
 	menu.insertarOpcion("       ( )===== Salir                ====( )      ", [&]() { salir(); }); // Para salir del bucle siempre se debe usar esta funcion de salir()
 	
 	menuEjecutando = true; // Siempre que se quiera correr un menu en bucle

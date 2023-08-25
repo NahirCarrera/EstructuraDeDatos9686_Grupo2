@@ -36,6 +36,26 @@ Singleton* Singleton::getInstance() {
 }
 
 ////////////////////////////////////////////////////////////////////////
+// Name:       Singleton::getNumeroDatos()
+// Purpose:    Implementation of Singleton::getNumeroDatos()
+// Return:     int
+////////////////////////////////////////////////////////////////////////
+
+int Singleton::getNumeroDatos() {
+	return numeroDatos;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       Singleton::setNumeroDatos(int numeroDatos)
+// Purpose:    Implementation of Singleton::setNumeroDatos(int numeroDatos)
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void Singleton::setNumeroDatos(int numeroDatos) {
+	this->numeroDatos = numeroDatos;
+}
+
+////////////////////////////////////////////////////////////////////////
 // Name:       Singleton::getRegistros()
 // Purpose:    Implementation of Singleton::getRegistros()
 // Return:     ListaCircularDoble<RegistroEntradaSalida>&

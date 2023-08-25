@@ -9,6 +9,7 @@ class BigO {
 public:
     static double medirTiempoEjecucion(const std::function<void()>& funcion);
     static void guardarResultadosCSV(const std::vector<std::pair<int, double>>& resultados, const std::string& nombreArchivo);
+    static int obtenerSaltos(int numeroDatos);
 };
 
 #endif

@@ -14,6 +14,7 @@
 
 #include "../Modelo/Empleado.h"
 #include "../Modelo/RegistroEntradaSalida.h"
+#include <vector>
 #include <string>
 
 template <typename T>
@@ -25,6 +26,7 @@ class GestorArchivo{
 		static void cargarCSVEnListaEmpleado(ListaCircularDoble<Empleado>&, std::string);
 		static void guardarListaRegistroComoCSV(ListaCircularDoble<RegistroEntradaSalida>&, std::string);
 		static void cargarCSVEnListaRegistro(ListaCircularDoble<RegistroEntradaSalida>&, ListaCircularDoble<Empleado>&, std::string);
+		static std::vector<std::pair<float, float>> cargarPuntos(std::string);
 	private:
 		static Fecha extraerFecha(std::string input);		
 };

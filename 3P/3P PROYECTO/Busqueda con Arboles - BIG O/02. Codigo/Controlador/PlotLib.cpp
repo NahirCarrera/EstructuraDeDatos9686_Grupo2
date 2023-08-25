@@ -6,7 +6,7 @@
 #include <iomanip>
 
 
-PlotLib::PlotLib(int w, int h, int cx, int cy) {
+PlotLib::PlotLib(int w, int h, float cx, float cy) {
     width = w;
     height = h;
     cotaX = cx;
@@ -20,7 +20,12 @@ PlotLib::~PlotLib() {
 char* PlotLib::toChar(float numero) {
 	// Redondea el número a 2 decimales
     std::stringstream stream;
-    stream << std::fixed << std::setprecision(2) << numero;
+    if (numero < 10) {
+    	stream << std::fixed << std::setprecision(2) << numero;	
+	} else {
+		stream << std::fixed << std::setprecision(0) << numero;
+	}
+    
     std::string cadena = stream.str();
     char* punteroModificable = new char[cadena.length() + 1];
     strcpy(punteroModificable, cadena.c_str());

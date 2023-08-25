@@ -22,6 +22,7 @@ class OperacionListas{
 		virtual bool buscar(T)=0;
 		virtual void mostrar()=0;
 		virtual T extraerDato(T dato)=0;
+		virtual T getPos(int)=0;
 		virtual NodoDoble<T>* extraerNodo(T)=0;
 		virtual void ordenarPorIntercambio(int)=0;
 		virtual void mostrarRepetidos(T) = 0;

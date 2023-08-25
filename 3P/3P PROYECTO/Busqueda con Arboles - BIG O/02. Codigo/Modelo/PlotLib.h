@@ -8,8 +8,8 @@ class PlotLib {
 private:
     int width;
     int height;
-    int cotaX;
-    int cotaY;
+    float cotaX;
+    float cotaY;
 
     char* toChar(float numero);
     char* stringToChar(std::string cadena);
@@ -17,7 +17,7 @@ private:
     void drawPoint(float x, float y, int centerX, int centerY, int size);
 
 public:
-    PlotLib(int w, int h, int cx, int cy);
+    PlotLib(int w, int h, float cx, float cy);
     ~PlotLib();
     void drawLine(std::vector<std::pair<float, float>> points, std::string color, int style, int size);
     void iniciar();

@@ -70,6 +70,42 @@ void GestorArchivo::guardarListaEmpleadoComoCSV(ListaCircularDoble<Empleado>& li
     }
 }
 
+std::vector<std::pair<float, float>> GestorArchivo::cargarPuntos(std::string nombreArchivo) {
+	std::vector<std::pair<float, float>> puntos;
+
+    // Abrir el archivo CSV
+    std::ifstream archivo(nombreArchivo);
+
+    if (!archivo.is_open()) {
+        std::cerr << "No se pudo abrir el archivo: " << nombreArchivo << std::endl;
+        return puntos;
+    }
+
+    std::string linea;
+    bool primeraLinea = true;
+
+    while (std::getline(archivo, linea)) {
+        if (primeraLinea) {
+            // Ignorar la primera línea (encabezado)
+            primeraLinea = false;
+            continue;
+        }
+
+        std::istringstream stream(linea);
+        std::string valor1, valor2;
+
+        if (std::getline(stream, valor1, ';') && std::getline(stream, valor2, ';')) {
+            float x = std::stof(valor1);
+            float y = std::stof(valor2);
+            puntos.emplace_back(x, y);
+        }
+    }
+
+    archivo.close();
+
+    return puntos;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Name:       GestorArchivo::cargarCSVEnListaEmpleado(ListaCircularDoble<Empleado>& lista, std::string nombreArchivo) 
 // Purpose:    Cargar los elementos de un archivo CSV en una ListaCircularDoble de empleados

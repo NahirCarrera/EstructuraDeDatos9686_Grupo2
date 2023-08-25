@@ -23,6 +23,7 @@ template <typename T>
 ListaCircularDoble<T>::ListaCircularDoble(){
 	this->cabeza = nullptr;
 	this->cola = nullptr;
+	this->size = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -33,6 +34,17 @@ ListaCircularDoble<T>::ListaCircularDoble(){
 
 template <typename T>
 ListaCircularDoble<T>::~ListaCircularDoble(){
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::getSize()
+// Purpose:    Implementation of ListaCircularDoble<T>::getSize()
+// Return:     NodoDoble<T>*
+////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+int ListaCircularDoble<T>::getSize() {
+	return size;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -119,6 +131,7 @@ void ListaCircularDoble<T>::insertar(T dato){
 		this->cabeza->setAnterior(nuevo);
 		this->cola = nuevo;
 	}
+	size++;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -143,6 +156,7 @@ bool ListaCircularDoble<T>::eliminar(T dato){
 	            this->cola->setSiguiente(this->cabeza);
 	        }
 	        delete aux;
+	        size--;
 	        return true;
 	    } else {
 	        NodoDoble<T>* aux = this->cabeza;
@@ -155,15 +169,14 @@ bool ListaCircularDoble<T>::eliminar(T dato){
 	                    this->cola = aux;
 	                }
 	                delete aux2;
+	                size--;
 	                return true;
 	            }
 	            aux = aux->getSiguiente();
 	        }
 	    }
 	}
-	
-	return false;
-		
+	return false;	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -181,6 +194,27 @@ void ListaCircularDoble<T>::mostrar(){
 		} while (aux != this->cabeza);
 		std::cout << std::endl;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       ListaCircularDoble<T>::getPos(int pos)
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+template <typename T>
+T ListaCircularDoble<T>::getPos(int pos) {
+	int cont = 0;
+	if (!estaVacia()){
+		NodoDoble<T>* aux = this->cabeza;
+		do{
+			if (pos == cont) {
+				return aux->getDato();
+			}
+			aux = aux->getSiguiente();
+			cont++;
+		} while (aux != this->cabeza);
+	}
+	
+	return this->cabeza->getDato();
 }
 
 ////////////////////////////////////////////////////////////////////////

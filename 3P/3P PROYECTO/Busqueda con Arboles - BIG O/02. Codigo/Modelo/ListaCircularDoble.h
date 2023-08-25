@@ -30,14 +30,17 @@ class ListaCircularDoble:public OperacionListas<T>{
 		void insertar(T)override ;
 		bool eliminar(T)override;
 		bool buscar(T)override;
+		T getPos(int)override;
 		void mostrar()override;
 		void mostrarRepetidos(T) override;
 		T extraerDato(T)override;
 		NodoDoble<T>* extraerNodo(T)override;
 		void ordenarPorIntercambio(int)override;
+		int getSize();
 	private:
 		NodoDoble<T>* cabeza;
 		NodoDoble<T>* cola;
+		int size;
 };                        
 #endif
 	

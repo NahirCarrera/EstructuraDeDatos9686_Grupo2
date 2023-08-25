@@ -24,10 +24,13 @@ public:
 
     ListaCircularDoble<RegistroEntradaSalida>& getRegistros();
     ListaCircularDoble<Empleado>& getEmpleados();
+    int getNumeroDatos();
+    void setNumeroDatos(int numeroDatos);
 private:
     static Singleton* instance;
     ListaCircularDoble<RegistroEntradaSalida> registros;
     ListaCircularDoble<Empleado> empleados;
+    int numeroDatos;
     Singleton();
 };
 

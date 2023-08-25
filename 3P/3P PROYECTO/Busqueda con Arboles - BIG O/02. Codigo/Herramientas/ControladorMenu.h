@@ -35,15 +35,13 @@ class ControladorMenu{
 		void generarPdf();
 		void crearSistemaDeAyuda(); 
 		void imprimirFoto();
-		void graficar1();
-		void graficar2();
-		void graficar3();
-		void graficar4();
+		void generarDatos();
+		void graficar();
+
 		//Submenus
 		void subMenuRegistroDePersonal();
 		void subMenuExtras();
 		void modificarEmpleado();
-		void subMenuBigO();
 		//Salir
 		void salir();
 		
